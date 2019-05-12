@@ -40,7 +40,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/et_user_register"
+            android:id="@+id/et_user"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_user_register"
@@ -62,14 +62,14 @@
             android:id="@+id/tv_pass_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/et_user_register"
+            android:layout_below="@id/et_user"
             android:layout_marginTop="8dp"
             android:text="密码:"
             android:textColor="#fff"
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/et_pass_register"
+            android:id="@+id/et_pass"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_pass_register"
@@ -89,14 +89,14 @@
             android:id="@+id/tv_pass_register2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/et_pass_register"
+            android:layout_below="@id/et_pass"
             android:layout_marginTop="8dp"
             android:text="确认密码:"
             android:textColor="#fff"
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/et_pass_register2"
+            android:id="@+id/et_pass1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_pass_register2"
@@ -116,7 +116,7 @@
             android:id="@+id/tv_pass_register3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/et_pass_register2"
+            android:layout_below="@id/et_pass1"
             android:layout_marginTop="8dp"
             android:text="性别:"
             android:textColor="#fff"
@@ -128,6 +128,7 @@
             android:layout_below="@id/tv_pass_register3"
             android:orientation="horizontal">
             <RadioButton
+                android:id="@+id/rbtn_man"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#fff"
@@ -167,7 +168,7 @@
             android:layout_width="wrap_content"
             android:layout_height="33dp"
             android:layout_below="@id/et_remark"
-            android:layout_alignRight="@id/et_pass_register2"
+            android:layout_alignRight="@id/et_remark"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="120dp"
@@ -182,7 +183,7 @@
             android:id="@+id/btn_register"
             android:layout_width="wrap_content"
             android:layout_height="33dp"
-            android:layout_alignRight="@id/et_pass_register2"
+            android:layout_alignRight="@id/et_remark"
             android:layout_below="@id/et_remark"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"

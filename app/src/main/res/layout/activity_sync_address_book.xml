@@ -1,12 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SyncAddressBook">
-    <TextView
-        android:layout_width="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/register">
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/login_btn_sync"
+        android:text="一键同步"
+        android:textSize="30dp"
+        android:textColor="#fff"/>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SyncAddressBook"/>
-</android.support.constraint.ConstraintLayout>
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上传"
+            android:checked="true"
+            android:buttonTint="#fff"
+            android:textColor="#fff"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:text="下载"
+            android:checked="true"
+            android:buttonTint="#fff"
+            android:textColor="#fff"/>
+    </LinearLayout>
+</LinearLayout>
