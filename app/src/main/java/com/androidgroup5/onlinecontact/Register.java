@@ -16,6 +16,7 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        init();
     }
     private void init(){
         btn_backToLogin=(Button) findViewById(R.id.btn_backToLogin);
@@ -24,6 +25,7 @@ public class Register extends AppCompatActivity {
         et_pass=(EditText) findViewById(R.id.et_pass);
         et_pass1=(EditText) findViewById(R.id.et_pass1);
         et_remark=(EditText) findViewById(R.id.et_remark);
+        rbtn_man=(RadioButton)findViewById(R.id.rbtn_man);
         btn_backToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,6 +39,8 @@ public class Register extends AppCompatActivity {
                     if(register()){
                         Toast.makeText(Register.this,"注册成功，返回登录页面...",Toast.LENGTH_LONG).show();
                         backToLogin();
+                    }else{
+                        Toast.makeText(Register.this,"注册失败，请检查网络连接！",Toast.LENGTH_LONG).show();
                     }
                 }else{
                     Toast.makeText(Register.this,"注册失败，请检查注册信息！",Toast.LENGTH_LONG).show();

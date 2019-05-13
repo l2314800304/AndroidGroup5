@@ -18,16 +18,16 @@ public class SyncAddressBook extends AppCompatActivity {
             public void onClick(View v) {
                 if(((CheckBox)findViewById(R.id.ckb_local)).isChecked()){
                     if(UpdateLocal()){
-                        Toast.makeText(SyncAddressBook.this,"本地通讯录更新成功！",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SyncAddressBook.this,"通讯录同步成功！",Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(SyncAddressBook.this,"本地通讯录更新失败，请重试！",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SyncAddressBook.this,"通讯录同步失败，请重试！",Toast.LENGTH_SHORT).show();
                     }
                 }
                 if(((CheckBox)findViewById(R.id.ckb_cloud)).isChecked()){
                     if(UpdateCloud()){
-                        Toast.makeText(SyncAddressBook.this,"云端通讯录更新成功！",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SyncAddressBook.this,"通讯录同步成功！",Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(SyncAddressBook.this,"云端通讯录更新失败，请重试！",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SyncAddressBook.this,"通讯录同步失败，请重试！",Toast.LENGTH_SHORT).show();
                     }
                 }
             }
