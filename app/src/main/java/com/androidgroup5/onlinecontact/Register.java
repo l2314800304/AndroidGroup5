@@ -56,6 +56,14 @@ public class Register extends AppCompatActivity {
 
     }
     private boolean checkData(){
-        return true;
+        String user=et_user.getText().toString(),
+                pass=et_pass.getText().toString(),
+                pass1=et_pass1.getText().toString(),
+                remark=et_remark.getText().toString();
+        if(user.length()<4||user.length()>8||pass.length()<6||pass.length()>16||!pass.equals(pass1)||remark.length()>50){
+            return false;
+        }else{
+            return true;
+        }
     }
 }
