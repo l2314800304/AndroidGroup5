@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:background="@drawable/register">
     <Button
+        android:id="@+id/btn_sync"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:background="@drawable/login_btn_sync"
@@ -21,17 +22,19 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
         <CheckBox
+            android:id="@+id/ckb_local"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="上传"
+            android:text="本地更新"
             android:checked="true"
             android:buttonTint="#fff"
             android:textColor="#fff"/>
         <CheckBox
+            android:id="@+id/ckb_cloud"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
-            android:text="下载"
+            android:text="云端更新"
             android:checked="true"
             android:buttonTint="#fff"
             android:textColor="#fff"/>
