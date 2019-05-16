@@ -50,8 +50,6 @@ public class SyncAddressBook extends AppCompatActivity {
         return true;
     }
     private List<Contact> GetContactFromLocal(){
-        List<Contact> Contacts=new ArrayList<Contact>();
-        Cursor cursor=SyncAddressBook.this.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,null,null,null);
-        return Contacts;
+        return null;
     }
 }

@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:orientation="vertical"
-        android:layout_marginTop="20dp"
         android:gravity="center">
 
         <TextView
@@ -149,6 +148,30 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/rg_sex"
             android:layout_marginTop="8dp"
+            android:text="地址:"
+            android:textColor="#fff"
+            android:textSize="14sp" />
+        <EditText
+            android:id="@+id/et_location"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_pass_register4"
+            android:background="@drawable/login_edit"
+            android:paddingBottom="7dp"
+            android:paddingLeft="9dp"
+            android:paddingRight="8dp"
+            android:paddingTop="7dp"
+            android:hint="地理位置(5个字符以内)"
+            android:textColorHint="#aaa"
+            android:textColor="#fff"
+            android:singleLine="true"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tv_pass_register5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_location"
+            android:layout_marginTop="8dp"
             android:text="备注:"
             android:textColor="#fff"
             android:textSize="14sp" />
@@ -156,7 +179,7 @@
             android:id="@+id/et_remark"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_below="@id/tv_pass_register4"
+            android:layout_below="@id/tv_pass_register5"
             android:background="@drawable/login_edit"
             android:singleLine="false"
             android:maxLines="5"
@@ -173,7 +196,7 @@
             android:layout_below="@id/et_remark"
             android:layout_alignRight="@id/et_remark"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="120dp"
             android:background="@drawable/login_btn_cancel"
             android:drawablePadding="5dp"
@@ -189,7 +212,7 @@
             android:layout_alignRight="@id/et_remark"
             android:layout_below="@id/et_remark"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/login_btn_ok"
             android:drawablePadding="5dp"
             android:paddingLeft="15dp"

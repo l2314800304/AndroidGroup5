@@ -26,6 +26,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         init();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     public void init(){
         btn01=(Button)findViewById(R.id.btn_01);
         btn01.setOnClickListener(new mClick(1));
