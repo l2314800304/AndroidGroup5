@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 case 12:
                     break;
                 case 21:
+                    startActivity(new Intent().setClass(MainActivity.this,Delete.class));
                     break;
                 case 22:
                     break;
