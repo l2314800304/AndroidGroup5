@@ -1,19 +1,13 @@
 package com.androidgroup5.onlinecontact;
 
-import android.database.Cursor;
-import android.provider.CallLog;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.androidgroup5.onlinecontact.EntityClass.Contact;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class SyncAddressBook extends AppCompatActivity {
@@ -50,8 +44,6 @@ public class SyncAddressBook extends AppCompatActivity {
         return true;
     }
     private List<Contact> GetContactFromLocal(){
-        List<Contact> Contacts=new ArrayList<Contact>();
-        Cursor cursor=SyncAddressBook.this.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,null,null,null);
-        return Contacts;
+        return null;
     }
 }
