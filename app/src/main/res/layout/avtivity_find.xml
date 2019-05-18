@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="48dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
+        app:titleMarginStart="0dp" />
+
+    <Button android:id="@+id/bt_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查找"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.androidgroup5.onlinecontact.search.CharIndexView
+            android:id="@+id/iv_main"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="1dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            app:charTextColor="#66FFFF"
+            app:indexTextColor="#ff00ff"
+            app:indexTextSize="13sp" />
+
+        <TextView android:id="@+id/tv_index"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:textColor="#66FFFF"
+            android:textSize="18sp"
+            android:visibility="invisible"
+            android:text="A"
+            android:gravity="center"
+            android:background="@drawable/bg_index"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
