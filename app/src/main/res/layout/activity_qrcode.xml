@@ -19,11 +19,11 @@
         android:id="@+id/create_qr_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="生成二维码（测试�? />
+        android:text="生成二维码测试" />
     <android.support.v7.widget.AppCompatAutoCompleteTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="联系人姓�?
+        android:text="联系人姓名"
         android:textSize="14sp"/>
     <ImageView
         android:id="@+id/create_qr_iv"

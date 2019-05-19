@@ -27,7 +27,7 @@ public class QRCodeActivity extends AppCompatActivity {
         createQrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String filePath = getFileRoot(MainActivity.this) + File.separator
+                final String filePath = getFileRoot(QRCodeActivity.this) + File.separator
                         + "qr_" + System.currentTimeMillis() + ".jpg";
                 //二维码图片较大时，生成图片、保存文件的时间可能较长，因此放在新线程中
                 new Thread(new Runnable() {
