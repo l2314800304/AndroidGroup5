@@ -16,7 +16,7 @@
         android:layout_marginEnd="57dp"
         android:layout_marginRight="57dp"
         android:layout_marginBottom="82dp"
-        android:text="联系人姓名"
+        android:text="@string/contacts_name"
         app:layout_constraintBottom_toTopOf="@+id/textViewTelNum"
         app:layout_constraintEnd_toStartOf="@+id/editText"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@
         android:layout_marginEnd="56dp"
         android:layout_marginRight="56dp"
         android:layout_marginBottom="83dp"
-        android:text="联系人电话"
+        android:text="@string/contacts_telnum"
         app:layout_constraintBottom_toTopOf="@+id/textViewBirth"
         app:layout_constraintEnd_toStartOf="@+id/editText2"
         app:layout_constraintStart_toStartOf="parent" />
@@ -45,7 +45,7 @@
         android:layout_marginEnd="55dp"
         android:layout_marginRight="55dp"
         android:layout_marginBottom="156dp"
-        android:text="联系人生日"
+        android:text="@string/contacts_birth"
         app:layout_constraintBottom_toTopOf="@+id/btnInsert"
         app:layout_constraintEnd_toStartOf="@+id/editText3"
         app:layout_constraintStart_toStartOf="parent" />
@@ -63,7 +63,8 @@
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/editText2"
         app:layout_constraintStart_toEndOf="@+id/textViewName"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/editText2"
@@ -76,7 +77,8 @@
         android:gravity="start|top"
         android:inputType="textMultiLine"
         app:layout_constraintStart_toEndOf="@+id/textViewTelNum"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/editText3"
@@ -91,7 +93,8 @@
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/btnClear"
         app:layout_constraintStart_toEndOf="@+id/textViewBirth"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/btnInsert"
@@ -102,7 +105,7 @@
         android:layout_marginEnd="92dp"
         android:layout_marginRight="92dp"
         android:layout_marginBottom="182dp"
-        android:text="添加"
+        android:text="@string/btn_insert"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnClear"
         app:layout_constraintStart_toStartOf="parent" />
@@ -114,7 +117,7 @@
         android:layout_marginStart="92dp"
         android:layout_marginLeft="92dp"
         android:layout_marginTop="146dp"
-        android:text="清空"
+        android:text="@string/btn_clear"
         app:layout_constraintStart_toEndOf="@+id/btnInsert"
         app:layout_constraintTop_toBottomOf="@+id/editText3" />
 </android.support.constraint.ConstraintLayout>
