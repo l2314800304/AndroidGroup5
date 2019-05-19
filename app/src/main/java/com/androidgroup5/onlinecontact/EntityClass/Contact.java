@@ -8,6 +8,7 @@ public class Contact {
     private int ID;
     private String Name;
     private Date Birthday;
+    private String TelNum;
     private List<ContactInfo> ContactInfos=new ArrayList<ContactInfo>();
 
     public Contact(int ID, String name, Date birthday) {
@@ -38,6 +39,14 @@ public class Contact {
 
     public void setBirthday(Date birthday) {
         Birthday = birthday;
+    }
+
+    public void setTelNum(String TelNum) {
+        this.TelNum = TelNum;
+    }
+
+    public String getTelNum() {
+        return TelNum;
     }
 
     public List<ContactInfo> getContactInfos() {
