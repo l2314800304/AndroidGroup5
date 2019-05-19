@@ -113,8 +113,10 @@ public class MainActivity extends AppCompatActivity {
                 case 61:
                     break;
                 case 71:
+                    startActivity(new Intent().setClass(MainActivity.this,Phone.class));
                     break;
                 case 72:
+                    startActivity(new Intent().setClass(MainActivity.this,Birthday.class));
                     break;
                 case 81:
                     break;
