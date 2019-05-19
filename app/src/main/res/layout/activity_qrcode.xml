@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/qrcode_background"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".MainActivity">
+
+
+    <EditText
+        android:id="@+id/create_qr_content"
+        android:layout_width="600px"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/create_qr_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="生成二维码（测试�? />
+    <android.support.v7.widget.AppCompatAutoCompleteTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="联系人姓�?
+        android:textSize="14sp"/>
+    <ImageView
+        android:id="@+id/create_qr_iv"
+        android:layout_width="600px"
+        android:layout_height="600px" />
+    <android.support.v7.widget.AppCompatAutoCompleteTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tips:扫描二维码即可获取联系人信息"
+        android:textSize="14sp"/>
+
+</android.support.v7.widget.LinearLayoutCompat>
