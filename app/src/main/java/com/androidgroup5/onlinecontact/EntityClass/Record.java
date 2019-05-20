@@ -2,15 +2,27 @@ package com.androidgroup5.onlinecontact.EntityClass;
 
 public class Record {
     private int ID;
-    private String Number,Time;
+    private int Type;
+    private String Number;
+    private String Time;
+    private String Duration;
     private Contact RecordContact;
 
-    public Record(int ID, String number, String time) {
-        this.ID = ID;
-        Number = number;
-        Time = time;
+    public int getType() {
+        return Type;
     }
 
+    public void setType(int type) {
+        Type = type;
+    }
+
+
+    public String getDuration() {
+        return Duration;
+    }
+    public void setDuration(String duration) {
+        Duration = duration;
+    }
     public int getID() {
         return ID;
     }

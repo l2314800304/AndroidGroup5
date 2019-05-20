@@ -1,4 +1,4 @@
-﻿package com.androidgroup5.onlinecontact.QRCode;
+package com.androidgroup5.onlinecontact.QRCode;
 
 import android.content.Context;
 import android.content.Intent;

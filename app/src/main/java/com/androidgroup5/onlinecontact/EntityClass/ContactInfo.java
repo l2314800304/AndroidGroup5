@@ -3,13 +3,17 @@ package com.androidgroup5.onlinecontact.EntityClass;
 public class ContactInfo {
 
     private int ID;
-    private String Data,Type;
 
-    public ContactInfo(int ID, String data, String type) {
-        this.ID = ID;
-        Data = data;
-        Type = type;
+    public int getEmailOrNumber() {
+        return EmailOrNumber;
     }
+
+    public void setEmailOrNumber(int emailOrNumber) {
+        EmailOrNumber = emailOrNumber;
+    }
+
+    private int EmailOrNumber;
+    private String Data,Type;
 
     public int getID() {
         return ID;

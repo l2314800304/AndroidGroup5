@@ -1,5 +1,6 @@
 package com.androidgroup5.onlinecontact.EntityClass;
 
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,11 +12,6 @@ public class Contact {
     private String TelNum;
     private List<ContactInfo> ContactInfos=new ArrayList<ContactInfo>();
 
-    public Contact(int ID, String name, Date birthday) {
-        this.ID = ID;
-        Name = name;
-        Birthday = birthday;
-    }
 
     public int getID() {
         return ID;
