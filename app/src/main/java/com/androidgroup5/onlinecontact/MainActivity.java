@@ -120,8 +120,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 81:
                     startActivity(new Intent().setClass(MainActivity.this,QRCodeActivity.class));
+                    break;
                 case 82:
                     startActivity(new Intent().setClass(MainActivity.this,QRCodeActivity.class));
+                    break;
                 case 91:
                     startActivity(new Intent().setClass(MainActivity.this,Find.class));
                     break;
