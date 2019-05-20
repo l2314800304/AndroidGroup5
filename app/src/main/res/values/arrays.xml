@@ -83,5 +83,60 @@
         <item>WORK</item>
         <item>OTHER</item>　　　
     </string-array>
+    <string-array name="names">
+        <item>游小陈</item>
+        <item>扫地神僧</item>
+        <item>无崖子</item>
+        <item>虚竹</item>
+        <item>段誉</item>
+        <item>李秋水</item>
+        <item>乔峰</item>
+        <item>萧峰</item>
+        <item>天山童姥</item>
+        <item>鸠摩智</item>
+        <item>游坦之</item>
+        <item>段正淳</item>
+        <item>慕容博</item>
+        <item>慕容复</item>
+        <item>耶律莫哥</item>
+        <item>丁春秋</item>
+        <item>东方不败</item>
+        <item>风清扬</item>
+        <item>令狐冲</item>
+        <item>任我行</item>
+        <item>方证大师</item>
+        <item>冲虚道长</item>
+        <item>岳不群</item>
+        <item>不戒和尚</item>
+        <item>向问天</item>
+        <item>桃谷六仙</item>
+        <item>周伯通</item>
+        <item>欧阳锋</item>
+        <item>洪七公</item>
+        <item>黄药师</item>
+        <item>郭靖</item>
+        <item>段智兴</item>
+        <item>裘千仞</item>
+        <item>杨过</item>
+        <item>金轮法王</item>
+        <item>小龙女</item>
+        <item>张三丰</item>
+        <item>郭襄</item>
+        <item>黄衫女</item>
+        <item>张无忌</item>
+        <item>少林三神僧</item>
+        <item>阳顶天</item>
+        <item>混元霹雳手成昆</item>
+        <item>风云月三使</item>
+        <item>杨逍</item>
+        <item>谢逊</item>
+        <item>韦一笑</item>
+        <item>张2三丰</item>
+        <item>东方94不败</item>
+        <item>扫地8神僧</item>
+        <item>周伯通hh</item>
+        <item>仇笑天</item>
+        <item>#youxiaochen</item>
+    </string-array>
 
 </resources>
