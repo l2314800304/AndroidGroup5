@@ -67,20 +67,9 @@ public class User {
     public void setContacts(List<Contact> contacts) {
         Contacts = contacts;
     }
-
     public List<Record> getRecords() {
         return Records;
     }
-    public List<Record> getRecordByContact(Contact recordContact) {
-        List<Record> list=new ArrayList<Record>();
-        for(int i=0;i<Records.size();i++){
-            if (Records.get(i).getContact().equals(recordContact)){
-                list.add(Records.get(i));
-            }
-        }
-        return list;
-    }
-
     public void setRecords(List<Record> records) {
         Records = records;
     }

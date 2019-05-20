@@ -40,4 +40,5 @@ dependencies {
     implementation 'com.github.promeg:tinypinyin:2.0.3'
     implementation files('libs/core-3.3.0.jar')
     implementation files('libs/javase-3.3.0.jar')
+    implementation 'com.google.code.gson:gson:2.8.5'
 }

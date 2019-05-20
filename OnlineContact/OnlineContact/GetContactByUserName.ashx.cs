@@ -68,11 +68,11 @@ namespace OnlineContact
                 if (reader.HasRows)
                 {
                     reader.Read();
-                    res += "{\"ID\":\"" + reader.GetInt32(0) + "\",\"Number\":\"" + reader.GetString(1) + "\",\"Contact_ID\":\"" + reader.GetInt32(2) + "\",\"Duration\":\"" + reader.GetString(3) + "\",\"Date\":\"" + reader.GetDateTime(4).ToString() + "\",\"Type\":\"" + reader.GetString(6) + "\"}";
+                    res += "{\"ID\":\"" + reader.GetInt32(0) + "\",\"Number\":\"" + reader.GetString(1) + "\",\"Duration\":\"" + reader.GetString(2) + "\",\"Date\":\"" + reader.GetDateTime(3).ToString() + "\",\"Type\":\"" + reader.GetString(5) + "\"}";
                 }
                 while (reader.Read())
                 {
-                    res += ",{\"ID\":\"" + reader.GetInt32(0) + "\",\"Number\":\"" + reader.GetString(1) + "\",\"Contact_ID\":\"" + reader.GetInt32(2) + "\",\"Duration\":\"" + reader.GetString(3) + "\",\"Date\":\"" + reader.GetDateTime(4).ToString() + "\",\"Type\":\"" + reader.GetString(6) + "\"}";
+                    res += ",{\"ID\":\"" + reader.GetInt32(0) + "\",\"Number\":\"" + reader.GetString(1) + "\",\"Duration\":\"" + reader.GetString(2) + "\",\"Date\":\"" + reader.GetDateTime(3).ToString() + "\",\"Type\":\"" + reader.GetString(5) + "\"}";
                 }
                 res += "]}";
                 context.Response.Write(res);

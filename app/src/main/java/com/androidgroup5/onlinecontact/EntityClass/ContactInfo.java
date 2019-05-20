@@ -13,7 +13,7 @@ public class ContactInfo {
     }
 
     private int EmailOrNumber;
-    private String Data,Type;
+    private String Number,Type;
 
     public int getID() {
         return ID;
@@ -23,12 +23,12 @@ public class ContactInfo {
         this.ID = ID;
     }
 
-    public String getData() {
-        return Data;
+    public String getNumber() {
+        return Number;
     }
 
-    public void setData(String data) {
-        Data = data;
+    public void setNumber(String number) {
+        Number = number;
     }
 
     public String getType() {

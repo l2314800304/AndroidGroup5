@@ -16,7 +16,8 @@ namespace OnlineContact
         {
             context.Response.ContentType = "text/plain";
             String UserName = context.Request["UserName"];
-            String json = context.Request["Contact"];
+            String contact = context.Request["Contact"];
+            String record = context.Request["Record"];
             String sql = "select ID from user where UserName=@u;";
             MySqlParameter[] pms ={
                 new MySqlParameter("@u",UserName)
@@ -30,7 +31,6 @@ namespace OnlineContact
                 sql = "select * from contact where User_ID=@id;";
                 reader = helper.getMySqlReader(sql, new MySqlParameter("@id", id));
                 MySqlHelper helper1 = new MySqlHelper();
-                MySqlDataReader reader1 = null;
                 if (reader.HasRows)
                 {
                     while (reader.Read())
@@ -40,7 +40,7 @@ namespace OnlineContact
                 }
                 int a = helper1.getMySqlCom("delete from contact where User_ID=@id", new MySqlParameter("@id", id + ""));
                 
-                context.Response.Write("OK"+"Contact:"+json);
+                context.Response.Write("OK");
             }
             else
             {

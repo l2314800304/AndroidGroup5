@@ -4,23 +4,62 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.androidgroup5.onlinecontact.EntityClass.*;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class SyncAddressBook extends AppCompatActivity {
+    private Handler handler = new Handler() {
 
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    Toast.makeText(SyncAddressBook.this, "同步云端通讯录成功", Toast.LENGTH_LONG).show();
+                    break;
+                case 1:
+                    Toast.makeText(SyncAddressBook.this, "同步本地通讯录成功", Toast.LENGTH_LONG).show();
+                    break;
+                case -1:
+                    Toast.makeText(SyncAddressBook.this, "同步失败，请检查网络连接！", Toast.LENGTH_LONG).show();
+                default:
+                    break;
+            }
+        }
+
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,20 +67,11 @@ public class SyncAddressBook extends AppCompatActivity {
         ((Button)findViewById(R.id.btn_sync)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GetContactFromLocal();
                 if(((CheckBox)findViewById(R.id.ckb_local)).isChecked()){
-                    if(UpdateLocal()){
-                        Toast.makeText(SyncAddressBook.this,"通讯录同步成功！",Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(SyncAddressBook.this,"通讯录同步失败，请重试！",Toast.LENGTH_SHORT).show();
-                    }
+                    UpdateLocal();
                 }
                 if(((CheckBox)findViewById(R.id.ckb_cloud)).isChecked()){
-                    if(UpdateCloud()){
-                        Toast.makeText(SyncAddressBook.this,"通讯录同步成功！",Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(SyncAddressBook.this,"通讯录同步失败，请重试！",Toast.LENGTH_SHORT).show();
-                    }
+                    UpdateCloud();
                 }
             }
         });
@@ -50,8 +80,53 @@ public class SyncAddressBook extends AppCompatActivity {
         return true;
     }
     private boolean UpdateCloud(){
+        HashMap<String,String> paramsMap=new HashMap<>();
+        paramsMap.put("UserName","dfsjdjsk");
+        paramsMap.put("Contact",(new Gson().toJson(GetContactFromLocal())));
+        paramsMap.put("Record",(new Gson().toJson(GetRecordFromLocal())));
+        FormBody.Builder builder = new FormBody.Builder();
+        for (String key : paramsMap.keySet()) {
+            //追加表单信息
+            builder.add(key, paramsMap.get(key));
+        }
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS).build();
+        RequestBody body=builder.build();
+        Request request = new Request.Builder()
+                .url("http://114.116.171.181:80/SetContactByUserName.ashx")
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Message message = new Message();
+                message.what = -1;
+                handler.sendMessage(message);
+                e.printStackTrace();
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()){//回调的方法执行在子线程。
+                    if (response.body().string().equals("OK")) {
+                        Message message = new Message();
+                        message.what = 0;
+                        handler.sendMessage(message);
+                    } else {
+                        Message message = new Message();
+                        message.what = -1;
+                        handler.sendMessage(message);
+                    }
+                }else{
+                    Log.i("Response:",response.body().string());
+                    Message message = new Message();
+                    message.what = -1;
+                    handler.sendMessage(message);
+                }
+            }
+        });
         return true;
     }
+
     private List<Contact> GetContactFromLocal(){
         List<Contact> contacts=new ArrayList<Contact>();
         Uri uri = ContactsContract.Contacts.CONTENT_URI;
@@ -77,7 +152,7 @@ public class SyncAddressBook extends AppCompatActivity {
                 String phoneType=phones.getString(phones.getColumnIndex(
                         ContactsContract.CommonDataKinds.Phone.TYPE));
                 info.setEmailOrNumber(5);
-                info.setData(phoneNumber);
+                info.setNumber(phoneNumber);
                 info.setType(phoneType);
                 contactInfos.add(info);
             }
@@ -94,7 +169,7 @@ public class SyncAddressBook extends AppCompatActivity {
                 String emailType = emails.getString(emails.getColumnIndex(
                         ContactsContract.CommonDataKinds.Email.TYPE));
                 info.setEmailOrNumber(1);
-                info.setData(emailAddress);
+                info.setNumber(emailAddress);
                 info.setType(emailType);
                 contactInfos.add(info);
             }
@@ -125,7 +200,7 @@ public class SyncAddressBook extends AppCompatActivity {
                     CallLog.Calls.DATE));
             info.setNumber(number);
             info.setDuration(duration);
-            info.setTime(date);
+            info.setDate(date);
             info.setType(type);
             records.add(info);
         }

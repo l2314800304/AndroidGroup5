@@ -7,8 +7,7 @@ import java.util.List;
 
 public class Contact {
     private int ID;
-    private String Name;
-    private Date Birthday;
+    private String Name,Birthday;
     private String TelNum;
     private List<ContactInfo> ContactInfos=new ArrayList<ContactInfo>();
 
@@ -29,11 +28,11 @@ public class Contact {
         Name = name;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return Birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         Birthday = birthday;
     }
 

@@ -4,9 +4,8 @@ public class Record {
     private int ID;
     private int Type;
     private String Number;
-    private String Time;
+    private String Date;
     private String Duration;
-    private Contact RecordContact;
 
     public int getType() {
         return Type;
@@ -39,19 +38,11 @@ public class Record {
         Number = number;
     }
 
-    public String getTime() {
-        return Time;
+    public String getDate() {
+        return Date;
     }
 
-    public void setTime(String time) {
-        Time = time;
-    }
-
-    public Contact getContact() {
-        return RecordContact;
-    }
-
-    public void setContact(Contact recordContact) {
-        RecordContact = recordContact;
+    public void setDate(String time) {
+        Date = time;
     }
 }
