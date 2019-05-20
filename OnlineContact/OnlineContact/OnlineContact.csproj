@@ -74,6 +74,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetContactByUserName.ashx.cs">
+      <DependentUpon>GetContactByUserName.ashx</DependentUpon>
+    </Compile>
     <Compile Include="MySqlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Register.ashx.cs">
@@ -81,6 +84,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="GetContactByUserName.ashx" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Register.ashx" />

@@ -3,4 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    
+    <color name="base_background">#f0f0f0</color>
+
+    <drawable name="charIndexColor">#33000000</drawable>
+    <color name="charIndexColor">#33000000</color>
 </resources>
