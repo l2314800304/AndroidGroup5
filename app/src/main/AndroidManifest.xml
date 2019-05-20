@@ -24,6 +24,7 @@
         <activity android:name=".SyncAddressBook" />
         <activity android:name=".Register" />
         <activity android:name=".Login" />
+        <activity android:name=".QRCode.QRCodeActivity" />
 
         <meta-data
             android:name="com.google.android.actions"
