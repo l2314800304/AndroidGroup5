@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.androidgroup5.onlinecontact.QRCode.QRCodeActivity;
+
 public class MainActivity extends AppCompatActivity {
     Button btn01,btn02,
             btn11,btn12,
@@ -119,9 +121,9 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this,Birthday.class));
                     break;
                 case 81:
-                    break;
+                    startActivity(new Intent().setClass(MainActivity.this,QRCodeActivity.class));
                 case 82:
-                    break;
+                    startActivity(new Intent().setClass(MainActivity.this,QRCodeActivity.class));
                 case 91:
                     startActivity(new Intent().setClass(MainActivity.this,Find.class));
                     break;
