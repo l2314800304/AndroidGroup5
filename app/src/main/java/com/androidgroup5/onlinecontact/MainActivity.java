@@ -1,13 +1,12 @@
 package com.androidgroup5.onlinecontact;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import com.androidgroup5.onlinecontact.QRCode.QRCodeActivity;
 
 public class MainActivity extends AppCompatActivity {
     Button btn01,btn02,
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this,Register.class));
                     break;
                 case 2:
-                    startActivity(new Intent().setClass(MainActivity.this,SyncAddressBook.class).putExtra("UserName","×¢²á²âÊÔ"));
+                    startActivity(new Intent().setClass(MainActivity.this,SyncAddressBook.class).putExtra("user_id","100001"));
                     break;
                 case 11:
                     break;
@@ -97,17 +96,20 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this,Delete.class));
                     break;
                 case 22:
-                    startActivity(new Intent().setClass(MainActivity.this,Remark.class));
                     break;
                 case 31:
+                    startActivity(new Intent().setClass(MainActivity.this,Login.class));
                     break;
                 case 32:
+                    startActivity(new Intent().setClass(MainActivity.this, ShowContactActivity.class));
                     break;
                 case 41:
+
                     break;
                 case 42:
                     break;
                 case 51:
+                    startActivity(new Intent().setClass(MainActivity.this,Insert.class));
                     break;
                 case 52:
                     break;
@@ -120,12 +122,16 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this,Birthday.class));
                     break;
                 case 81:
+                    startActivity(new Intent().setClass(MainActivity.this,QRCodeActivity.class));
                     break;
                 case 82:
+                    startActivity(new Intent().setClass(MainActivity.this,QRCodeActivity.class));
                     break;
                 case 91:
+                    startActivity(new Intent().setClass(MainActivity.this,Find.class));
                     break;
                 case 92:
+                    startActivity(new Intent().setClass(MainActivity.this,Export.class));
                     break;
             }
         }
