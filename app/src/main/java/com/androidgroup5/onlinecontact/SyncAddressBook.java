@@ -81,7 +81,7 @@ public class SyncAddressBook extends AppCompatActivity {
     }
     private boolean UpdateCloud(){
         HashMap<String,String> paramsMap=new HashMap<>();
-        paramsMap.put("UserName","dfsjdjsk");
+        paramsMap.put("UserName","宋甜乐");
         paramsMap.put("Contact",(new Gson().toJson(GetContactFromLocal())));
         paramsMap.put("Record",(new Gson().toJson(GetRecordFromLocal())));
         FormBody.Builder builder = new FormBody.Builder();
@@ -89,8 +89,8 @@ public class SyncAddressBook extends AppCompatActivity {
             //追加表单信息
             builder.add(key, paramsMap.get(key));
         }
-        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(20, TimeUnit.SECONDS).build();
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS).build();
         RequestBody body=builder.build();
         Request request = new Request.Builder()
                 .url("http://114.116.171.181:80/SetContactByUserName.ashx")

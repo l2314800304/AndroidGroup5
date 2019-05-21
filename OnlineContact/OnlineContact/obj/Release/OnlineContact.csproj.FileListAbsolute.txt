@@ -114,3 +114,4 @@ E:\AndroidGroup5\AndroidGroup5\OnlineContact\OnlineContact\obj\Release\OnlineCon
 E:\AndroidGroup5\AndroidGroup5\OnlineContact\OnlineContact\obj\Release\OnlineContact.csproj.CopyComplete
 E:\AndroidGroup5\AndroidGroup5\OnlineContact\OnlineContact\obj\Release\OnlineContact.dll
 E:\AndroidGroup5\AndroidGroup5\OnlineContact\OnlineContact\obj\Release\OnlineContact.pdb
+E:\AndroidGroup5\AndroidGroup5\OnlineContact\OnlineContact\bin\Newtonsoft.Json.dll
