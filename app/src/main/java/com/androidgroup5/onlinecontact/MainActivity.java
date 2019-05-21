@@ -1,11 +1,8 @@
 package com.androidgroup5.onlinecontact;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -89,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this,Register.class));
                     break;
                 case 2:
-                    startActivity(new Intent().setClass(MainActivity.this,SyncAddressBook.class).putExtra("user_id","100001"));
+                    startActivity(new Intent().setClass(MainActivity.this,SyncAddressBook.class).putExtra("UserName","宋甜乐"));
                     break;
                 case 11:
                     break;
@@ -109,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 case 42:
                     break;
                 case 51:
+                    startActivity(new Intent().setClass(MainActivity.this,Insert.class));
                     break;
                 case 52:
                     break;

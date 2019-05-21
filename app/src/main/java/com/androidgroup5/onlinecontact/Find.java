@@ -2,14 +2,107 @@ package com.androidgroup5.onlinecontact;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.widget.TextView;
+
+import com.androidgroup5.onlinecontact.cn.CNPinyin;
+import com.androidgroup5.onlinecontact.search.CharIndexView;
+import com.androidgroup5.onlinecontact.search.Contact;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class Find extends AppCompatActivity {
-
+    private CharIndexView iv_main;
+    private TextView tv_index;
+    private ArrayList<CNPinyin<Contact>> contactList = new ArrayList<>();
+    private Subscription subscription;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avtivity_find);
+        iv_main = (CharIndexView) findViewById(R.id.iv_main);
+        tv_index = (TextView) findViewById(R.id.tv_index);
+        final LinearLayoutManager manager = new LinearLayoutManager(this);
+
+
+        iv_main.setOnCharIndexChangedListener(new CharIndexView.OnCharIndexChangedListener() {
+            @Override
+            public void onCharIndexChanged(char currentIndex) {
+                for (int i=0; i<contactList.size(); i++) {
+                    if (contactList.get(i).getFirstChar() == currentIndex) {
+                        manager.scrollToPositionWithOffset(i, 0);
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCharIndexSelected(String currentIndex) {
+                if (currentIndex == null) {
+                    tv_index.setVisibility(View.INVISIBLE);
+                } else {
+                    tv_index.setVisibility(View.VISIBLE);
+                    tv_index.setText(currentIndex);
+                }
+            }
+        });
+
+
+
+
+        getPinyinList();
     }
 
 
-}
+    private void getPinyinList() {
+        subscription = Observable.create(new Observable.OnSubscribe<List<CNPinyin<Contact>>>() {
+            @Override
+            public void call(Subscriber<? super List<CNPinyin<Contact>>> subscriber) {
+                if (!subscriber.isUnsubscribed()) {
+
+                    Collections.sort(contactList);
+                    subscriber.onNext(contactList);
+                    subscriber.onCompleted();
+                }
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<CNPinyin<Contact>>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<CNPinyin<Contact>> cnPinyins) {
+                        contactList.addAll(cnPinyins);
+
+                    }
+                });
+    }
+
+
+
+    @Override
+    protected void onDestroy() {
+        if (subscription != null) {
+            subscription.unsubscribe();
+        }
+        super.onDestroy();
+    }
+    }
+
+

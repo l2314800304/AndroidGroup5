@@ -48,6 +48,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\MySQL\MySQL Connector Net 8.0.16\Assemblies\v4.5.2\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -71,9 +75,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="libs\Newtonsoft.Json.dll" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity.cs" />
     <Compile Include="GetContactByUserName.ashx.cs">
       <DependentUpon>GetContactByUserName.ashx</DependentUpon>
     </Compile>
@@ -82,12 +88,16 @@
     <Compile Include="Register.ashx.cs">
       <DependentUpon>Register.ashx</DependentUpon>
     </Compile>
+    <Compile Include="SetContactByUserName.ashx.cs">
+      <DependentUpon>SetContactByUserName.ashx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="GetContactByUserName.ashx" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Register.ashx" />
+    <Content Include="SetContactByUserName.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

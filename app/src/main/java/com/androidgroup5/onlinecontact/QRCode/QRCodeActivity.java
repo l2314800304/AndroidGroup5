@@ -10,9 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import com.androidgroup5.onlinecontact.R;
-
 import java.io.File;
-
 public class QRCodeActivity extends AppCompatActivity {
 
     @Override
