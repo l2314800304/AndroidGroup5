@@ -16,7 +16,7 @@ namespace OnlineContact
         {
             context.Response.ContentType = "text/plain";
             String UserName = context.Request["UserName"];
-            String sql = "select ID from user where UserName=@u;";
+            String sql = "select * from user where UserName=@u;";
             MySqlParameter[] pms ={
                 new MySqlParameter("@u",UserName)
             };
@@ -26,60 +26,90 @@ namespace OnlineContact
             {
                 reader.Read();
                 int id = reader.GetInt32(0);
+                string u = reader.GetString(1), p = reader.GetString(2), s = reader.GetString(3), l = reader.GetString(4), r = reader.GetString(5);
+                string res = "{\"ID\":" + id + ",\"UserName\":\"" + u + "\",\"Password\":\"" + p + "\",\"Sex\":\"" + s + "\",\"Location\":\"" + l + "\",\"Remark\":\"" + r + "\",\"Contact\":[";
                 sql = "select * from contact where User_ID=@id;";
-                reader = helper.getMySqlReader(sql, new MySqlParameter("@id",id));
-                string res = "{\"Contact\":[";
+                reader.Close();
+                helper.mysqlcom.Dispose();
+                helper.mysqlcon.Close();
+                helper.mysqlcon.Dispose();
                 MySqlHelper helper1 = new MySqlHelper();
-                MySqlDataReader reader1 = null;
-                if (reader.HasRows)
+                MySqlDataReader reader1 = helper1.getMySqlReader(sql, new MySqlParameter("@id",id));
+                if (reader1.HasRows)
                 {
-                    reader.Read();
-                    res+= "{\"ID\":\"" + reader.GetInt32(0) + "\",\"Name\":\"" + reader.GetString(2) + "\",\"Birthday\":\"" + reader.GetString(3) + "\",\"Contact_Info\":[";
-                    reader1 = helper1.getMySqlReader("select * from contact_info where Contact_ID=@id", new MySqlParameter("@id", reader.GetInt32(0) + ""));
-                    if (reader1.HasRows)
+                    reader1.Read();
+                    res+= "{\"ID\":" + reader1.GetInt32(0) + ",\"Name\":\"" + reader1.GetString(2) + "\",\"Birthday\":\"" + (reader1.IsDBNull(3)?"":reader1.GetString(3)) + "\",\"Contact_Info\":[";
+                    MySqlHelper helper2 = new MySqlHelper();
+                    MySqlDataReader reader2 = helper2.getMySqlReader("select * from contact_info where Contact_ID=@id", new MySqlParameter("@id", reader1.GetInt32(0) + ""));
+                    if (reader2.HasRows)
                     {
-                        reader1.Read();
-                        res += "{\"ID\":\"" + reader1.GetInt32(1) + "\",\"EmailOrNumber\":\"" + reader1.GetInt32(0) + "\",\"Number\":\"" + reader1.GetString(2) + "\",\"Type\":\"" + reader1.GetString(3) + "\"}";
+                        reader2.Read();
+                        res += "{\"ID\":" + reader2.GetInt32(1) + ",\"EmailOrNumber\":" + reader2.GetInt32(0) + ",\"Number\":\"" + reader2.GetString(2) + "\",\"Type\":\"" + reader2.GetString(3) + "\"}";
                     }
-                    while (reader1.Read())
+                    while (reader2.Read())
                     {
-                        res += ",{\"ID\":\"" + reader1.GetInt32(1) + "\",\"EmailOrNumber\":\"" + reader1.GetInt32(0) + "\",\"Number\":\"" + reader1.GetString(2) + "\",\"Type\":\"" + reader1.GetString(3) + "\"}";
+                        res += ",{\"ID\":" + reader2.GetInt32(1) + ",\"EmailOrNumber\":" + reader2.GetInt32(0) + ",\"Number\":\"" + reader2.GetString(2) + "\",\"Type\":\"" + reader2.GetString(3) + "\"}";
                     }
                     res += "]}";
+                    reader2.Close();
+                    helper2.mysqlcom.Dispose();
+                    helper2.mysqlcon.Close();
+                    helper2.mysqlcon.Dispose();
                 }
-                while (reader.Read())
+                while (reader1.Read())
                 {
-                    res+= ",{\"ID\":\"" + reader.GetInt32(0) + "\",\"Name\":\"" + reader.GetString(2) + "\",\"Birthday\":\"" + reader.GetString(3) + "\",\"Contact_Info\":[";
-                    reader1 = helper1.getMySqlReader("select * from contact_info where Contact_ID=@id", new MySqlParameter("@id", reader.GetInt32(0) + ""));
-                    if (reader1.HasRows)
+                    res+= ",{\"ID\":" + reader1.GetInt32(0) + ",\"Name\":\"" + reader1.GetString(2) + "\",\"Birthday\":\"" + (reader1.IsDBNull(3) ? "" : reader1.GetString(3)) + "\",\"Contact_Info\":[";
+                    MySqlHelper helper2 = new MySqlHelper();
+                    MySqlDataReader reader2 = helper2.getMySqlReader("select * from contact_info where Contact_ID=@id", new MySqlParameter("@id", reader1.GetInt32(0) + ""));
+                    if (reader2.HasRows)
                     {
-                        reader1.Read();
-                        res += "{\"ID\":\"" + reader1.GetInt32(1) + "\",\"EmailOrNumber\":\"" + reader1.GetInt32(0) + "\",\"Number\":\"" + reader1.GetString(2) + "\",\"Type\":\"" + reader1.GetString(3) + "\"}";
+                        reader2.Read();
+                        res += "{\"ID\":" + reader2.GetInt32(1) + ",\"EmailOrNumber\":" + reader2.GetInt32(0) + ",\"Number\":\"" + reader2.GetString(2) + "\",\"Type\":\"" + reader2.GetString(3) + "\"}";
                     }
-                    while (reader1.Read())
+                    while (reader2.Read())
                     {
-                        res += ",{\"ID\":\"" + reader1.GetInt32(1) + "\",\"EmailOrNumber\":\"" + reader1.GetInt32(0) + "\",\"Number\":\"" + reader1.GetString(2) + "\",\"Type\":\"" + reader1.GetString(3) + "\"}";
+                        res += ",{\"ID\":" + reader2.GetInt32(1) + ",\"EmailOrNumber\":" + reader2.GetInt32(0) + ",\"Number\":\"" + reader2.GetString(2) + "\",\"Type\":\"" + reader2.GetString(3) + "\"}";
                     }
                     res += "]}";
+                    reader2.Close();
+                    helper2.mysqlcom.Dispose();
+                    helper2.mysqlcon.Close();
+                    helper2.mysqlcon.Dispose();
                 }
                 res += "],\"Record\":[";
                 sql = "select * from record where User_ID=@id;";
-                reader = helper.getMySqlReader(sql, new MySqlParameter("@id", id));
-                if (reader.HasRows)
+                reader1.Close();
+                helper1.mysqlcom.Dispose();
+                helper1.mysqlcon.Close();
+                helper1.mysqlcon.Dispose();
+                MySqlHelper helper3 = new MySqlHelper();
+                MySqlDataReader reader3 = helper3.getMySqlReader(sql, new MySqlParameter("@id", id));
+                if (reader3.HasRows)
                 {
-                    reader.Read();
-                    res += "{\"ID\":\"" + reader.GetInt32(0) + "\",\"Number\":\"" + reader.GetString(1) + "\",\"Contact_ID\":\"" + reader.GetInt32(2) + "\",\"Duration\":\"" + reader.GetString(3) + "\",\"Date\":\"" + reader.GetDateTime(4).ToString() + "\",\"Type\":\"" + reader.GetString(6) + "\"}";
+                    reader3.Read();
+                    res += "{\"ID\":" + reader3.GetInt32(0) + ",\"Number\":\"" + reader3.GetString(1) + "\",\"Duration\":\"" + reader3.GetString(2) + "\",\"Date\":\"" + reader3.GetString(3).ToString() + "\",\"Type\":\"" + reader3.GetString(5) + "\"}";
                 }
-                while (reader.Read())
+                while (reader3.Read())
                 {
-                    res += ",{\"ID\":\"" + reader.GetInt32(0) + "\",\"Number\":\"" + reader.GetString(1) + "\",\"Contact_ID\":\"" + reader.GetInt32(2) + "\",\"Duration\":\"" + reader.GetString(3) + "\",\"Date\":\"" + reader.GetDateTime(4).ToString() + "\",\"Type\":\"" + reader.GetString(6) + "\"}";
+                    res += ",{\"ID\":" + reader3.GetInt32(0) + ",\"Number\":\"" + reader3.GetString(1) + "\",\"Duration\":\"" + reader3.GetString(2) + "\",\"Date\":\"" + reader3.GetString(3).ToString() + "\",\"Type\":\"" + reader3.GetString(5) + "\"}";
                 }
                 res += "]}";
                 context.Response.Write(res);
+                reader3.Close();
+                helper3.mysqlcom.Dispose();
+                helper3.mysqlcon.Close();
+                helper3.mysqlcon.Dispose();
             }
             else
             {
                 context.Response.Write("Error");
+            }
+            if (!reader.IsClosed)
+            {
+                reader.Close();
+                helper.mysqlcom.Dispose();
+                helper.mysqlcon.Close();
+                helper.mysqlcon.Dispose();
             }
         }
 

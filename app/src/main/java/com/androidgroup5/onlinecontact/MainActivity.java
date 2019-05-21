@@ -1,11 +1,8 @@
 package com.androidgroup5.onlinecontact;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -101,10 +98,13 @@ public class MainActivity extends AppCompatActivity {
                 case 22:
                     break;
                 case 31:
+                    startActivity(new Intent().setClass(MainActivity.this,Login.class));
                     break;
                 case 32:
+                    startActivity(new Intent().setClass(MainActivity.this, ShowContactActivity.class));
                     break;
                 case 41:
+
                     break;
                 case 42:
                     break;
@@ -123,8 +123,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 81:
                     startActivity(new Intent().setClass(MainActivity.this,QRCodeActivity.class));
+                    break;
                 case 82:
                     startActivity(new Intent().setClass(MainActivity.this,QRCodeActivity.class));
+                    break;
                 case 91:
                     startActivity(new Intent().setClass(MainActivity.this,Find.class));
                     break;

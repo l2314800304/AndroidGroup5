@@ -1,4 +1,4 @@
-﻿package com.androidgroup5.onlinecontact.QRCode;
+package com.androidgroup5.onlinecontact.QRCode;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,9 +8,9 @@ import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView; 
+import android.widget.ImageView;
+import com.androidgroup5.onlinecontact.R;
 import java.io.File;
-
 public class QRCodeActivity extends AppCompatActivity {
 
     @Override

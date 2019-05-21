@@ -6,12 +6,8 @@ import java.util.List;
 public class User {
     private int ID;
     private String UserName,Password,Sex,Location,Remark;
-    private List<Contact> Contacts=new ArrayList<Contact>();
-    private List<Record> Records=new ArrayList<Record>();
-
-    public void User(String UserName,String Password){
-
-    }
+    private List<Contact> Contact;
+    private List<Record> Record;
     public int getID() {
         return ID;
     }
@@ -60,29 +56,18 @@ public class User {
         Remark = remark;
     }
 
-    public List<Contact> getContacts() {
-        return Contacts;
+    public List<Contact> getContact() {
+        return Contact;
     }
 
-    public void setContacts(List<Contact> contacts) {
-        Contacts = contacts;
+    public void setContact(List<Contact> contacts) {
+        Contact = contacts;
     }
-
-    public List<Record> getRecords() {
-        return Records;
+    public List<Record> getRecord() {
+        return Record;
     }
-    public List<Record> getRecordByContact(Contact recordContact) {
-        List<Record> list=new ArrayList<Record>();
-        for(int i=0;i<Records.size();i++){
-            if (Records.get(i).getContact().equals(recordContact)){
-                list.add(Records.get(i));
-            }
-        }
-        return list;
-    }
-
-    public void setRecords(List<Record> records) {
-        Records = records;
+    public void setRecord(List<Record> records) {
+        Record = records;
     }
 
 }
