@@ -106,8 +106,8 @@ public class SyncAddressBook extends AppCompatActivity {
         Message message = new Message();
         message.what = 10;
         handler.sendMessage(message);
-        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(120, TimeUnit.SECONDS)
-                .readTimeout(120, TimeUnit.SECONDS).build();
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(1200, TimeUnit.SECONDS)
+                .readTimeout(1200, TimeUnit.SECONDS).build();
         Request request = new Request.Builder()
                 .url("http://114.116.171.181:80/GetContactByUserName.ashx?UserName=" + UserName)
                 .method("GET", null)
@@ -136,7 +136,6 @@ public class SyncAddressBook extends AppCompatActivity {
                     }
                     syncTSContactsToContactsProvider(contact);
                     List<Record> record = u.getRecord();
-                    deleteCallLog();
                     try {
                         BatchAddCallLogs(record);
                     } catch (Exception e) {
@@ -256,8 +255,8 @@ public class SyncAddressBook extends AppCompatActivity {
             //追加表单信息
             builder.add(key, paramsMap.get(key));
         }
-        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(120, TimeUnit.SECONDS)
-                .readTimeout(120, TimeUnit.SECONDS).build();
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(1200, TimeUnit.SECONDS)
+                .readTimeout(1200, TimeUnit.SECONDS).build();
         RequestBody body = builder.build();
         Request request = new Request.Builder()
                 .url("http://114.116.171.181:80/SetContactByUserName.ashx")

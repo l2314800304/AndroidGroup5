@@ -11,14 +11,8 @@ namespace OnlineContact
     {
         public static string Constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
 
-        #region  建立MySql数据库连接
-        public MySqlConnection getMySqlCon()
-        {
-            string M_str_sqlcon = Constr;
-            MySqlConnection myCon = new MySqlConnection(M_str_sqlcon);
-            return myCon;
-        }
-        #endregion
+        public MySqlConnection mysqlcon= new MySqlConnection(Constr);
+        public MySqlCommand mysqlcom;
 
         #region  执行MySqlCommand命令
         /// <summary>
@@ -27,11 +21,19 @@ namespace OnlineContact
         /// <param name="M_str_sqlstr">SQL语句</param>
         public int getMySqlCom(string M_str_sqlstr, params MySqlParameter[] parameters)
         {
-            MySqlConnection mysqlcon = this.getMySqlCon();
-            mysqlcon.Open();
-            MySqlCommand mysqlcom = new MySqlCommand(M_str_sqlstr, mysqlcon);
+            if (mysqlcon.State != System.Data.ConnectionState.Open)
+                mysqlcon.Open();
+            mysqlcom = new MySqlCommand(M_str_sqlstr, mysqlcon);
             mysqlcom.Parameters.AddRange(parameters);
-            int count = mysqlcom.ExecuteNonQuery();
+            int count = 0;
+            try
+            {
+                count = mysqlcom.ExecuteNonQuery();
+            }
+            catch (MySqlException)
+            {
+                count = 0;
+            }
             mysqlcom.Dispose();
             mysqlcon.Close();
             mysqlcon.Dispose();
@@ -47,12 +49,11 @@ namespace OnlineContact
         /// <returns>返回MySqlDataReader对象</returns>
         public MySqlDataReader getMySqlReader(string M_str_sqlstr, params MySqlParameter[] parameters)
         {
-            MySqlConnection mysqlcon = this.getMySqlCon();
-            mysqlcon.Open();
-            MySqlCommand mysqlcom = new MySqlCommand(M_str_sqlstr, mysqlcon);
+            if(mysqlcon.State!=System.Data.ConnectionState.Open)
+                mysqlcon.Open();
+            mysqlcom = new MySqlCommand(M_str_sqlstr, mysqlcon);
             mysqlcom.Parameters.AddRange(parameters);
-            MySqlDataReader reader = mysqlcom.ExecuteReader();
-            return reader;
+            return mysqlcom.ExecuteReader();
         }
         #endregion
     }
