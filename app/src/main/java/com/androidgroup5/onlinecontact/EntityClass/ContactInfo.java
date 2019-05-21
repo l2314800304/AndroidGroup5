@@ -3,6 +3,8 @@ package com.androidgroup5.onlinecontact.EntityClass;
 public class ContactInfo {
 
     private int ID;
+    private int EmailOrNumber;
+    private String Number,Type;
 
     public int getEmailOrNumber() {
         return EmailOrNumber;
@@ -11,9 +13,6 @@ public class ContactInfo {
     public void setEmailOrNumber(int emailOrNumber) {
         EmailOrNumber = emailOrNumber;
     }
-
-    private int EmailOrNumber;
-    private String Number,Type;
 
     public int getID() {
         return ID;

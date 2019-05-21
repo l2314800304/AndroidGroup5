@@ -2,16 +2,16 @@ package com.androidgroup5.onlinecontact.EntityClass;
 
 public class Record {
     private int ID;
-    private int Type;
+    private String Type;
     private String Number;
     private String Date;
     private String Duration;
 
-    public int getType() {
+    public String getType() {
         return Type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         Type = type;
     }
 

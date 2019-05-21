@@ -8,8 +8,7 @@ import java.util.List;
 public class Contact {
     private int ID;
     private String Name,Birthday;
-    private String TelNum;
-    private List<ContactInfo> ContactInfos=new ArrayList<ContactInfo>();
+    private List<ContactInfo> Contact_Info=new ArrayList<ContactInfo>();
 
 
     public int getID() {
@@ -36,19 +35,11 @@ public class Contact {
         Birthday = birthday;
     }
 
-    public void setTelNum(String TelNum) {
-        this.TelNum = TelNum;
+    public List<ContactInfo> getContact_Info() {
+        return Contact_Info;
     }
 
-    public String getTelNum() {
-        return TelNum;
-    }
-
-    public List<ContactInfo> getContactInfos() {
-        return ContactInfos;
-    }
-
-    public void setContactInfos(List<ContactInfo> contactInfos) {
-        ContactInfos = contactInfos;
+    public void setContact_Info(List<ContactInfo> contactInfos) {
+        Contact_Info = contactInfos;
     }
 }
