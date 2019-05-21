@@ -16,7 +16,7 @@ public class QRCodeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_qrcode);
         //内容
         final EditText contentET = (EditText) findViewById(R.id.create_qr_content);
         //显示二维码图片
