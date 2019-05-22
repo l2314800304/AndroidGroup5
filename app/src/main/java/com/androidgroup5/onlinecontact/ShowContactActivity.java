@@ -14,24 +14,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.androidgroup5.onlinecontact.EntityClass.Contact;
-import com.androidgroup5.onlinecontact.EntityClass.User;
-import com.androidgroup5.onlinecontact.contextDetail.ContactDetailActivity;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.net.URLEncoder;
+import com.androidgroup5.onlinecontact.EntityClass.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class ShowContactActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
