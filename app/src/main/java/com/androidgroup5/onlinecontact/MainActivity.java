@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this,Delete.class));
                     break;
                 case 22:
+                    startActivity(new Intent().setClass(MainActivity.this,Remark.class));
                     break;
                 case 31:
                     startActivity(new Intent().setClass(MainActivity.this,Login.class));
