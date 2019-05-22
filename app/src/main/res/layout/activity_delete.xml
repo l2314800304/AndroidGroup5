@@ -6,27 +6,35 @@
     android:orientation="vertical"
     tools:context="com.androidgroup5.onlinecontact.Delete">
 
-    <CheckBox
-        android:id="@+id/ckb_main"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#666666"
-        android:padding="10dp"
-        android:text="全选" />
+        android:orientation="horizontal">
 
-    <ListView
-        android:id="@+id/list_main"
-        android:layout_width="match_parent"
-        android:layout_height="570dp">
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="删除" />
 
-    </ListView>
+        <CheckBox
+            android:id="@+id/che_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150dp"
+            android:text="全选" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/button1"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="确定"
-        android:textColor="#fff"
-        android:textSize="25sp" />
+        android:layout_weight="1">
+
+        <ListView
+            android:id="@+id/lv_data"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"></ListView>
+    </LinearLayout>
+
+
 </LinearLayout>
