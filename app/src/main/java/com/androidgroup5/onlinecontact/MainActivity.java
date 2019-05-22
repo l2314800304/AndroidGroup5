@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this,QRCodeActivity.class));
                     break;
                 case 82:
-                    startActivity(new Intent().setClass(MainActivity.this,QRCodeActivity.class));
+                    startActivity(new Intent().setClass(MainActivity.this,EditContactDetailActivity.class));
                     break;
                 case 91:
                     startActivity(new Intent().setClass(MainActivity.this,Find.class));

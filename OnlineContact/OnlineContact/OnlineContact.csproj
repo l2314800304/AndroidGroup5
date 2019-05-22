@@ -93,6 +93,9 @@
     <Compile Include="SetContactByUserName.ashx.cs">
       <DependentUpon>SetContactByUserName.ashx</DependentUpon>
     </Compile>
+    <Compile Include="UpdateContactInfo.ashx.cs">
+      <DependentUpon>UpdateContactInfo.ashx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="GetContactByUserName.ashx" />
@@ -100,6 +103,7 @@
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Register.ashx" />
     <Content Include="SetContactByUserName.ashx" />
+    <Content Include="UpdateContactInfo.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

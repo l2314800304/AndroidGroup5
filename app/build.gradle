@@ -41,4 +41,7 @@ dependencies {
     implementation files('libs/core-3.3.0.jar')
     implementation files('libs/javase-3.3.0.jar')
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation files('src/main/res/drawable-v24/BaiduLBS_Android.jar')
+    implementation files('src/main/res/drawable-v24/IndoorscapeAlbumPlugin.jar')
+    implementation files('src/main/res/drawable-v24/httpmime-4.1.2.jar')
 }
