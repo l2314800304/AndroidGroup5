@@ -3,6 +3,7 @@ package com.androidgroup5.onlinecontact;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -41,15 +42,17 @@ public class Login extends AppCompatActivity {
         usernameField = findViewById(R.id.editText7);
         passwordField = findViewById(R.id.editText9);
         loginBtn = findViewById(R.id.button4);
-        loginBtn.setOnClickListener(e->{
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String u = usernameField.getText().toString();
+                String p = passwordField.getText().toString();
+                if (u.isEmpty() || p.isEmpty()){
+                    Toast.makeText(Login.this,"输入信息不合法",Toast.LENGTH_LONG).show();
+                }else {
 
-            String u = usernameField.getText().toString();
-            String p = passwordField.getText().toString();
-            if (u.isEmpty() || p.isEmpty()){
-                Toast.makeText(Login.this,"输入信息不合法",Toast.LENGTH_LONG).show();
-            }else {
-
-                verifyLogin(u, p);
+                    verifyLogin(u, p);
+                }
             }
         });
     }
