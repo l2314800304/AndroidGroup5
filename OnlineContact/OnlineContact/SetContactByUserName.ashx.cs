@@ -31,65 +31,90 @@ namespace OnlineContact
                 reader.Read();
                 int id = reader.GetInt32(0);
                 sql = "select * from contact where User_ID=@id;";
-                reader = helper.getMySqlReader(sql, new MySqlParameter("@id", id));
                 MySqlHelper helper1 = new MySqlHelper();
-                if (reader.HasRows)
+                MySqlDataReader reader1 = helper1.getMySqlReader(sql, new MySqlParameter("@id", id));
+                MySqlHelper helper2 = new MySqlHelper();
+                if (reader1.HasRows)
                 {
-                    while (reader.Read())
+                    while (reader1.Read())
                     {
-                        int a1 = helper1.getMySqlCom("delete from contact_info where Contact_ID=@id", new MySqlParameter("@id", reader.GetInt32(0) + ""));
+                        int a1 = helper2.getMySqlCom("delete from contact_info where Contact_ID=@id", new MySqlParameter("@id", reader1.GetInt32(0) + ""));
                     }
                 }
-                int a = helper1.getMySqlCom("delete from contact where User_ID=@id", new MySqlParameter("@id", id + ""));
+                helper2 = new MySqlHelper();
+                int a = helper2.getMySqlCom("delete from contact where User_ID=@id", new MySqlParameter("@id", id + ""));
                 string ss = "insert into record (Number,Duration,Date,User_ID,Type) values ";
-                for (int i = 0; i < rb.Record.Count; i++)
+
+                if (rb.Record != null)
                 {
-                    if (i == 0)
-                        ss += "(\""+ rb.Record[i].Number + "\",\"" + rb.Record[i].Duration + "\",\"" + rb.Record[i].Date + "\"," + id + ",\"" + rb.Record[i].Type + "\")";
-                    else
-                        ss += ",(\"" + rb.Record[i].Number + "\",\"" + rb.Record[i].Duration + "\",\"" + rb.Record[i].Date + "\"," + id + ",\"" + rb.Record[i].Type + "\")";
+                    for (int i = 0; i < rb.Record.Count; i++)
+                    {
+                        if (i == 0)
+                            ss += "(\"" + rb.Record[i].Number + "\",\"" + rb.Record[i].Duration + "\",\"" + rb.Record[i].Date + "\"," + id + ",\"" + rb.Record[i].Type + "\")";
+                        else
+                            ss += ",(\"" + rb.Record[i].Number + "\",\"" + rb.Record[i].Duration + "\",\"" + rb.Record[i].Date + "\"," + id + ",\"" + rb.Record[i].Type + "\")";
+
+                    }
+                    if (rb.Record.Count != 0)
+                    {
+                        helper2.getMySqlCom(ss);
+                    }
+                }
                     
-                }
-                if (rb.Record.Count!=0&&helper1.getMySqlCom(ss) <= 0)
-                {
-                    context.Response.Write("Error");
-                    return;
-                }
                 ss = "insert into contact (ID,User_ID,Name) values ";
                 sql = "insert into contact_info (EmailOrNumber,Number,Type,Contact_ID) values ";
-                for (int i = 0; i < rb.Contact.Count; i++)
+                if (rb.Contact != null)
                 {
-                    if (i == 0)
-                        ss += "(" + (int)(id * 10000 + i) + "," + id + ",\"" + rb.Contact[i].Name+"\")";
-                    else
-                        ss += ",(" + (int)(id * 10000 + i) + "," + id + ",\"" + rb.Contact[i].Name + "\")";
-                    
-                    for (int j = 0; j < rb.Contact[i].ContactInfos.Count; j++)
+                    for (int i = 0; i < rb.Contact.Count; i++)
                     {
-                        if (sql.Length==71)
-                            sql += "(" + rb.Contact[i].ContactInfos[j].EmailOrNumber + ",\"" + rb.Contact[i].ContactInfos[j].Number + "\",\"" + rb.Contact[i].ContactInfos[j].Type + "\","+ (int)(id * 10000 + i) + ")";
+                        if (i == 0)
+                            ss += "(" + (int)(id * 10000 + i) + "," + id + ",\"" + rb.Contact[i].Name + "\")";
                         else
-                            sql += ",(" + rb.Contact[i].ContactInfos[j].EmailOrNumber + ",\"" + rb.Contact[i].ContactInfos[j].Number + "\",\"" + rb.Contact[i].ContactInfos[j].Type + "\"," + (int)(id * 10000 + i) + ")";
-                        
+                            ss += ",(" + (int)(id * 10000 + i) + "," + id + ",\"" + rb.Contact[i].Name + "\")";
+                        if (rb.Contact[i].ContactInfos != null)
+                            for (int j = 0; j < rb.Contact[i].ContactInfos.Count; j++)
+                            {
+                                if (sql.Length == 71)
+                                    sql += "(" + rb.Contact[i].ContactInfos[j].EmailOrNumber + ",\"" + rb.Contact[i].ContactInfos[j].Number + "\",\"" + rb.Contact[i].ContactInfos[j].Type + "\"," + (int)(id * 10000 + i) + ")";
+                                else
+                                    sql += ",(" + rb.Contact[i].ContactInfos[j].EmailOrNumber + ",\"" + rb.Contact[i].ContactInfos[j].Number + "\",\"" + rb.Contact[i].ContactInfos[j].Type + "\"," + (int)(id * 10000 + i) + ")";
+
+                            }
                     }
-                }
-                if (rb.Contact.Count!=0&&helper1.getMySqlCom(ss) <= 0)
-                {
-                    context.Response.Write("Error");
-                    return;
-                }else if (rb.Contact.Count != 0)
-                {
-                    if (sql.Length>71&&helper1.getMySqlCom(sql) <= 0)
+                    if (rb.Contact.Count != 0 && helper2.getMySqlCom(ss) < 0)
                     {
                         context.Response.Write("Error");
                         return;
                     }
-                }
+                    else if (rb.Contact.Count != 0)
+                    {
+                        if (sql.Length > 71 && helper2.getMySqlCom(sql) < 0)
+                        {
+                            context.Response.Write("Error");
+                            return;
+                        }
+                    }
+                } 
                 context.Response.Write("OK");
+                reader.Close();
+                helper.mysqlcom.Dispose();
+                helper.mysqlcon.Close();
+                helper.mysqlcon.Dispose();
+                reader1.Close();
+                helper1.mysqlcom.Dispose();
+                helper1.mysqlcon.Close();
+                helper1.mysqlcon.Dispose();
             }
             else
             {
                 context.Response.Write("Error");
+            }
+            if (!reader.IsClosed)
+            {
+                reader.Close();
+                helper.mysqlcom.Dispose();
+                helper.mysqlcon.Close();
+                helper.mysqlcon.Dispose();
             }
         }
 

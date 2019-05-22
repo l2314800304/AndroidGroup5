@@ -1,17 +1,24 @@
 package com.androidgroup5.onlinecontact;
 
 import android.Manifest;
+import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.OperationApplicationException;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.os.RemoteException;
+import android.os.TransactionTooLargeException;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,7 +55,7 @@ import okhttp3.Response;
 public class SyncAddressBook extends AppCompatActivity {
     private String UserName = "";
     TextView state;
-    User u=new User();
+    User u = new User();
     private Handler handler = new Handler() {
 
         @Override
@@ -99,8 +106,8 @@ public class SyncAddressBook extends AppCompatActivity {
         Message message = new Message();
         message.what = 10;
         handler.sendMessage(message);
-        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(120, TimeUnit.SECONDS)
-                .readTimeout(120, TimeUnit.SECONDS).build();
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(1200, TimeUnit.SECONDS)
+                .readTimeout(1200, TimeUnit.SECONDS).build();
         Request request = new Request.Builder()
                 .url("http://114.116.171.181:80/GetContactByUserName.ashx?UserName=" + UserName)
                 .method("GET", null)
@@ -126,12 +133,14 @@ public class SyncAddressBook extends AppCompatActivity {
                     List<Contact> contact = u.getContact();
                     for (int i = 0; i < contact.size(); i++) {
                         deleteContactPhoneNumber(contact.get(i).getName());
-                        addContactPhoneNumber(contact.get(i));
                     }
+                    syncTSContactsToContactsProvider(contact);
                     List<Record> record = u.getRecord();
-                    deleteCallLog();
-                    for(int i=0;i<record.size();i++)
-                        insertCallLog(record.get(i));
+                    try {
+                        BatchAddCallLogs(record);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     UpdateCloud();
                 } else {
                     Log.i("Response:", response.body().string());
@@ -156,37 +165,66 @@ public class SyncAddressBook extends AppCompatActivity {
         }
         getContentResolver().insert(CallLog.Calls.CONTENT_URI, values);
     }
-
+    public void BatchAddCallLogs(List<Record> list)
+            throws RemoteException, OperationApplicationException {
+        ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+        ContentValues values = new ContentValues();
+        int count=0;
+        for (Record r : list) {
+            values.clear();
+            values.put(CallLog.Calls.NUMBER, r.getNumber());
+            values.put(CallLog.Calls.TYPE, r.getType());
+            values.put(CallLog.Calls.DATE, r.getDate());
+            values.put(CallLog.Calls.DURATION, r.getDuration());
+            values.put(CallLog.Calls.NEW, "0");// 0已看1未看 ,由于没有获取默认全为已读
+            ops.add(ContentProviderOperation
+                    .newInsert(CallLog.Calls.CONTENT_URI).withValues(values)
+                    .withYieldAllowed(true).build());
+            count++;
+            if(count==400){
+                count=0;
+                if (ops != null) {
+                    ContentProviderResult[] results = getContentResolver()
+                            .applyBatch(CallLog.AUTHORITY, ops);
+                }
+                ops.clear();
+            }
+        }
+        if (ops != null) {
+            ContentProviderResult[] results = getContentResolver()
+                    .applyBatch(CallLog.AUTHORITY, ops);
+        }
+    }
     private void deleteCallLog() {
         ContentResolver resolver = getContentResolver();
         int result = resolver.delete(CallLog.Calls.CONTENT_URI, null, null);
     }
 
-    private void addContactPhoneNumber(Contact contact) {
-        ContentValues values = new ContentValues();
-        Uri uri = getContentResolver().insert(ContactsContract.RawContacts.CONTENT_URI, values);
-        long contact_id = ContentUris.parseId(uri);
-        uri = ContactsContract.Data.CONTENT_URI;
-        String raw_contact_id = ContactsContract.Data.RAW_CONTACT_ID;
-        String data2 = ContactsContract.Data.DATA2;
-        String data1 = ContactsContract.Data.DATA1;
-        values.put(raw_contact_id, contact_id);
-        values.put(ContactsContract.CommonDataKinds.Phone.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE);
-        values.put(data2, contact.getName());
-        values.put(data1, contact.getName());
-        getContentResolver().insert(uri, values);
-        values.clear();
-        for (int i = 0; i < contact.getContact_Info().size(); i++) {
-            values.put(raw_contact_id, contact_id);
-            if (contact.getContact_Info().get(i).getEmailOrNumber() == 5) {
-                values.put(ContactsContract.CommonDataKinds.Phone.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
-            } else {
-                values.put(ContactsContract.CommonDataKinds.Phone.MIMETYPE, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE);
+    private void syncTSContactsToContactsProvider(List<Contact> contact) {
+        final int contactsListSize = contact.size();
+        int unitLength = 400;
+        int syncedCount = 0;
+        while (syncedCount < contactsListSize) {
+            int syncLength = (contactsListSize - syncedCount) < unitLength ? (contactsListSize - syncedCount) : unitLength;
+            ArrayList<ContentProviderOperation> ops = new ArrayList<>();
+            for (int index = 0; index < contact.size(); index++) {
+                Contact con = contact.get(index);
+                int rawContactInsertIndex = ops.size();
+                ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI).withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null).withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null).withYieldAllowed(true).build());
+                ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, con.getName()).withYieldAllowed(true).build());
+                for(int i=0;i<con.getContact_Info().size();i++)
+                    if(con.getContact_Info().get(i).getEmailOrNumber()==5)
+                        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, con.getContact_Info().get(i).getNumber()).withValue(ContactsContract.CommonDataKinds.Phone.TYPE, con.getContact_Info().get(i).getType()).withValue(ContactsContract.CommonDataKinds.Phone.LABEL, "").withYieldAllowed(true).build());
+                    else
+                        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.Email.ADDRESS, con.getContact_Info().get(i).getNumber()).withValue(ContactsContract.CommonDataKinds.Phone.TYPE, con.getContact_Info().get(i).getType()).withValue(ContactsContract.CommonDataKinds.Phone.LABEL, "").withYieldAllowed(true).build());
+                syncedCount++;
             }
-            values.put(data2, contact.getContact_Info().get(i).getNumber());
-            values.put(data1, contact.getContact_Info().get(i).getNumber());
-            getContentResolver().insert(uri, values);
-            values.clear();
+            try {
+                getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+                ops.clear();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -217,8 +255,8 @@ public class SyncAddressBook extends AppCompatActivity {
             //追加表单信息
             builder.add(key, paramsMap.get(key));
         }
-        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(120, TimeUnit.SECONDS)
-                .readTimeout(120, TimeUnit.SECONDS).build();
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(1200, TimeUnit.SECONDS)
+                .readTimeout(1200, TimeUnit.SECONDS).build();
         RequestBody body = builder.build();
         Request request = new Request.Builder()
                 .url("http://114.116.171.181:80/SetContactByUserName.ashx")
