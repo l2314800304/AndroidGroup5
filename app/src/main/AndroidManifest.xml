@@ -30,7 +30,7 @@
         <activity android:name=".Login" />
         <activity android:name=".QRCode.QRCodeActivity" />
         <activity android:name=".Birthday" />
-        <activity android:name=".contextDetail.ContactDetailActivity" />
+        <activity android:name=".EditContactDetailActivity" />
         <activity android:name=".Delete" />
         <activity android:name=".Export" />
         <activity android:name=".Find" />
