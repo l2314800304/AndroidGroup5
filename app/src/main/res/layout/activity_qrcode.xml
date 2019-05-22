@@ -13,7 +13,8 @@
     <EditText
         android:id="@+id/create_qr_content"
         android:layout_width="600px"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:hint="输入测试文本"/>
 
     <Button
         android:id="@+id/create_qr_btn"
