@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author xhb
  * listView中嵌入复选框实现单选、全选删除列表条目
  * 注意事项：
  *1.子布局中的checkBox以下两个属性（会导致onItemClickListener（即单个条目的点击事件）失效）：
