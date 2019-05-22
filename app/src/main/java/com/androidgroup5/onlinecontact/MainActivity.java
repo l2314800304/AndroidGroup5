@@ -115,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 61:
                     break;
+                case 62:
+                    break;
                 case 71:
                     startActivity(new Intent().setClass(MainActivity.this,Phone.class));
                     break;

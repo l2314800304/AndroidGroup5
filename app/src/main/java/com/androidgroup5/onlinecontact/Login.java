@@ -15,6 +15,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URLEncoder;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -39,9 +40,9 @@ public class Login extends AppCompatActivity {
     }
 
     private void init(){
-        usernameField = findViewById(R.id.editText7);
-        passwordField = findViewById(R.id.editText9);
-        loginBtn = findViewById(R.id.button4);
+        usernameField = findViewById(R.id.login_et_user);
+        passwordField = findViewById(R.id.login_et_pass);
+        loginBtn = findViewById(R.id.login_btn_login);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,9 +51,14 @@ public class Login extends AppCompatActivity {
                 if (u.isEmpty() || p.isEmpty()){
                     Toast.makeText(Login.this,"输入信息不合法",Toast.LENGTH_LONG).show();
                 }else {
-
                     verifyLogin(u, p);
                 }
+            }
+        });
+        ((Button)findViewById(R.id.login_btn_toRegister)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent().setClass(Login.this,Register.class));
             }
         });
     }
@@ -60,9 +66,12 @@ public class Login extends AppCompatActivity {
     private void verifyLogin(String username, String password){
 
 
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("http://192.168.43.199:8080/api/users/search/findUserByUsernameAndPassword?username="+ URLEncoder.encode(username)+"&password="+URLEncoder.encode(password)).method("GET",null).build();
-
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS).build();
+        Request request = new Request.Builder()
+                .url("http://114.116.171.181:80/Login.ashx?UserName=" + URLEncoder.encode(username) + "&Password=" + URLEncoder.encode(password))
+                .method("GET",null)
+                .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -76,14 +85,10 @@ public class Login extends AppCompatActivity {
                     // 登录成功
                     Intent intent = new Intent();
                     intent.setClass(Login.this, ShowContactActivity.class);
-//                    Gson gson = new Gson();
-//                    User user = gson.fromJson(response.body().string(),new TypeToken<User>(){}.getType());
-//                    Toast.makeText(Login.this,user.getID(),Toast.LENGTH_LONG).show();
-//                    intent.putExtra("user", user);
                     startActivity(intent);
                 }else {
                     // 用户名或密码错误
-                    Toast.makeText(Login.this,"登陆失败,用户名或密码错误",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Login.this,"服务器响应失败",Toast.LENGTH_LONG).show();
                 }
             }
         });
