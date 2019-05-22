@@ -1,21 +1,15 @@
 package com.androidgroup5.onlinecontact.EntityClass;
 
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Contact {
     private int ID;
-    private String Name;
-    private Date Birthday;
-    private String TelNum;
-    private List<ContactInfo> ContactInfos=new ArrayList<ContactInfo>();
+    private String Name,Birthday;
+    private List<ContactInfo> Contact_Info=new ArrayList<ContactInfo>();
 
-    public Contact(int ID, String name, Date birthday) {
-        this.ID = ID;
-        Name = name;
-        Birthday = birthday;
-    }
 
     public int getID() {
         return ID;
@@ -33,27 +27,19 @@ public class Contact {
         Name = name;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return Birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         Birthday = birthday;
     }
 
-    public void setTelNum(String TelNum) {
-        this.TelNum = TelNum;
+    public List<ContactInfo> getContact_Info() {
+        return Contact_Info;
     }
 
-    public String getTelNum() {
-        return TelNum;
-    }
-
-    public List<ContactInfo> getContactInfos() {
-        return ContactInfos;
-    }
-
-    public void setContactInfos(List<ContactInfo> contactInfos) {
-        ContactInfos = contactInfos;
+    public void setContact_Info(List<ContactInfo> contactInfos) {
+        Contact_Info = contactInfos;
     }
 }
