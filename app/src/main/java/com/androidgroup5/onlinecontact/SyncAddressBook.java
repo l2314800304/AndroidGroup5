@@ -64,10 +64,10 @@ public class SyncAddressBook extends AppCompatActivity {
             String m = "";
             switch (msg.what) {
                 case 10:
-                    m = "正在下载云端通讯录信息，由于数据较多，请耐心等待...";
+                    m = "同步成功，正在下载云端通讯录信息，由于数据较多，请耐心等待...";
                     break;
                 case 11:
-                    m = "下载成功，正在同步本地通讯录信息以及通话信息，由于数据较多，请耐心等待...";
+                    m = "下载成功，正在同步云端通讯录信息，由于数据较多，请耐心等待...";
                     break;
                 case 12:
                     m = "正在提取本地通讯录信息，由于数据较多，请耐心等待...";
@@ -97,7 +97,7 @@ public class SyncAddressBook extends AppCompatActivity {
         ((Button) findViewById(R.id.btn_sync)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UpdateLocal();
+                UpdateCloud();
             }
         });
     }
@@ -124,12 +124,12 @@ public class SyncAddressBook extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
+                    Message message1 = new Message();
+                    message1.what = 11;
+                    handler.sendMessage(message1);
                     String json = response.body().string();
                     Gson gson = new Gson();
                     u = gson.fromJson(json, User.class);
-                    Message message = new Message();
-                    message.what = 11;
-                    handler.sendMessage(message);
                     List<Contact> contact = u.getContact();
                     for (int i = 0; i < contact.size(); i++) {
                         deleteContactPhoneNumber(contact.get(i).getName());
@@ -141,7 +141,9 @@ public class SyncAddressBook extends AppCompatActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    UpdateCloud();
+                    Message message = new Message();
+                    message.what = 14;
+                    handler.sendMessage(message);
                 } else {
                     Log.i("Response:", response.body().string());
                     Message message = new Message();
@@ -276,8 +278,9 @@ public class SyncAddressBook extends AppCompatActivity {
                 if (response.isSuccessful()) {//回调的方法执行在子线程。
                     if (response.body().string().equals("OK")) {
                         Message message = new Message();
-                        message.what = 14;
+                        message.what = 13;
                         handler.sendMessage(message);
+                        UpdateLocal();
                     } else {
                         Message message = new Message();
                         message.what = -1;
@@ -291,9 +294,6 @@ public class SyncAddressBook extends AppCompatActivity {
                 }
             }
         });
-        message = new Message();
-        message.what = 13;
-        handler.sendMessage(message);
     }
 
     private List<Contact> GetContactFromLocal() {

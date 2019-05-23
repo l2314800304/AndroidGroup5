@@ -1,0 +1,259 @@
+﻿using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace OnlineContact
+{
+    /// <summary>
+    /// SyncAllContactByUserName 的摘要说明
+    /// </summary>
+    public class SyncAllContactByUserName : IHttpHandler
+    {
+
+        public void ProcessRequest(HttpContext context)
+        {
+            String UserName = context.Request["UserName"];
+            String contact = context.Request["Contact"];
+            String record = context.Request["Record"];
+            String res = "";
+            RootObject rb_local = JsonConvert.DeserializeObject<RootObject>("{\"Contact\":" + contact + ",\"Record\":" + record + "}");
+            String sql = "select * from user where UserName=@u;";
+            MySqlParameter[] pms ={
+                new MySqlParameter("@u",UserName)
+            };
+            MySqlHelper helper = new MySqlHelper();
+            MySqlDataReader reader = helper.getMySqlReader(sql, pms);
+            RootObject rb_cloud = new RootObject();
+            rb_cloud.Contact = new List<Contact>();
+            rb_cloud.Record = new List<Record>();
+            if (reader.HasRows)
+            {
+                reader.Read();
+                int id = reader.GetInt32(0);
+                String u = reader.GetString(1), p = reader.GetString(2), s = reader.GetString(3), l = reader.GetString(4), r = reader.GetString(5);
+                reader.Dispose();
+                helper.mysqlcom.Dispose();
+                helper.mysqlcon.Close();
+                helper.mysqlcon.Dispose();
+                res = "{\"ID\":" + id + ",\"UserName\":\"" + u + "\",\"Password\":\"" + p + "\",\"Sex\":\"" + s + "\",\"Location\":\"" + l + "\",\"Remark\":\"" + r + "\",\"Contact\":[";
+                sql = "select * from contact where User_ID=@id;";
+                MySqlHelper helper1 = new MySqlHelper();
+                MySqlDataReader reader1 = helper1.getMySqlReader(sql, new MySqlParameter("@id", id));
+                while (reader1.Read())
+                {
+                    Contact con = new Contact();
+                    con.ContactInfos = new List<ContactInfos>();
+                    con.ID = "0";
+                    con.Name = reader1.GetString(2);
+                    MySqlHelper helper12 = new MySqlHelper();
+                    MySqlDataReader reader12 = helper12.getMySqlReader("select * from contact_info where Contact_ID=" + reader1.GetInt32(0));
+                    List<ContactInfos> contactInfos = new List<ContactInfos>();
+                    while (reader12.Read())
+                    {
+                        ContactInfos ci = new ContactInfos();
+                        ci.EmailOrNumber = reader12.GetInt32(0) + "";
+                        ci.ID ="0";
+                        ci.Number = reader12.GetString(2);
+                        ci.Type = reader12.GetString(3);
+                        contactInfos.Add(ci);
+                    }
+                    con.ContactInfos = contactInfos;
+                    rb_cloud.Contact.Add(con);
+                    reader12.Dispose();
+                    helper12.mysqlcom.Dispose();
+                    helper12.mysqlcon.Close();
+                    helper12.mysqlcon.Dispose();
+                }
+                reader1.Dispose();
+                helper1.mysqlcom.Dispose();
+                helper1.mysqlcon.Close();
+                helper1.mysqlcon.Dispose();
+                sql = "select * from record where User_ID=@id;";
+                MySqlHelper helper2 = new MySqlHelper();
+                MySqlDataReader reader2 = helper2.getMySqlReader(sql, new MySqlParameter("@id", id));
+                while (reader2.Read())
+                {
+                    Record rec = new Record();
+                    rec.ID ="0";
+                    rec.Number = reader2.GetString(1);
+                    rec.Duration = reader2.GetString(2);
+                    rec.Date = reader2.GetString(3);
+                    rec.Type = reader2.GetString(5);
+                    rb_cloud.Record.Add(rec);
+                }
+                reader2.Dispose();
+                helper2.mysqlcom.Dispose();
+                helper2.mysqlcon.Close();
+                helper2.mysqlcon.Dispose();
+                Contact a, b;
+                ContactInfos c,d;
+                if(rb_cloud.Contact.Count>0)
+                    for (int i = 0; i < rb_cloud.Contact.Count; i++)
+                    {
+                        bool flag = false;
+                        for (int j=0; j < rb_local.Contact.Count; j++)
+                        {
+                            a = rb_local.Contact[j];
+                            b = rb_cloud.Contact[i];
+                            if (a.Name.Equals(b.Name)&&a.ContactInfos.Count==b.ContactInfos.Count)
+                            {
+                                if (a.ContactInfos.Count == 0)
+                                {
+                                    rb_local.Contact.RemoveAt(j);
+                                    flag = true;
+                                    j--;
+                                }
+                                for(int k = 0; k < a.ContactInfos.Count; k++)
+                                {
+                                    c = a.ContactInfos[k];
+                                    d = b.ContactInfos[k];
+                                    if (c.EmailOrNumber.Equals(d.EmailOrNumber)&&c.ID.Equals(d.ID)&&c.Number.Equals(d.Number
+                                        ) && c.Type.Equals(d.Type)&&k== a.ContactInfos.Count-1)
+                                    {
+                                        rb_local.Contact.RemoveAt(j);
+                                        flag = true;
+                                        j--;
+                                    }
+                                    else if(c.EmailOrNumber.Equals(d.EmailOrNumber) && c.ID.Equals(d.ID) && c.Number.Equals(d.Number) && c.Type.Equals(d.Type))
+                                    {}
+                                    else
+                                    {
+                                        k = a.ContactInfos.Count;
+                                    }
+                                }
+                            }
+                        }
+                        if (flag == true)
+                        {
+                            rb_cloud.Contact.RemoveAt(i);
+                            i--;
+                        }
+                    }
+                Record r1, r2;
+                if (rb_cloud.Record.Count > 0)
+                    for (int i = 0; i < rb_cloud.Record.Count; i++)
+                    {
+                        bool flag = false;
+                        for (int j = 0; j < rb_local.Record.Count; j++)
+                        {
+                            r1 = rb_local.Record[j];
+                            r2 = rb_cloud.Record[i];
+                            if (r1.Type.Equals(r2.Type)&&r1.Number.Equals(r2.Number)&&r1.ID.Equals(r2.ID)&&r1.Duration.Equals(r2.Duration)&&r1.Date.Equals(r2.Date))
+                            {
+                                rb_local.Record.RemoveAt(j);
+                                j--;
+                                flag = true;
+                            }
+                        }
+                        if (flag)
+                        {
+                            rb_cloud.Record.RemoveAt(i);
+                            i--;
+                        }
+                    }
+
+                rb_local.Record.AddRange(rb_cloud.Record);
+                rb_local.Contact.AddRange(rb_cloud.Contact);
+                MySqlHelper helper3 = new MySqlHelper();
+                string ss = "insert into contact (ID,User_ID,Name) values ";
+                sql = "insert into contact_info (EmailOrNumber,Number,Type,Contact_ID) values ";
+                if (rb_local.Contact != null)
+                {
+                    for (int i = 0; i < rb_local.Contact.Count; i++)
+                    {
+                        if (i == 0)
+                        {
+                            ss += "(" + (int)(id * 10000 + i) + "," + id + ",\"" + rb_local.Contact[i].Name + "\")";
+                            res += "{\"ID\":" + 0 + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\"\",\"Contact_Info\":[";
+                        }
+                        else
+                        {
+                            ss += ",(" + (int)(id * 10000 + i) + "," + id + ",\"" + rb_local.Contact[i].Name + "\")";
+                            res += ",{\"ID\":" + 0 + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\"\",\"Contact_Info\":[";
+                        }
+                        if (rb_local.Contact[i].ContactInfos != null)
+                            for (int j = 0; j < rb_local.Contact[i].ContactInfos.Count; j++)
+                            {
+                                if (sql.Length < 75)
+                                {
+                                    sql += "(" + rb_local.Contact[i].ContactInfos[j].EmailOrNumber + ",\"" + rb_local.Contact[i].ContactInfos[j].Number + "\",\"" + rb_local.Contact[i].ContactInfos[j].Type + "\"," + (int)(id * 10000 + i) + ")";
+                                    res += "{\"ID\":" + 0 + ",\"EmailOrNumber\":" + rb_local.Contact[i].ContactInfos[j].EmailOrNumber + ",\"Number\":\"" + rb_local.Contact[i].ContactInfos[j].Number + "\",\"Type\":\"" + rb_local.Contact[i].ContactInfos[j].Type + "\"}";
+                                }
+                                else
+                                {
+                                    sql += ",(" + rb_local.Contact[i].ContactInfos[j].EmailOrNumber + ",\"" + rb_local.Contact[i].ContactInfos[j].Number + "\",\"" + rb_local.Contact[i].ContactInfos[j].Type + "\"," + (int)(id * 10000 + i) + ")";
+                                    res += ",{\"ID\":" + 0 + ",\"EmailOrNumber\":" + rb_local.Contact[i].ContactInfos[j].EmailOrNumber + ",\"Number\":\"" + rb_local.Contact[i].ContactInfos[j].Number + "\",\"Type\":\"" + rb_local.Contact[i].ContactInfos[j].Type + "\"}";
+                                }
+
+                            }
+                        res += "]}";
+                    }
+                    if (rb_local.Contact.Count != 0)
+                    {
+                        helper3.getMySqlCom(ss);
+                    }
+                    if (rb_local.Contact.Count != 0)
+                    {
+                        helper3.getMySqlCom(sql);
+                    }
+                    
+                }
+                res += "],\"Record\":[";
+                ss = "insert into record (Number,Duration,Date,User_ID,Type) values ";
+                if (rb_local.Record != null)
+                {
+                    for (int i = 0; i < rb_local.Record.Count; i++)
+                    {
+                        if (i == 0)
+                        {
+                            ss += "(\"" + rb_local.Record[i].Number + "\",\"" + rb_local.Record[i].Duration + "\",\"" + rb_local.Record[i].Date + "\"," + id + ",\"" + rb_local.Record[i].Type + "\")";
+                            res += "{\"ID\":0,\"Number\":\"" + rb_local.Record[i].Number + "\",\"Duration\":\"" + rb_local.Record[i].Duration + "\",\"Date\":\"" + rb_local.Record[i].Date + "\",\"Type\":\"" + rb_local.Record[i].Type + "\"}";
+                        }
+                        else
+                        {
+                            ss += ",(\"" + rb_local.Record[i].Number + "\",\"" + rb_local.Record[i].Duration + "\",\"" + rb_local.Record[i].Date + "\"," + id + ",\"" + rb_local.Record[i].Type + "\")";
+                            res += ",{\"ID\":0,\"Number\":\"" + rb_local.Record[i].Number + "\",\"Duration\":\"" + rb_local.Record[i].Duration + "\",\"Date\":\"" + rb_local.Record[i].Date + "\",\"Type\":\"" + rb_local.Record[i].Type + "\"}";
+                        }
+
+                    }
+                    if (rb_local.Record.Count != 0)
+                    {
+                        helper3.getMySqlCom(ss);
+                    }
+                }
+                res += "]}";
+                context.Response.Write(res);
+                reader.Close();
+                helper.mysqlcom.Dispose();
+                helper.mysqlcon.Close();
+                helper.mysqlcon.Dispose();
+                reader1.Close();
+                helper1.mysqlcom.Dispose();
+                helper1.mysqlcon.Close();
+                helper1.mysqlcon.Dispose();
+            }
+            else
+            {
+                context.Response.Write("Error");
+            }
+            if (!reader.IsClosed)
+            {
+                reader.Close();
+                helper.mysqlcom.Dispose();
+                helper.mysqlcon.Close();
+                helper.mysqlcon.Dispose();
+            }
+        }
+
+        public bool IsReusable
+        {
+            get
+            {
+                return false;
+            }
+        }
+    }
+}

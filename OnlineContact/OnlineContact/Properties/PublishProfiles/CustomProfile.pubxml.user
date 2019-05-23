@@ -26,10 +26,10 @@
       <publishTime>05/21/2019 01:00:16</publishTime>
     </File>
     <File Include="bin/OnlineContact.dll">
-      <publishTime>05/21/2019 20:48:22</publishTime>
+      <publishTime>05/23/2019 22:33:14</publishTime>
     </File>
     <File Include="bin/OnlineContact.pdb">
-      <publishTime>05/21/2019 20:48:22</publishTime>
+      <publishTime>05/23/2019 22:33:14</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>05/24/2018 13:38:22</publishTime>
@@ -184,8 +184,14 @@
     <File Include="SetContactByUserName.ashx">
       <publishTime>05/20/2019 16:10:31</publishTime>
     </File>
+    <File Include="SyncAllContactByUserName.ashx">
+      <publishTime>05/23/2019 19:17:36</publishTime>
+    </File>
+    <File Include="UpdateContactInfo.ashx">
+      <publishTime>05/22/2019 19:24:26</publishTime>
+    </File>
     <File Include="Web.config">
-      <publishTime>05/21/2019 20:42:51</publishTime>
+      <publishTime>05/23/2019 22:33:15</publishTime>
     </File>
   </ItemGroup>
 </Project>

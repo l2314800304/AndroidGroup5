@@ -86,7 +86,7 @@ namespace OnlineContact
                         context.Response.Write("Error");
                         return;
                     }
-                    else if (rb.Contact.Count != 0)
+                    if (rb.Contact.Count != 0)
                     {
                         if (sql.Length > 71 && helper2.getMySqlCom(sql) < 0)
                         {

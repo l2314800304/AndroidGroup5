@@ -93,6 +93,9 @@
     <Compile Include="SetContactByUserName.ashx.cs">
       <DependentUpon>SetContactByUserName.ashx</DependentUpon>
     </Compile>
+    <Compile Include="SyncAllContactByUserName.ashx.cs">
+      <DependentUpon>SyncAllContactByUserName.ashx</DependentUpon>
+    </Compile>
     <Compile Include="UpdateContactInfo.ashx.cs">
       <DependentUpon>UpdateContactInfo.ashx</DependentUpon>
     </Compile>
@@ -104,6 +107,7 @@
     <Content Include="Register.ashx" />
     <Content Include="SetContactByUserName.ashx" />
     <Content Include="UpdateContactInfo.ashx" />
+    <Content Include="SyncAllContactByUserName.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
