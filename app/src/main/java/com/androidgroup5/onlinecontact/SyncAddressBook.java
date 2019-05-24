@@ -77,6 +77,7 @@ public class SyncAddressBook extends AppCompatActivity {
                 case -1:
                     m = "抱歉，同步失败，请检查网络连接！";
                 default:
+                    m="正在添加联系人："+(int)(msg.what-100)+"/"+u.getContact().size();
                     break;
             }
             state.setText(m);
@@ -182,7 +183,6 @@ public class SyncAddressBook extends AppCompatActivity {
                 }
                 ops.clear();
             }
-            state.setText("正在添加通话记录："+ops.size()+"//"+list.size());
         }
         if (ops != null) {
             ContentProviderResult[] results = getContentResolver()
@@ -190,6 +190,7 @@ public class SyncAddressBook extends AppCompatActivity {
         }
     }
     private void syncTSContactsToContactsProvider(List<Contact> contact) {
+        int ind=0;
         ArrayList<ContentProviderOperation> ops = new ArrayList<>();
         for (int index = 0; index < contact.size(); index++) {
             Contact con = contact.get(index);
@@ -197,17 +198,24 @@ public class SyncAddressBook extends AppCompatActivity {
             ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI).withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null).withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null).withYieldAllowed(true).build());
             ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, con.getName()).withYieldAllowed(true).build());
             for(int i=0;i<con.getContactInfos().size();i++)
-                if(con.getContactInfos().get(i).getEmailOrNumber()==5)
-                    ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, con.getContactInfos().get(i).getNumber()).withValue(ContactsContract.CommonDataKinds.Phone.TYPE, con.getContactInfos().get(i).getType()).withValue(ContactsContract.CommonDataKinds.Phone.LABEL, "").withYieldAllowed(true).build());
-                else
-                    ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.Email.ADDRESS, con.getContactInfos().get(i).getNumber()).withValue(ContactsContract.CommonDataKinds.Phone.TYPE, con.getContactInfos().get(i).getType()).withValue(ContactsContract.CommonDataKinds.Phone.LABEL, "").withYieldAllowed(true).build());
-            try {
-                getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
-                ops.clear();
-            } catch (Exception e) {
-                e.printStackTrace();
+                if(con.getContactInfos().get(i)!=null)
+                    if(con.getContactInfos().get(i).getEmailOrNumber()==5)
+                        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, con.getContactInfos().get(i).getNumber()).withValue(ContactsContract.CommonDataKinds.Phone.TYPE, con.getContactInfos().get(i).getType()).withValue(ContactsContract.CommonDataKinds.Phone.LABEL, "").withYieldAllowed(true).build());
+                    else
+                        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.Email.ADDRESS, con.getContactInfos().get(i).getNumber()).withValue(ContactsContract.CommonDataKinds.Phone.TYPE, con.getContactInfos().get(i).getType()).withValue(ContactsContract.CommonDataKinds.Phone.LABEL, "").withYieldAllowed(true).build());
+            ind++;
+            Message message = new Message();
+            message.what = index+100;
+            handler.sendMessage(message);
+            if(ind>=100){
+                try {
+                    getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+                    ops.clear();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                ind=0;
             }
-            state.setText("正在添加联系人："+index+"//"+contact.size());
         }
     }
     private List<Contact> GetContactFromLocal() {
