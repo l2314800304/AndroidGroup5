@@ -82,7 +82,7 @@ public class EditContactDetailActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS).build();
         Request request = new Request.Builder()
-                .url("http://114.116.171.181:80/UpdateContactInfo.ashx?contact_info_ID=1" + URLEncoder.encode(contact_number) + "&contact_email=" + contact_email + "&contact_type=" + URLEncoder.encode(contact_type))
+                .url("http://114.116.171.181:80/UpdateContactInfo.ashx?contact_info_ID=303830" + "&contact_number=" + URLEncoder.encode(contact_number) + "&contact_email=" + contact_email + "&contact_type=" + URLEncoder.encode(contact_type))
                 .method("GET",null)
                 .build();
         client.newCall(request).enqueue(new Callback() {

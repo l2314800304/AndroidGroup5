@@ -102,7 +102,7 @@
             android:paddingTop="7dp"
             android:singleLine="true"
             android:textSize="15sp"
-            android:text="公司"/>
+            android:text="1"/>
 
         <Button
             android:id="@+id/btn_backToDetail"
