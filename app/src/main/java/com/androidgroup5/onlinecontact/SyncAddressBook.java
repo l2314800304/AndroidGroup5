@@ -207,7 +207,7 @@ public class SyncAddressBook extends AppCompatActivity {
             Message message = new Message();
             message.what = index+100;
             handler.sendMessage(message);
-            if(ind>=100){
+            if(ind>=100||index==contact.size()-1){
                 try {
                     getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
                     ops.clear();
