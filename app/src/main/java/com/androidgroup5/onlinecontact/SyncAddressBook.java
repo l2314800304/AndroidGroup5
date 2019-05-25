@@ -10,6 +10,8 @@ import android.content.Context;
 import android.content.OperationApplicationException;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -64,16 +66,10 @@ public class SyncAddressBook extends AppCompatActivity {
             String m = "";
             switch (msg.what) {
                 case 10:
-                    m = "同步成功，正在下载云端通讯录信息，由于数据较多，请耐心等待...";
-                    break;
-                case 11:
-                    m = "下载成功，正在同步云端通讯录信息，由于数据较多，请耐心等待...";
-                    break;
-                case 12:
                     m = "正在提取本地通讯录信息，由于数据较多，请耐心等待...";
                     break;
-                case 13:
-                    m = "提取成功，正在同步云端通讯录信息以及通话信息，由于数据较多，请耐心等待...";
+                case 11:
+                    m = "提取成功，正在同步通讯录信息以及通话信息，由于数据较多，请耐心等待...";
                     break;
                 case 14:
                     m = "恭喜，同步成功！";
@@ -81,6 +77,7 @@ public class SyncAddressBook extends AppCompatActivity {
                 case -1:
                     m = "抱歉，同步失败，请检查网络连接！";
                 default:
+                    m="正在添加联系人："+(int)(msg.what-100)+"/"+u.getContact().size();
                     break;
             }
             state.setText(m);
@@ -97,20 +94,30 @@ public class SyncAddressBook extends AppCompatActivity {
         ((Button) findViewById(R.id.btn_sync)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UpdateCloud();
+                Update();
             }
         });
     }
 
-    private void UpdateLocal() {
+    private void Update() {
         Message message = new Message();
         message.what = 10;
         handler.sendMessage(message);
+        HashMap<String, String> paramsMap = new HashMap<>();
+        paramsMap.put("UserName", UserName);
+        paramsMap.put("Contact", (new Gson().toJson(GetContactFromLocal())));
+        paramsMap.put("Record", (new Gson().toJson(GetRecordFromLocal())));
+        FormBody.Builder builder = new FormBody.Builder();
+        for (String key : paramsMap.keySet()) {
+            //追加表单信息
+            builder.add(key, paramsMap.get(key));
+        }
         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(1200, TimeUnit.SECONDS)
                 .readTimeout(1200, TimeUnit.SECONDS).build();
+        RequestBody body = builder.build();
         Request request = new Request.Builder()
-                .url("http://114.116.171.181:80/GetContactByUserName.ashx?UserName=" + UserName)
-                .method("GET", null)
+                .url("http://114.116.171.181:80/SyncAllContactByUserName.ashx")
+                .post(body)
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -131,12 +138,11 @@ public class SyncAddressBook extends AppCompatActivity {
                     Gson gson = new Gson();
                     u = gson.fromJson(json, User.class);
                     List<Contact> contact = u.getContact();
-                    for (int i = 0; i < contact.size(); i++) {
-                        deleteContactPhoneNumber(contact.get(i).getName());
-                    }
+                    if(contact.size()>0)
                     syncTSContactsToContactsProvider(contact);
                     List<Record> record = u.getRecord();
                     try {
+                        if(record.size()>0)
                         BatchAddCallLogs(record);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -152,20 +158,6 @@ public class SyncAddressBook extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void insertCallLog(Record record) {
-        ContentValues values = new ContentValues();
-        values.put(CallLog.Calls.NUMBER, record.getNumber());
-        values.put(CallLog.Calls.DATE, record.getDate());
-        values.put(CallLog.Calls.DURATION, record.getDuration());
-        values.put(CallLog.Calls.TYPE, record.getType());
-        values.put(CallLog.Calls.NEW, 0);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_CALL_LOG}, 1000);
-        }
-        getContentResolver().insert(CallLog.Calls.CONTENT_URI, values);
     }
     public void BatchAddCallLogs(List<Record> list)
             throws RemoteException, OperationApplicationException {
@@ -197,105 +189,35 @@ public class SyncAddressBook extends AppCompatActivity {
                     .applyBatch(CallLog.AUTHORITY, ops);
         }
     }
-    private void deleteCallLog() {
-        ContentResolver resolver = getContentResolver();
-        int result = resolver.delete(CallLog.Calls.CONTENT_URI, null, null);
-    }
-
     private void syncTSContactsToContactsProvider(List<Contact> contact) {
-        final int contactsListSize = contact.size();
-        int unitLength = 400;
-        int syncedCount = 0;
-        while (syncedCount < contactsListSize) {
-            int syncLength = (contactsListSize - syncedCount) < unitLength ? (contactsListSize - syncedCount) : unitLength;
-            ArrayList<ContentProviderOperation> ops = new ArrayList<>();
-            for (int index = 0; index < contact.size(); index++) {
-                Contact con = contact.get(index);
-                int rawContactInsertIndex = ops.size();
-                ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI).withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null).withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null).withYieldAllowed(true).build());
-                ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, con.getName()).withYieldAllowed(true).build());
-                for(int i=0;i<con.getContact_Info().size();i++)
-                    if(con.getContact_Info().get(i).getEmailOrNumber()==5)
-                        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, con.getContact_Info().get(i).getNumber()).withValue(ContactsContract.CommonDataKinds.Phone.TYPE, con.getContact_Info().get(i).getType()).withValue(ContactsContract.CommonDataKinds.Phone.LABEL, "").withYieldAllowed(true).build());
+        int ind=0;
+        ArrayList<ContentProviderOperation> ops = new ArrayList<>();
+        for (int index = 0; index < contact.size(); index++) {
+            Contact con = contact.get(index);
+            int rawContactInsertIndex = ops.size();
+            ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI).withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null).withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null).withYieldAllowed(true).build());
+            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, con.getName()).withYieldAllowed(true).build());
+            for(int i=0;i<con.getContactInfos().size();i++)
+                if(con.getContactInfos().get(i)!=null)
+                    if(con.getContactInfos().get(i).getEmailOrNumber()==5)
+                        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, con.getContactInfos().get(i).getNumber()).withValue(ContactsContract.CommonDataKinds.Phone.TYPE, con.getContactInfos().get(i).getType()).withValue(ContactsContract.CommonDataKinds.Phone.LABEL, "").withYieldAllowed(true).build());
                     else
-                        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.Email.ADDRESS, con.getContact_Info().get(i).getNumber()).withValue(ContactsContract.CommonDataKinds.Phone.TYPE, con.getContact_Info().get(i).getType()).withValue(ContactsContract.CommonDataKinds.Phone.LABEL, "").withYieldAllowed(true).build());
-                syncedCount++;
-            }
-            try {
-                getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
-                ops.clear();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void deleteContactPhoneNumber(String contactName) {
-        Uri uri = ContactsContract.RawContacts.CONTENT_URI;
-        ContentResolver resolver = getContentResolver();
-        String where = ContactsContract.PhoneLookup.DISPLAY_NAME;
-        Cursor cursor = resolver.query(uri, new String[]{ContactsContract.Data._ID}, where + "=?", new String[]{contactName}, null);
-        if (cursor.moveToFirst()) {
-            int id = cursor.getInt(0);
-            //根据id删除data中的相应数据
-            resolver.delete(uri, where + "=?", new String[]{contactName});
-            uri = ContactsContract.Data.CONTENT_URI;
-            resolver.delete(uri, ContactsContract.Data.RAW_CONTACT_ID + "=?", new String[]{id + ""});
-        }
-    }
-
-    private void UpdateCloud() {
-        HashMap<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("UserName", UserName);
-        Message message = new Message();
-        message.what = 12;
-        handler.sendMessage(message);
-        paramsMap.put("Contact", (new Gson().toJson(GetContactFromLocal())));
-        paramsMap.put("Record", (new Gson().toJson(GetRecordFromLocal())));
-        FormBody.Builder builder = new FormBody.Builder();
-        for (String key : paramsMap.keySet()) {
-            //追加表单信息
-            builder.add(key, paramsMap.get(key));
-        }
-        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(1200, TimeUnit.SECONDS)
-                .readTimeout(1200, TimeUnit.SECONDS).build();
-        RequestBody body = builder.build();
-        Request request = new Request.Builder()
-                .url("http://114.116.171.181:80/SetContactByUserName.ashx")
-                .post(body)
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Message message = new Message();
-                message.what = -1;
-                handler.sendMessage(message);
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {//回调的方法执行在子线程。
-                    if (response.body().string().equals("OK")) {
-                        Message message = new Message();
-                        message.what = 13;
-                        handler.sendMessage(message);
-                        UpdateLocal();
-                    } else {
-                        Message message = new Message();
-                        message.what = -1;
-                        handler.sendMessage(message);
-                    }
-                } else {
-                    Log.i("Response:", response.body().string());
-                    Message message = new Message();
-                    message.what = -1;
-                    handler.sendMessage(message);
+                        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, rawContactInsertIndex).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.Email.ADDRESS, con.getContactInfos().get(i).getNumber()).withValue(ContactsContract.CommonDataKinds.Phone.TYPE, con.getContactInfos().get(i).getType()).withValue(ContactsContract.CommonDataKinds.Phone.LABEL, "").withYieldAllowed(true).build());
+            ind++;
+            Message message = new Message();
+            message.what = index+100;
+            handler.sendMessage(message);
+            if(ind>=100||index==contact.size()-1){
+                try {
+                    getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+                    ops.clear();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                ind=0;
             }
-        });
+        }
     }
-
     private List<Contact> GetContactFromLocal() {
         List<Contact> contacts = new ArrayList<Contact>();
         Uri uri = ContactsContract.Contacts.CONTENT_URI;
@@ -303,7 +225,7 @@ public class SyncAddressBook extends AppCompatActivity {
         Cursor cursor = contentResolver.query(uri, null, null, null, null);
         while (cursor.moveToNext()) {
             Contact contact = new Contact();
-            List<ContactInfo> contactInfos = new ArrayList<ContactInfo>();
+            List<ContactInfos> contactInfos = new ArrayList<ContactInfos>();
             String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
             contact.setName(name);
             String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
@@ -312,7 +234,7 @@ public class SyncAddressBook extends AppCompatActivity {
                     ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id,
                     null, null);
             while (phones.moveToNext()) {
-                ContactInfo info = new ContactInfo();
+                ContactInfos info = new ContactInfos();
                 String phoneNumber = phones.getString(phones.getColumnIndex(
                         ContactsContract.CommonDataKinds.Phone.NUMBER));
                 //添加Phone的信息
@@ -329,7 +251,7 @@ public class SyncAddressBook extends AppCompatActivity {
                     ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id,
                     null, null);
             while (emails.moveToNext()) {
-                ContactInfo info = new ContactInfo();
+                ContactInfos info = new ContactInfos();
                 String emailAddress = emails.getString(emails.getColumnIndex(
                         ContactsContract.CommonDataKinds.Email.DATA));
                 String emailType = emails.getString(emails.getColumnIndex(
@@ -340,7 +262,7 @@ public class SyncAddressBook extends AppCompatActivity {
                 contactInfos.add(info);
             }
             emails.close();
-            contact.setContact_Info(contactInfos);
+            contact.setContactInfos(contactInfos);
             contacts.add(contact);
         }
 

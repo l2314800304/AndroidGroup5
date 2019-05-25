@@ -20,7 +20,7 @@ namespace OnlineContact
             String record = context.Request["Record"];
             String res = "";
             RootObject rb_local = JsonConvert.DeserializeObject<RootObject>("{\"Contact\":" + contact + ",\"Record\":" + record + "}");
-            String sql = "select * from user where UserName=@u;";
+            String sql = "select * from user where UserName=@u ORDER BY ID;";
             MySqlParameter[] pms ={
                 new MySqlParameter("@u",UserName)
             };
@@ -39,7 +39,7 @@ namespace OnlineContact
                 helper.mysqlcon.Close();
                 helper.mysqlcon.Dispose();
                 res = "{\"ID\":" + id + ",\"UserName\":\"" + u + "\",\"Password\":\"" + p + "\",\"Sex\":\"" + s + "\",\"Location\":\"" + l + "\",\"Remark\":\"" + r + "\",\"Contact\":[";
-                sql = "select * from contact where User_ID=@id;";
+                sql = "select * from contact where User_ID=@id ORDER BY ID;";
                 MySqlHelper helper1 = new MySqlHelper();
                 MySqlDataReader reader1 = helper1.getMySqlReader(sql, new MySqlParameter("@id", id));
                 while (reader1.Read())
@@ -49,7 +49,7 @@ namespace OnlineContact
                     con.ID = "0";
                     con.Name = reader1.GetString(2);
                     MySqlHelper helper12 = new MySqlHelper();
-                    MySqlDataReader reader12 = helper12.getMySqlReader("select * from contact_info where Contact_ID=" + reader1.GetInt32(0));
+                    MySqlDataReader reader12 = helper12.getMySqlReader("select * from contact_info where Contact_ID=" + reader1.GetInt32(0)+ "  ORDER BY ID");
                     List<ContactInfos> contactInfos = new List<ContactInfos>();
                     while (reader12.Read())
                     {
@@ -71,7 +71,7 @@ namespace OnlineContact
                 helper1.mysqlcom.Dispose();
                 helper1.mysqlcon.Close();
                 helper1.mysqlcon.Dispose();
-                sql = "select * from record where User_ID=@id;";
+                sql = "select * from record where User_ID=@id ORDER BY ID;";
                 MySqlHelper helper2 = new MySqlHelper();
                 MySqlDataReader reader2 = helper2.getMySqlReader(sql, new MySqlParameter("@id", id));
                 while (reader2.Read())
@@ -98,6 +98,7 @@ namespace OnlineContact
                         {
                             a = rb_local.Contact[j];
                             b = rb_cloud.Contact[i];
+                            if (a.ContactInfos == null) a.ContactInfos = new List<ContactInfos>();
                             if (a.Name.Equals(b.Name)&&a.ContactInfos.Count==b.ContactInfos.Count)
                             {
                                 if (a.ContactInfos.Count == 0)
@@ -128,6 +129,40 @@ namespace OnlineContact
                         }
                         if (flag == true)
                         {
+                            if(rb_cloud.Contact.Count>i)
+                                for(int k = i+1; k < rb_cloud.Contact.Count; k++)
+                                {
+                                    a = rb_cloud.Contact[k];
+                                    b = rb_cloud.Contact[i];
+                                    if (a.ContactInfos == null) a.ContactInfos = new List<ContactInfos>();
+                                    if (a.Name.Equals(b.Name) && a.ContactInfos.Count == b.ContactInfos.Count)
+                                    {
+                                        if (a.ContactInfos.Count == 0)
+                                        {
+                                            rb_cloud.Contact.RemoveAt(k);
+                                            flag = true;
+                                            k--;
+                                        }
+                                        for (int m = 0; m < a.ContactInfos.Count; m++)
+                                        {
+                                            c = a.ContactInfos[m];
+                                            d = b.ContactInfos[m];
+                                            if (c.EmailOrNumber.Equals(d.EmailOrNumber) && c.ID.Equals(d.ID) && c.Number.Equals(d.Number
+                                                ) && c.Type.Equals(d.Type) && m == a.ContactInfos.Count - 1)
+                                            {
+                                                rb_cloud.Contact.RemoveAt(k);
+                                                flag = true;
+                                                k--;
+                                            }
+                                            else if (c.EmailOrNumber.Equals(d.EmailOrNumber) && c.ID.Equals(d.ID) && c.Number.Equals(d.Number) && c.Type.Equals(d.Type))
+                                            { }
+                                            else
+                                            {
+                                                k = a.ContactInfos.Count;
+                                            }
+                                        }
+                                    }
+                                }
                             rb_cloud.Contact.RemoveAt(i);
                             i--;
                         }
@@ -167,12 +202,12 @@ namespace OnlineContact
                         if (i == 0)
                         {
                             ss += "(" + (int)(id * 10000 + i) + "," + id + ",\"" + rb_local.Contact[i].Name + "\")";
-                            res += "{\"ID\":" + 0 + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\"\",\"Contact_Info\":[";
+                            res += "{\"ID\":" + 0 + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\"\",\"ContactInfos\":[";
                         }
                         else
                         {
                             ss += ",(" + (int)(id * 10000 + i) + "," + id + ",\"" + rb_local.Contact[i].Name + "\")";
-                            res += ",{\"ID\":" + 0 + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\"\",\"Contact_Info\":[";
+                            res += ",{\"ID\":" + 0 + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\"\",\"ContactInfos\":[";
                         }
                         if (rb_local.Contact[i].ContactInfos != null)
                             for (int j = 0; j < rb_local.Contact[i].ContactInfos.Count; j++)

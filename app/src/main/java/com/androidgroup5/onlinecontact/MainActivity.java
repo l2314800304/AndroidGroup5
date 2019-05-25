@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this,Register.class));
                     break;
                 case 2:
-                    startActivity(new Intent().setClass(MainActivity.this,SyncAddressBook.class).putExtra("UserName","注册测试"));
+                    startActivity(new Intent().setClass(MainActivity.this,SyncAddressBook.class).putExtra("UserName","宋甜乐"));
                     break;
                 case 11:
                     break;

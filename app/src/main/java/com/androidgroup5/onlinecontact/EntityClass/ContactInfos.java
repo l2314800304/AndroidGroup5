@@ -1,6 +1,6 @@
 package com.androidgroup5.onlinecontact.EntityClass;
 
-public class ContactInfo {
+public class ContactInfos {
 
     private int ID;
     private int EmailOrNumber;
