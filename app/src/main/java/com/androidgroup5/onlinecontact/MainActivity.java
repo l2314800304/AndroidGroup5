@@ -104,10 +104,11 @@ public class MainActivity extends AppCompatActivity {
                 case 32:
                     startActivity(new Intent().setClass(MainActivity.this, ShowContactActivity.class));
                     break;
-                case 41:
-
+                case 41://通讯录详情页
+                    startActivity(new Intent().setClass(MainActivity.this, ContactDetailActivity.class));
                     break;
-                case 42:
+                case 42://通话记录
+                    startActivity(new Intent().setClass(MainActivity.this, CallLogActivity.class));
                     break;
                 case 51:
                     startActivity(new Intent().setClass(MainActivity.this,Insert.class));
