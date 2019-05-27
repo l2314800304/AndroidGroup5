@@ -126,10 +126,11 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this,Birthday.class));
                     break;
                 case 81:
-                    startActivity(new Intent().setClass(MainActivity.this,QRCodeActivity.class));
+                    startActivity(new Intent().setClass(MainActivity.this,QRCodeActivity.class).putExtra("ContactName1","张三")
+                    .putExtra("ContactNumber","31321231"));
                     break;
                 case 82:
-                    startActivity(new Intent().setClass(MainActivity.this,EditContactDetailActivity.class));
+                    startActivity(new Intent().setClass(MainActivity.this,EditContactDetailActivity.class).putExtra("ContactName","张三"));
                     break;
                 case 91:
                     startActivity(new Intent().setClass(MainActivity.this,Find.class));
