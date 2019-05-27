@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,8 +21,8 @@ import com.androidgroup5.onlinecontact.search.CharIndexView;
 import com.androidgroup5.onlinecontact.stickyheader.StickyHeaderDecoration;
 import com.androidgroup5.onlinecontact.adapter.TestUtils;
 import com.androidgroup5.onlinecontact.cn.CNPinyin;
+import com.androidgroup5.onlinecontact.search.sContact;
 import com.androidgroup5.onlinecontact.cn.CNPinyinFactory;
-import com.androidgroup5.onlinecontact.search.Contact;
 
 public class Find extends AppCompatActivity {
     private RecyclerView rv_main;
@@ -32,7 +31,7 @@ public class Find extends AppCompatActivity {
     private CharIndexView iv_main;
     private TextView tv_index;
 
-    private ArrayList<CNPinyin<Contact>> contactList = new ArrayList<>();
+    private ArrayList<CNPinyin<sContact>> contactList = new ArrayList<>();
     private Subscription subscription;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,18 +81,18 @@ public class Find extends AppCompatActivity {
 
 
     private void getPinyinList() {
-        subscription = Observable.create(new Observable.OnSubscribe<List<CNPinyin<Contact>>>() {
+        subscription = Observable.create(new Observable.OnSubscribe<List<CNPinyin<sContact>>>() {
             @Override
-            public void call(Subscriber<? super List<CNPinyin<Contact>>> subscriber) {
+            public void call(Subscriber<? super List<CNPinyin<sContact>>> subscriber) {
                 if (!subscriber.isUnsubscribed()) {
-                    List<CNPinyin<Contact>> contactList = CNPinyinFactory.createCNPinyinList(TestUtils.contactList(Find.this));
+                    List<CNPinyin<sContact>> contactList = CNPinyinFactory.createCNPinyinList(TestUtils.contactList(Find.this));
                     Collections.sort(contactList);
                     subscriber.onNext(contactList);
                     subscriber.onCompleted();
                 }
             }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<CNPinyin<Contact>>>() {
+                .subscribe(new Subscriber<List<CNPinyin<sContact>>>() {
                     @Override
                     public void onCompleted() {
 
@@ -105,7 +104,7 @@ public class Find extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onNext(List<CNPinyin<Contact>> cnPinyins) {
+                    public void onNext(List<CNPinyin<sContact>> cnPinyins) {
                         contactList.addAll(cnPinyins);
                         adapter.notifyDataSetChanged();
                     }

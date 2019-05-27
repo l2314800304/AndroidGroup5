@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout.LayoutParams;
 
 /**
+ * Created by you on 16/8/31.
  * 配置辅助类  Resources.getSystem()
  */
 public class ConfigUtils {
