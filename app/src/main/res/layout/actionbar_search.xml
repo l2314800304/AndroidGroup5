@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical">
+
+    <ImageView android:id="@+id/iv_return"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/public_return"
+        android:paddingLeft="15dp"
+        android:scaleType="center"/>
+
+    <EditText android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:singleLine="true"
+        android:textSize="14sp"
+        android:textColor="#303F9F"
+        android:hint="请输入文字..."
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"/>
+
+</LinearLayout>

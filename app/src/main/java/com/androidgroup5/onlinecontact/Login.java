@@ -8,14 +8,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.androidgroup5.onlinecontact.EntityClass.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.concurrent.TimeUnit;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -63,28 +63,44 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    private void verifyLogin(String username, String password){
+    private void verifyLogin(final String username, final String password){
 
 
-        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(20, TimeUnit.SECONDS).build();
-        Request request = new Request.Builder()
-                .url("http://114.116.171.181:80/Login.ashx?UserName=" + URLEncoder.encode(username) + "&Password=" + URLEncoder.encode(password))
-                .method("GET",null)
-                .build();
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = null;
+        try {
+            request = new Request.Builder()
+                    .url("http://wuwensen007.ticp.io/login?UserName=" + URLEncoder.encode(username, "utf8") + "&Password=" + URLEncoder.encode(password))
+                    .get()
+                    .build();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+
+
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Toast.makeText(Login.this,"连接失败",Toast.LENGTH_LONG).show();
             }
 
+
+
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+
                 if (response.isSuccessful()){
-                    Toast.makeText(Login.this,"连接成功",Toast.LENGTH_LONG).show();
+
                     // 登录成功
                     Intent intent = new Intent();
                     intent.setClass(Login.this, ShowContactActivity.class);
+                    String json = response.body().string();
+                    Gson gson = new Gson();
+                    Map<String, String> dataMap = gson.fromJson(json, new TypeToken< HashMap<String, String>>(){}.getType());
+                    intent.putExtra("ID", dataMap.get("ID"));
+                    intent.putExtra("UserName", dataMap.get("UserName"));
                     startActivity(intent);
                 }else {
                     // 用户名或密码错误
