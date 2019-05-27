@@ -3,12 +3,14 @@ package com.androidgroup5.onlinecontact;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.androidgroup5.onlinecontact.QRCode.QRCodeActivity;
 
 public class MainActivity extends AppCompatActivity {
+
     Button btn01,btn02,
             btn11,btn12,
             btn21,btn22,
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
             btn71,btn72,
             btn81,btn82,
             btn91,btn92;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,9 +118,11 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 52:
                     break;
-                case 61:
+                case 61://日历签到
+                    startActivity(new Intent().setClass(MainActivity.this,SignDate.class));
                     break;
-                case 62:
+                case 62://引导页
+                    startActivity(new Intent().setClass(MainActivity.this,ActivitySlip.class));
                     break;
                 case 71:
                     startActivity(new Intent().setClass(MainActivity.this,Phone.class));

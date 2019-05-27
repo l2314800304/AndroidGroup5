@@ -43,6 +43,11 @@
             tools:ignore="DuplicateActivity" />
         <activity android:name=".ContactDetailActivity" />
         <activity android:name=".CallLogActivity" />
+        <activity android:name=".SignDate" />
+        <activity android:name=".ActivitySlip" />
+
+
+
 
         <meta-data
             android:name="com.google.android.actions"
