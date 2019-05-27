@@ -8,16 +8,16 @@ import java.util.List;
 
 import com.androidgroup5.onlinecontact.R;
 import com.androidgroup5.onlinecontact.cn.CNPinyin;
-import com.androidgroup5.onlinecontact.search.Contact;
+import com.androidgroup5.onlinecontact.search.sContact;
 import com.androidgroup5.onlinecontact.stickyheader.StickyHeaderAdapter;
 
 
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactHolder> implements StickyHeaderAdapter<HeaderHolder> {
 
-    private final List<CNPinyin<Contact>> cnPinyinList;
+    private final List<CNPinyin<sContact>> cnPinyinList;
 
-    public ContactAdapter(List<CNPinyin<Contact>> cnPinyinList) {
+    public ContactAdapter(List<CNPinyin<sContact>> cnPinyinList) {
         this.cnPinyinList = cnPinyinList;
     }
 
@@ -35,7 +35,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactHolder> implemen
 
     @Override
     public void onBindViewHolder(ContactHolder holder, int position) {
-        Contact contact = cnPinyinList.get(position).data;
+        sContact contact = cnPinyinList.get(position).data;
         holder.iv_header.setImageResource(contact.imgUrl);
         holder.tv_name.setText(contact.name);
     }

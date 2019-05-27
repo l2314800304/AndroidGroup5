@@ -10,16 +10,15 @@ import android.view.ViewGroup;
 
 import com.androidgroup5.onlinecontact.R;
 import com.androidgroup5.onlinecontact.cn.CNPinyinIndex;
-import com.androidgroup5.onlinecontact.search.Contact;
-
+import com.androidgroup5.onlinecontact.search.sContact;
 import java.util.List;
 
 
 public class SearchAdapter extends RecyclerView.Adapter<ContactHolder> {
 
-    private final List<CNPinyinIndex<Contact>> contactList;
+    private final List<CNPinyinIndex<sContact>> contactList;
 
-    public SearchAdapter(List<CNPinyinIndex<Contact>> contactList) {
+    public SearchAdapter(List<CNPinyinIndex<sContact>> contactList) {
         this.contactList = contactList;
     }
 
@@ -36,8 +35,8 @@ public class SearchAdapter extends RecyclerView.Adapter<ContactHolder> {
 
     @Override
     public void onBindViewHolder(ContactHolder holder, int position) {
-        CNPinyinIndex<Contact> index = contactList.get(position);
-        Contact contact = index.cnPinyin.data;
+        CNPinyinIndex<sContact> index = contactList.get(position);
+        sContact contact = index.cnPinyin.data;
         holder.iv_header.setImageResource(contact.imgUrl);
 
         SpannableStringBuilder ssb = new SpannableStringBuilder(contact.chinese());
@@ -46,7 +45,7 @@ public class SearchAdapter extends RecyclerView.Adapter<ContactHolder> {
         holder.tv_name.setText(ssb);
     }
 
-    public void setNewDatas(List<CNPinyinIndex<Contact>> newDatas) {
+    public void setNewDatas(List<CNPinyinIndex<sContact>> newDatas) {
         this.contactList.clear();
         if (newDatas != null && !newDatas.isEmpty()) {
             this.contactList.addAll(newDatas);
