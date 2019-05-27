@@ -6,14 +6,12 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/register">
-
     <LinearLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:orientation="vertical"
         android:gravity="center">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,13 +20,11 @@
             android:textColor="#fff"
             android:textSize="25sp" />
     </LinearLayout>
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dip"
         android:padding="15dip" >
-
         <TextView
             android:id="@+id/tv_user_register"
             android:layout_width="wrap_content"
@@ -38,7 +34,6 @@
             android:text="帐号:"
             android:textColor="#fff"
             android:textSize="14sp" />
-
         <EditText
             android:id="@+id/et_user"
             android:layout_width="fill_parent"
@@ -57,7 +52,6 @@
             android:paddingTop="7dp"
             android:singleLine="true"
             android:textSize="15sp" />
-
         <TextView
             android:id="@+id/tv_pass_register"
             android:layout_width="wrap_content"
@@ -67,7 +61,6 @@
             android:text="密码:"
             android:textColor="#fff"
             android:textSize="14sp" />
-
         <EditText
             android:id="@+id/et_pass"
             android:layout_width="fill_parent"
@@ -204,7 +197,6 @@
             android:paddingRight="15dp"
             android:text="返回"
             android:textSize="15dp" />
-
         <Button
             android:id="@+id/btn_register"
             android:layout_width="wrap_content"
