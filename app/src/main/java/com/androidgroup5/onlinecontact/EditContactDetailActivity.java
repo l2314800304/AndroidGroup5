@@ -12,12 +12,13 @@ import android.widget.Toast;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+import com.androidgroup5.onlinecontact.EntityClass.Contact;
 import com.google.gson.Gson;
 import com.androidgroup5.onlinecontact.EntityClass.User;
+import com.androidgroup5.onlinecontact.EntityClass.ContactInfos;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -38,6 +39,11 @@ public class EditContactDetailActivity extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 10:
+                    GetAllInfo("宋甜乐");
+                    Contact contact = (Contact)user.getContact();
+                    ContactInfos contactInfos = (ContactInfos)contact.getContactInfos();
+                    init();
+
                     ///在这里进行对user的所有数据处理与展示
                     break;
             }
