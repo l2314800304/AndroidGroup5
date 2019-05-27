@@ -69,6 +69,7 @@ public class ShowContactActivity extends AppCompatActivity implements AdapterVie
 
     private void fetchData(int id){
 
+
         names.add(userName);
 
 //        OkHttpClient client = new OkHttpClient.Builder()
