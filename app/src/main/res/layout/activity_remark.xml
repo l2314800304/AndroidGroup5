@@ -37,7 +37,7 @@
         android:layout_margin="20dp">
 
         <EditText
-            android:id="@+id/et_remark"
+            android:id="@+id/buttonRemark"
             android:layout_width="match_parent"
             android:layout_height="192dp"
             android:background="@drawable/login_edit"
