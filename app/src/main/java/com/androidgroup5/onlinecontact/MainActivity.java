@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this, ShowContactActivity.class));
                     break;
                 case 41://通讯录详情页
-                    startActivity(new Intent().setClass(MainActivity.this, ContactDetailActivity.class));
+                    startActivity(new Intent().setClass(MainActivity.this, ContactDetailActivity.class).putExtra("rawContactId",5364));
                     break;
                 case 42://通话记录
                     startActivity(new Intent().setClass(MainActivity.this, CallLogActivity.class));
