@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this,EditContactDetailActivity.class).putExtra("ContactName","张三"));
                     break;
                 case 91:
-                    startActivity(new Intent().setClass(MainActivity.this,Find.class));
+                    startActivity(new Intent().setClass(MainActivity.this,Find.class).putExtra("UserName","宋甜乐"));
                     break;
                 case 92:
                     startActivity(new Intent().setClass(MainActivity.this,Export.class));
