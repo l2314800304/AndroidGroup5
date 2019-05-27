@@ -12,5 +12,6 @@
     <string name="contacts_info">联系人信息</string>
     <string name="btn_insert">添加</string>
     <string name="btn_clear">清空</string>
+    <string name="search">查找</string>
 
 </resources>
