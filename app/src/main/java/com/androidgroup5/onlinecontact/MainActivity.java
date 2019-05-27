@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this, ShowContactActivity.class));
                     break;
                 case 41://通讯录详情页
-                    startActivity(new Intent().setClass(MainActivity.this, ContactDetailActivity.class));
+                    startActivity(new Intent().setClass(MainActivity.this, ContactDetailActivity.class).putExtra("rawContactId",5364));
                     break;
                 case 42://通话记录
                     startActivity(new Intent().setClass(MainActivity.this, CallLogActivity.class));
@@ -126,13 +126,14 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this,Birthday.class));
                     break;
                 case 81:
-                    startActivity(new Intent().setClass(MainActivity.this,QRCodeActivity.class));
+                    startActivity(new Intent().setClass(MainActivity.this,QRCodeActivity.class).putExtra("ContactName1","张三")
+                    .putExtra("ContactNumber","31321231"));
                     break;
                 case 82:
-                    startActivity(new Intent().setClass(MainActivity.this,EditContactDetailActivity.class));
+                    startActivity(new Intent().setClass(MainActivity.this,EditContactDetailActivity.class).putExtra("ContactName","张三"));
                     break;
                 case 91:
-                    startActivity(new Intent().setClass(MainActivity.this,Find.class));
+                    startActivity(new Intent().setClass(MainActivity.this,Find.class).putExtra("UserName","宋甜乐"));
                     break;
                 case 92:
                     startActivity(new Intent().setClass(MainActivity.this,Export.class));

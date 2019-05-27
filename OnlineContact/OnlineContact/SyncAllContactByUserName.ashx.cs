@@ -15,6 +15,7 @@ namespace OnlineContact
 
         public void ProcessRequest(HttpContext context)
         {
+            context.Response.ContentType = "text/plain";
             String UserName = context.Request["UserName"];
             String contact = context.Request["Contact"];
             String record = context.Request["Record"];
@@ -46,7 +47,7 @@ namespace OnlineContact
                 {
                     Contact con = new Contact();
                     con.ContactInfos = new List<ContactInfos>();
-                    con.ID = "0";
+                    con.ID = reader1.GetInt32(0) + "";
                     con.Name = reader1.GetString(2);
                     MySqlHelper helper12 = new MySqlHelper();
                     MySqlDataReader reader12 = helper12.getMySqlReader("select * from contact_info where Contact_ID=" + reader1.GetInt32(0)+ "  ORDER BY ID");
@@ -55,7 +56,7 @@ namespace OnlineContact
                     {
                         ContactInfos ci = new ContactInfos();
                         ci.EmailOrNumber = reader12.GetInt32(0) + "";
-                        ci.ID ="0";
+                        ci.ID = reader12.GetInt32(1) + "";
                         ci.Number = reader12.GetString(2);
                         ci.Type = reader12.GetString(3);
                         contactInfos.Add(ci);
@@ -77,7 +78,7 @@ namespace OnlineContact
                 while (reader2.Read())
                 {
                     Record rec = new Record();
-                    rec.ID ="0";
+                    rec.ID = reader2.GetInt32(0)+"";
                     rec.Number = reader2.GetString(1);
                     rec.Duration = reader2.GetString(2);
                     rec.Date = reader2.GetString(3);
@@ -202,12 +203,12 @@ namespace OnlineContact
                         if (i == 0)
                         {
                             ss += "(" + (int)(id * 10000 + i) + "," + id + ",\"" + rb_local.Contact[i].Name + "\")";
-                            res += "{\"ID\":" + 0 + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\"\",\"ContactInfos\":[";
+                            res += "{\"ID\":" + (int)(id * 10000 + i) + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\"\",\"ContactInfos\":[";
                         }
                         else
                         {
                             ss += ",(" + (int)(id * 10000 + i) + "," + id + ",\"" + rb_local.Contact[i].Name + "\")";
-                            res += ",{\"ID\":" + 0 + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\"\",\"ContactInfos\":[";
+                            res += ",{\"ID\":" + (int)(id * 10000 + i) + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\"\",\"ContactInfos\":[";
                         }
                         if (rb_local.Contact[i].ContactInfos != null)
                             for (int j = 0; j < rb_local.Contact[i].ContactInfos.Count; j++)
