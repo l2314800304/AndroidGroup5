@@ -81,9 +81,24 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChangePassword.ashx.cs">
+      <DependentUpon>ChangePassword.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeRemark.ashx.cs">
+      <DependentUpon>ChangeRemark.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Delete.ashx.cs">
+      <DependentUpon>Delete.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Entity.cs" />
     <Compile Include="GetContactByUserName.ashx.cs">
       <DependentUpon>GetContactByUserName.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="GetSignDate.ashx.cs">
+      <DependentUpon>GetSignDate.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="InsertContact.ashx.cs">
+      <DependentUpon>InsertContact.ashx</DependentUpon>
     </Compile>
     <Compile Include="MySqlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,8 +108,14 @@
     <Compile Include="SetContactByUserName.ashx.cs">
       <DependentUpon>SetContactByUserName.ashx</DependentUpon>
     </Compile>
+    <Compile Include="SetSignDate.ashx.cs">
+      <DependentUpon>SetSignDate.ashx</DependentUpon>
+    </Compile>
     <Compile Include="SyncAllContactByUserName.ashx.cs">
       <DependentUpon>SyncAllContactByUserName.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateContact.ashx.cs">
+      <DependentUpon>UpdateContact.ashx</DependentUpon>
     </Compile>
     <Compile Include="UpdateContactInfo.ashx.cs">
       <DependentUpon>UpdateContactInfo.ashx</DependentUpon>
@@ -102,12 +123,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="GetContactByUserName.ashx" />
+    <Content Include="InsertContact.ashx" />
+    <Content Include="Delete.ashx" />
+    <Content Include="ChangeRemark.ashx" />
+    <Content Include="ChangePassword.ashx" />
+    <Content Include="GetSignDate.ashx" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Register.ashx" />
     <Content Include="SetContactByUserName.ashx" />
     <Content Include="UpdateContactInfo.ashx" />
     <Content Include="SyncAllContactByUserName.ashx" />
+    <Content Include="UpdateContact.ashx" />
+    <Content Include="SetSignDate.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

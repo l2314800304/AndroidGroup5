@@ -15,6 +15,7 @@ namespace OnlineContact
 
         public void ProcessRequest(HttpContext context)
         {
+            context.Response.ContentType = "text/plain";
             String UserName = context.Request["UserName"];
             String contact = context.Request["Contact"];
             String record = context.Request["Record"];
