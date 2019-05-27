@@ -1,14 +1,12 @@
 package com.androidgroup5.onlinecontact;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
-import com.androidgroup5.onlinecontact.cn.CNPinyin;
-import com.androidgroup5.onlinecontact.search.CharIndexView;
-import com.androidgroup5.onlinecontact.search.Contact;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,20 +17,38 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import com.androidgroup5.onlinecontact.adapter.ContactAdapter;
+import com.androidgroup5.onlinecontact.search.CharIndexView;
+import com.androidgroup5.onlinecontact.stickyheader.StickyHeaderDecoration;
+import com.androidgroup5.onlinecontact.adapter.TestUtils;
+import com.androidgroup5.onlinecontact.cn.CNPinyin;
+import com.androidgroup5.onlinecontact.cn.CNPinyinFactory;
+import com.androidgroup5.onlinecontact.search.Contact;
 
 public class Find extends AppCompatActivity {
+    private RecyclerView rv_main;
+    private ContactAdapter adapter;
+
     private CharIndexView iv_main;
     private TextView tv_index;
+
     private ArrayList<CNPinyin<Contact>> contactList = new ArrayList<>();
     private Subscription subscription;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avtivity_find);
+        rv_main = (RecyclerView) findViewById(R.id.rv_main);
         iv_main = (CharIndexView) findViewById(R.id.iv_main);
         tv_index = (TextView) findViewById(R.id.tv_index);
+        findViewById(R.id.bt_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchActivity.lanuch(Find.this, contactList);
+            }
+        });
         final LinearLayoutManager manager = new LinearLayoutManager(this);
-
+        rv_main.setLayoutManager(manager);
 
         iv_main.setOnCharIndexChangedListener(new CharIndexView.OnCharIndexChangedListener() {
             @Override
@@ -57,7 +73,9 @@ public class Find extends AppCompatActivity {
         });
 
 
-
+        adapter = new ContactAdapter(contactList);
+        rv_main.setAdapter(adapter);
+        rv_main.addItemDecoration(new StickyHeaderDecoration(adapter));
 
         getPinyinList();
     }
@@ -68,7 +86,7 @@ public class Find extends AppCompatActivity {
             @Override
             public void call(Subscriber<? super List<CNPinyin<Contact>>> subscriber) {
                 if (!subscriber.isUnsubscribed()) {
-
+                    List<CNPinyin<Contact>> contactList = CNPinyinFactory.createCNPinyinList(TestUtils.contactList(Find.this));
                     Collections.sort(contactList);
                     subscriber.onNext(contactList);
                     subscriber.onCompleted();
@@ -89,12 +107,10 @@ public class Find extends AppCompatActivity {
                     @Override
                     public void onNext(List<CNPinyin<Contact>> cnPinyins) {
                         contactList.addAll(cnPinyins);
-
+                        adapter.notifyDataSetChanged();
                     }
                 });
     }
-
-
 
     @Override
     protected void onDestroy() {
@@ -103,6 +119,5 @@ public class Find extends AppCompatActivity {
         }
         super.onDestroy();
     }
-    }
 
-
+}
