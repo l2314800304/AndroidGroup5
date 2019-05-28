@@ -15,13 +15,23 @@ public class SkipActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.skip_layout);
-        Button btn=findViewById(R.id.btn3);
+        Button btn=findViewById(R.id.btn2);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent it1=new Intent();
                 it1.setClass(SkipActivity.this,XinxiActivity.class);
                 SkipActivity.this.startActivity(it1);
+
+            }
+        });
+        Button bt=findViewById(R.id.btn4);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it2=new Intent();
+                it2.setClass(SkipActivity.this,Updatemm.class);
+                SkipActivity.this.startActivity(it2);
 
             }
         });

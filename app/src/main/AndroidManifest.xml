@@ -47,6 +47,8 @@
 
         </activity>
         <activity android:name=".XinxiActivity"></activity>
+        <activity android:name=".Updatemm"></activity>
+
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/network_security_config" />
