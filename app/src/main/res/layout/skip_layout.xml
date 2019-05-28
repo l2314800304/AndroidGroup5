@@ -36,14 +36,6 @@
         android:background="@drawable/tou4"
         >
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/tou5"
-        >
-    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -52,6 +44,14 @@
         android:layout_marginRight="10dp"
         android:background="@drawable/tou6"
         >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/tou5"></RelativeLayout>
     </RelativeLayout>
 
     <Button
@@ -60,12 +60,18 @@
         android:layout_height="45dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@drawable/tou7"
+        android:background="@drawable/tou11"
         >
     </Button>
     <Button
+        android:id="@+id/btn4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/dianwei1"
-        android:id="@+id/btn2"/>
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/tou10"
+        >
+    </Button>
+
+
 </LinearLayout>

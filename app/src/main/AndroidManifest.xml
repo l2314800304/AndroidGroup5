@@ -43,7 +43,10 @@
             tools:ignore="DuplicateActivity" />
         <activity android:name=".ContactDetailActivity" />
         <activity android:name=".CallLogActivity" />
+        <activity android:name=".SkipActivity">
 
+        </activity>
+        <activity android:name=".XinxiActivity"></activity>
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/network_security_config" />
