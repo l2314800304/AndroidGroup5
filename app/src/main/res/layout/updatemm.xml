@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:background="@android:color/transparent"
-            android:text="È¡ÏûÐÞ¸ÄÃÜÂë"
+            android:text="å–æ¶ˆä¿®æ”¹å¯†ç "
             android:textColor="#fff"
             android:textSize="25sp" />
 
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:background="@android:color/transparent"
-            android:text="È·¶¨ÐÞ¸ÄÃÜÂë"
+            android:text="ç¡®å®šä¿®æ”¹å¯†ç "
             android:textColor="#fff"
             android:textSize="25sp" />
     </RelativeLayout>
@@ -40,8 +40,8 @@
         <EditText
             android:id="@+id/buttonPass"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/register"
+            android:layout_height="45dp"
+            android:background="@drawable/login_edit"
             android:inputType="textMultiLine"
             android:maxLines="5"
             android:scrollHorizontally="false"
