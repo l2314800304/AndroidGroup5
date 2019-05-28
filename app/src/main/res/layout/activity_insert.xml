@@ -141,7 +141,7 @@
             android:textColor="#fff"
             android:text="公司职位：" />
         <EditText
-            android:id="@+id/contactPosition"
+            android:id="@+id/Position"
             android:layout_width="206dp"
             android:layout_height="wrap_content"
             android:inputType="text"></EditText>
@@ -156,7 +156,7 @@
         android:text="其它信息：" />
 
     <EditText
-        android:id="@+id/et_remark"
+        android:id="@+id/otherInfo"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_below="@id/tv_pass_register5"
