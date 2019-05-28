@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -97,6 +98,7 @@ public class Find extends AppCompatActivity {
     };
     private void getPinyinList(String UserName) {
         HashMap<String, String> paramsMap = new HashMap<>();
+
         paramsMap.put("UserName", UserName);
         paramsMap.put("Contact", "[]");
         paramsMap.put("Record", "[]");
@@ -114,6 +116,7 @@ public class Find extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                Toast.makeText(Find.this,"连接失败",Toast.LENGTH_LONG).show();
                 e.printStackTrace();
                 user=null;
             }
@@ -121,6 +124,7 @@ public class Find extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
+                    Toast.makeText(Find.this,"连接成功",Toast.LENGTH_LONG).show();
                     String json = response.body().string();
                     Gson gson = new Gson();
                     user = gson.fromJson(json, User.class);
@@ -128,6 +132,7 @@ public class Find extends AppCompatActivity {
                     message.what = 10;
                     handler.sendMessage(message);
                 } else {
+                    Toast.makeText(Find.this,"连接失败",Toast.LENGTH_LONG).show();
                     user=null;
                 }
             }
@@ -147,7 +152,7 @@ public class Find extends AppCompatActivity {
         findViewById(R.id.bt_search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SearchActivity.lanuch(Find.this, contactList);
+//                SearchActivity.lanuch(Find.this, contactList);
             }
         });
         final LinearLayoutManager manager = new LinearLayoutManager(this);
