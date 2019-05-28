@@ -14,13 +14,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
 
-import com.androidgroup5.onlinecontact.adapter.SearchAdapter;
-import com.androidgroup5.onlinecontact.cn.CNPinyin;
-import com.androidgroup5.onlinecontact.cn.CNPinyinIndex;
-import com.androidgroup5.onlinecontact.cn.CNPinyinIndexFactory;
-import com.androidgroup5.onlinecontact.search.Contact;
-import com.androidgroup5.onlinecontact.search.TextViewChangedOnSubscribe;
-
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -30,6 +23,12 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import com.androidgroup5.onlinecontact.adapter.SearchAdapter;
+import com.androidgroup5.onlinecontact.cn.CNPinyin;
+import com.androidgroup5.onlinecontact.cn.CNPinyinIndex;
+import com.androidgroup5.onlinecontact.search.sContact;
+import com.androidgroup5.onlinecontact.cn.CNPinyinIndexFactory;
+import com.androidgroup5.onlinecontact.search.TextViewChangedOnSubscribe;
 
 
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
@@ -49,10 +48,10 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private RecyclerView rv_main;
     private SearchAdapter adapter;
 
-    private ArrayList<CNPinyin<Contact>> contactList;
+    private ArrayList<CNPinyin<sContact>> contactList;
     private Subscription subscription;
 
-    public static void lanuch(Context context, ArrayList<CNPinyin<Contact>> contactList) {
+    public static void lanuch(Context context, ArrayList<CNPinyin<sContact>> contactList) {
         if (contactList == null) return;
         Intent intent = new Intent(context, SearchActivity.class);
         intent.putExtra("contactList", contactList);
@@ -63,7 +62,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        contactList = (ArrayList<CNPinyin<Contact>>) getIntent().getSerializableExtra("contactList");
+        contactList = (ArrayList<CNPinyin<sContact>>) getIntent().getSerializableExtra("contactList");
 
         ll_root = findViewById(R.id.ll_root);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -72,7 +71,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         rv_main = (RecyclerView) findViewById(R.id.rv_main);
         final LinearLayoutManager manager = new LinearLayoutManager(this);
         rv_main.setLayoutManager(manager);
-        adapter = new SearchAdapter(new ArrayList<CNPinyinIndex<Contact>>());
+        adapter = new SearchAdapter(new ArrayList<CNPinyinIndex<sContact>>());
         rv_main.setAdapter(adapter);
 
         final View decorView = this.getWindow().getDecorView();
@@ -110,12 +109,12 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         TextViewChangedOnSubscribe plateSubscribe = new TextViewChangedOnSubscribe();
         plateSubscribe.addTextViewWatcher(et_search);
         subscription = Observable.create(plateSubscribe).debounce(300, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                .switchMap(new Func1<String, Observable<ArrayList<CNPinyinIndex<Contact>>>>() {
+                .switchMap(new Func1<String, Observable<ArrayList<CNPinyinIndex<sContact>>>>() {
                     @Override
-                    public Observable<ArrayList<CNPinyinIndex<Contact>>> call(final String s) {
+                    public Observable<ArrayList<CNPinyinIndex<sContact>>> call(final String s) {
                         return createObservable(s).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
                     }
-                }).subscribe(new Subscriber<ArrayList<CNPinyinIndex<Contact>>>() {
+                }).subscribe(new Subscriber<ArrayList<CNPinyinIndex<sContact>>>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -125,7 +124,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                     }
 
                     @Override
-                    public void onNext(ArrayList<CNPinyinIndex<Contact>> cnPinyinIndices) {
+                    public void onNext(ArrayList<CNPinyinIndex<sContact>> cnPinyinIndices) {
                         adapter.setNewDatas(cnPinyinIndices);
                     }
                 });
@@ -152,10 +151,10 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
      * 搜索订阅
      * @return
      */
-    private Observable<ArrayList<CNPinyinIndex<Contact>>> createObservable(final String keywork) {
-        return Observable.create(new Observable.OnSubscribe<ArrayList<CNPinyinIndex<Contact>>>() {
+    private Observable<ArrayList<CNPinyinIndex<sContact>>> createObservable(final String keywork) {
+        return Observable.create(new Observable.OnSubscribe<ArrayList<CNPinyinIndex<sContact>>>() {
             @Override
-            public void call(Subscriber<? super ArrayList<CNPinyinIndex<Contact>>> subscriber) {
+            public void call(Subscriber<? super ArrayList<CNPinyinIndex<sContact>>> subscriber) {
                 if (!subscriber.isUnsubscribed()) {
                     subscriber.onNext(CNPinyinIndexFactory.indexList(contactList, keywork));
                 }
