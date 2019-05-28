@@ -7,12 +7,16 @@ import com.androidgroup5.onlinecontact.EntityClass.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import com.androidgroup5.onlinecontact.ShowContactActivity;
 import com.androidgroup5.onlinecontact.search.sContact;
 
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -86,11 +90,16 @@ public class TestUtils {
         Random random = new Random(System.currentTimeMillis());
         ArrayList<String> names=new ArrayList<>();
 
+        for (int i = 0; i < 100; i++){
+            names.add("张三"+i);
+        }
+
         for (int i = 0; i < names.size(); i++) {
             int urlIndex = random.nextInt(URLS.length - 1);
             int url = URLS[urlIndex];
             contactList.add(new sContact(names.get(i), url));
         }
+
         return contactList;
     }
 

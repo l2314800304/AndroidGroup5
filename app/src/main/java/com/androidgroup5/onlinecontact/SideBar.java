@@ -1,4 +1,5 @@
-package com.androidgroup5.onlinecontact;
+package com.androidgroup5.onlinecontact.sortlist;
+
 
 
 import android.annotation.SuppressLint;
@@ -11,6 +12,9 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+
+import com.androidgroup5.onlinecontact.R;
+
 /**
  * @Description:右侧的sideBar,显示的是二十六个字母以及*，和#号，
  * 点击字母，自动导航到相应拼音的汉字上

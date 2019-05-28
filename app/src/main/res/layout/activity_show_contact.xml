@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShowContactActivity">
+    tools:context=".ShowContactActivity"
+    android:background="@drawable/contactbg">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -29,7 +30,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="联系人清单"
-                    android:textSize="36sp" />
+                    android:textSize="40sp" />
             </LinearLayout>
 
             <ListView
@@ -37,7 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="621dp"
                 android:layout_gravity="center"
-                android:foregroundGravity="center" />
+                android:foregroundGravity="center"
+                android:scrollbarSize="6dp" />
         </LinearLayout>
     </ScrollView>
 
