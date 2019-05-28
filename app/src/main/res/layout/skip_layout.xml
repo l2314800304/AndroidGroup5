@@ -81,9 +81,8 @@
         android:text="退出"
         android:textColor="@android:color/black"
         android:background="@android:color/holo_red_light"
+    ></Button>
 
-        >
-    </Button>
 
 
 </LinearLayout>
