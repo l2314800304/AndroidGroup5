@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         for (String key : paramsMap.keySet()) {
             builder.add(key, paramsMap.get(key));
         }
-        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS).build();
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(1000, TimeUnit.SECONDS)
+                .readTimeout(1000, TimeUnit.SECONDS).build();
         RequestBody body = builder.build();
         Request request = new Request.Builder()
                 .url("http://114.116.171.181:80/SyncAllContactByUserName.ashx")
