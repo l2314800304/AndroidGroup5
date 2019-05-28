@@ -191,8 +191,6 @@ namespace OnlineContact
                         }
                     }
 
-                rb_local.Record.AddRange(rb_cloud.Record);
-                rb_local.Contact.AddRange(rb_cloud.Contact);
                 MySqlHelper helper3 = new MySqlHelper();
                 string ss = "insert into contact (ID,User_ID,Name) values ";
                 sql = "insert into contact_info (EmailOrNumber,Number,Type,Contact_ID) values ";
@@ -203,12 +201,10 @@ namespace OnlineContact
                         if (i == 0)
                         {
                             ss += "(" + (int)(id * 10000 + i) + "," + id + ",\"" + rb_local.Contact[i].Name + "\")";
-                            res += "{\"ID\":" + (int)(id * 10000 + i) + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\"\",\"ContactInfos\":[";
                         }
                         else
                         {
                             ss += ",(" + (int)(id * 10000 + i) + "," + id + ",\"" + rb_local.Contact[i].Name + "\")";
-                            res += ",{\"ID\":" + (int)(id * 10000 + i) + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\"\",\"ContactInfos\":[";
                         }
                         if (rb_local.Contact[i].ContactInfos != null)
                             for (int j = 0; j < rb_local.Contact[i].ContactInfos.Count; j++)
@@ -216,12 +212,10 @@ namespace OnlineContact
                                 if (sql.Length < 75)
                                 {
                                     sql += "(" + rb_local.Contact[i].ContactInfos[j].EmailOrNumber + ",\"" + rb_local.Contact[i].ContactInfos[j].Number + "\",\"" + rb_local.Contact[i].ContactInfos[j].Type + "\"," + (int)(id * 10000 + i) + ")";
-                                    res += "{\"ID\":" + 0 + ",\"EmailOrNumber\":" + rb_local.Contact[i].ContactInfos[j].EmailOrNumber + ",\"Number\":\"" + rb_local.Contact[i].ContactInfos[j].Number + "\",\"Type\":\"" + rb_local.Contact[i].ContactInfos[j].Type + "\"}";
                                 }
                                 else
                                 {
                                     sql += ",(" + rb_local.Contact[i].ContactInfos[j].EmailOrNumber + ",\"" + rb_local.Contact[i].ContactInfos[j].Number + "\",\"" + rb_local.Contact[i].ContactInfos[j].Type + "\"," + (int)(id * 10000 + i) + ")";
-                                    res += ",{\"ID\":" + 0 + ",\"EmailOrNumber\":" + rb_local.Contact[i].ContactInfos[j].EmailOrNumber + ",\"Number\":\"" + rb_local.Contact[i].ContactInfos[j].Number + "\",\"Type\":\"" + rb_local.Contact[i].ContactInfos[j].Type + "\"}";
                                 }
 
                             }
@@ -237,7 +231,6 @@ namespace OnlineContact
                     }
                     
                 }
-                res += "],\"Record\":[";
                 ss = "insert into record (Number,Duration,Date,User_ID,Type) values ";
                 if (rb_local.Record != null)
                 {
@@ -246,18 +239,63 @@ namespace OnlineContact
                         if (i == 0)
                         {
                             ss += "(\"" + rb_local.Record[i].Number + "\",\"" + rb_local.Record[i].Duration + "\",\"" + rb_local.Record[i].Date + "\"," + id + ",\"" + rb_local.Record[i].Type + "\")";
-                            res += "{\"ID\":0,\"Number\":\"" + rb_local.Record[i].Number + "\",\"Duration\":\"" + rb_local.Record[i].Duration + "\",\"Date\":\"" + rb_local.Record[i].Date + "\",\"Type\":\"" + rb_local.Record[i].Type + "\"}";
                         }
                         else
                         {
                             ss += ",(\"" + rb_local.Record[i].Number + "\",\"" + rb_local.Record[i].Duration + "\",\"" + rb_local.Record[i].Date + "\"," + id + ",\"" + rb_local.Record[i].Type + "\")";
-                            res += ",{\"ID\":0,\"Number\":\"" + rb_local.Record[i].Number + "\",\"Duration\":\"" + rb_local.Record[i].Duration + "\",\"Date\":\"" + rb_local.Record[i].Date + "\",\"Type\":\"" + rb_local.Record[i].Type + "\"}";
                         }
 
                     }
                     if (rb_local.Record.Count != 0)
                     {
                         helper3.getMySqlCom(ss);
+                    }
+                }
+                rb_local.Record.AddRange(rb_cloud.Record);
+                rb_local.Contact.AddRange(rb_cloud.Contact);
+                if (rb_local.Contact != null)
+                {
+                    for (int i = 0; i < rb_local.Contact.Count; i++)
+                    {
+                        if (i == 0)
+                        {
+                            res += "{\"ID\":" + (int)(id * 10000 + i) + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\"\",\"ContactInfos\":[";
+                        }
+                        else
+                        {
+                            res += ",{\"ID\":" + (int)(id * 10000 + i) + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\"\",\"ContactInfos\":[";
+                        }
+                        if (rb_local.Contact[i].ContactInfos != null)
+                            for (int j = 0; j < rb_local.Contact[i].ContactInfos.Count; j++)
+                            {
+                                if (sql.Length < 75)
+                                {
+                                    res += "{\"ID\":" + 0 + ",\"EmailOrNumber\":" + rb_local.Contact[i].ContactInfos[j].EmailOrNumber + ",\"Number\":\"" + rb_local.Contact[i].ContactInfos[j].Number + "\",\"Type\":\"" + rb_local.Contact[i].ContactInfos[j].Type + "\"}";
+                                }
+                                else
+                                {
+                                    res += ",{\"ID\":" + 0 + ",\"EmailOrNumber\":" + rb_local.Contact[i].ContactInfos[j].EmailOrNumber + ",\"Number\":\"" + rb_local.Contact[i].ContactInfos[j].Number + "\",\"Type\":\"" + rb_local.Contact[i].ContactInfos[j].Type + "\"}";
+                                }
+
+                            }
+                        res += "]}";
+                    }
+
+                }
+                res += "],\"Record\":[";
+                if (rb_local.Record != null)
+                {
+                    for (int i = 0; i < rb_local.Record.Count; i++)
+                    {
+                        if (i == 0)
+                        {
+                            res += "{\"ID\":0,\"Number\":\"" + rb_local.Record[i].Number + "\",\"Duration\":\"" + rb_local.Record[i].Duration + "\",\"Date\":\"" + rb_local.Record[i].Date + "\",\"Type\":\"" + rb_local.Record[i].Type + "\"}";
+                        }
+                        else
+                        {
+                            res += ",{\"ID\":0,\"Number\":\"" + rb_local.Record[i].Number + "\",\"Duration\":\"" + rb_local.Record[i].Duration + "\",\"Date\":\"" + rb_local.Record[i].Date + "\",\"Type\":\"" + rb_local.Record[i].Type + "\"}";
+                        }
+
                     }
                 }
                 res += "]}";

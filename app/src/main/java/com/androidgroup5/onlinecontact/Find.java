@@ -5,23 +5,24 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+import com.androidgroup5.onlinecontact.EntityClass.User;
 import com.androidgroup5.onlinecontact.adapter.ContactAdapter;
 import com.androidgroup5.onlinecontact.search.CharIndexView;
 import com.androidgroup5.onlinecontact.stickyheader.StickyHeaderDecoration;
-import com.androidgroup5.onlinecontact.adapter.TestUtils;
 import com.androidgroup5.onlinecontact.cn.CNPinyin;
 import com.androidgroup5.onlinecontact.cn.CNPinyinFactory;
 import com.androidgroup5.onlinecontact.search.sContact;
@@ -30,6 +31,7 @@ public class Find extends AppCompatActivity {
     private RecyclerView rv_main;
     private ContactAdapter adapter;
 
+    User u;
     private CharIndexView iv_main;
     private TextView tv_index;
 
@@ -39,6 +41,7 @@ public class Find extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avtivity_find);
+        u=((UserParameter) getApplication()).getUser();
         rv_main = (RecyclerView) findViewById(R.id.rv_main);
         iv_main = (CharIndexView) findViewById(R.id.iv_main);
         tv_index = (TextView) findViewById(R.id.tv_index);
@@ -80,14 +83,21 @@ public class Find extends AppCompatActivity {
 
         getPinyinList();
     }
-
-
     private void getPinyinList() {
         subscription = Observable.create(new Observable.OnSubscribe<List<CNPinyin<sContact>>>() {
             @Override
             public void call(Subscriber<? super List<CNPinyin<sContact>>> subscriber) {
+
                 if (!subscriber.isUnsubscribed()) {
-                    List<CNPinyin<sContact>> contactList = CNPinyinFactory.createCNPinyinList(TestUtils.contactList(Find.this));
+                    List<sContact> contactLists = new ArrayList<>();
+                    Random random = new Random(System.currentTimeMillis());
+                    int[] URLS = {R.drawable.header0, R.drawable.header1, R.drawable.header2, R.drawable.header3};
+                    for (int i = 0; i < u.getContact().size(); i++) {
+                        int urlIndex = random.nextInt(URLS.length - 1);
+                        int url = URLS[urlIndex];
+                        contactLists.add(new sContact(u.getContact().get(i).getName(), url));
+                    }
+                    List<CNPinyin<sContact>> contactList = CNPinyinFactory.createCNPinyinList(contactLists);
                     Collections.sort(contactList);
                     subscriber.onNext(contactList);
                     subscriber.onCompleted();

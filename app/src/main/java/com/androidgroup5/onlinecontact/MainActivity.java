@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+        GetAllInfo("宋甜乐");
     }
 
     @Override
@@ -142,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
         btn91.setOnClickListener(new mClick(91));
         btn92=(Button)findViewById(R.id.btn_92);
         btn92.setOnClickListener(new mClick(92));
-        GetAllInfo("宋甜乐");
     }
     class mClick implements View.OnClickListener{
         int _id;

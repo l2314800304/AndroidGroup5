@@ -4,33 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShowContactActivity"
-    android:background="@drawable/contactbg">
+    android:background="@drawable/register"
+    tools:context=".ShowContactActivity">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="235dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-
                 <TextView
                     android:id="@+id/textView2"
-                    android:layout_width="373dp"
-                    android:layout_height="115dp"
-                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="联系人清单"
-                    android:textSize="40sp" />
+                    android:textColorHighlight="@color/whites"
+                    android:textColor="@color/whites" />
             </LinearLayout>
 
             <ListView
@@ -40,7 +38,6 @@
                 android:layout_gravity="center"
                 android:foregroundGravity="center"
                 android:scrollbarSize="6dp" />
-        </LinearLayout>
-    </ScrollView>
-
+        </ScrollView>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
