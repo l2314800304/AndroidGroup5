@@ -1,13 +1,11 @@
 package com.androidgroup5.onlinecontact;
 
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
-import android.widget.TextView;
+import android.view.View;
 import android.widget.Toast;
-
 
 public class Export extends AppCompatActivity {
     private Button btnExported;
@@ -22,7 +20,7 @@ public class Export extends AppCompatActivity {
                 Toast.makeText(Export.this, "导出成功", Toast.LENGTH_LONG).show();
             }
         });
+
     }
-
-
 }
+
