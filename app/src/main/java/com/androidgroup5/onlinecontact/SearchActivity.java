@@ -20,14 +20,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidgroup5.onlinecontact.shu_search.ClearEditText;
 import com.androidgroup5.onlinecontact.shu_search.ConstactUtil;
 import com.androidgroup5.onlinecontact.shu_search.PinyinComparator;
 import com.androidgroup5.onlinecontact.shu_search.SortAdapter;
 import com.androidgroup5.onlinecontact.sortlist.CharacterParser;
-import com.androidgroup5.onlinecontact.sortlist.SideBar;
 import com.androidgroup5.onlinecontact.sortlist.SortModel;
 
 

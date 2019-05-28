@@ -1,9 +1,5 @@
-package com.androidgroup5.onlinecontact.sortlist;
+package com.androidgroup5.onlinecontact;
 
-
-import com.finddreams.sortedcontact.R;
-import com.finddreams.sortedcontact.R.color;
-import com.finddreams.sortedcontact.R.drawable;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
