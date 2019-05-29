@@ -6,6 +6,7 @@ import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,9 +26,11 @@ import com.androidgroup5.onlinecontact.search.CharIndexView;
 import com.androidgroup5.onlinecontact.search.sContact;
 import com.androidgroup5.onlinecontact.stickyheader.StickyHeaderDecoration;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -183,10 +186,13 @@ public class Export extends AppCompatActivity {
 
     private void export() {
         try{
+            Uri uri1 = ContactsContract.Contacts.CONTENT_URI;
             ContentResolver contentResolver = Export.this.getContentResolver();
-            Cursor cur = contentResolver.query(ContactsContract.Contacts.CONTENT_URI,null, null, null, null);
+            Cursor cur = contentResolver.query(uri1, null, null, null, null);
             int index = cur.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY);
-            FileOutputStream fout = new FileOutputStream("/SDCARD/tt.vcf");
+            Date d=new Date();
+            File fs = new File(Environment.getExternalStorageDirectory().toString()+"/"+d.getYear()+""+d.getMonth()+""+d.getDay()+""+d.getHours()+""+d.getMinutes()+""+d.getSeconds()+".vcf");
+            FileOutputStream fout = new FileOutputStream(fs);
             byte[] data = new byte[1024 * 1];
 			while(cur.moveToNext()) {
                 String lookupKey = cur.getString(index);
