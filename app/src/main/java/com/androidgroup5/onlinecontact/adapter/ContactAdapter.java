@@ -38,6 +38,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactHolder> implemen
         sContact contact = cnPinyinList.get(position).data;
         holder.iv_header.setImageResource(contact.imgUrl);
         holder.tv_name.setText(contact.name);
+        holder.tv_phone.setText(contact.Number);
     }
 
     @Override
