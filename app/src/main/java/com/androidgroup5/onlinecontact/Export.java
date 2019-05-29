@@ -183,12 +183,10 @@ public class Export extends AppCompatActivity {
 
     private void export() {
         try{
-        ContentResolver cr = getContentResolver();
-        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,null, null, null, null);
-        int index = cur.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY);
-
-
-            FileOutputStream fout = new FileOutputStream("/sdcard/tt.vcf");
+            ContentResolver contentResolver = Export.this.getContentResolver();
+            Cursor cur = contentResolver.query(ContactsContract.Contacts.CONTENT_URI,null, null, null, null);
+            int index = cur.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY);
+            FileOutputStream fout = new FileOutputStream("/SDCARD/tt.vcf");
             byte[] data = new byte[1024 * 1];
 			while(cur.moveToNext()) {
                 String lookupKey = cur.getString(index);
@@ -198,16 +196,15 @@ public class Export extends AppCompatActivity {
                 int len = -1;
                 while ((len = fin.read(data)) != -1) {
                     fout.write(data, 0, len);
-                }fin.close();
+                }
+                fin.close();
             }
             fout.close();
 		}catch(Exception e){
             // TODO Auto-generated catch block
             e.printStackTrace();
-
         }
     }
-
 
 
 }
