@@ -134,12 +134,12 @@
         android:paddingBottom="18dp"
         android:orientation="horizontal">
         <TextView
-            android:id="@+id/position"
+            android:id="@+id/contactCorpEmail"
             android:layout_width="203dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="#fff"
-            android:text="公司职位：" />
+            android:text="公司邮箱：" />
         <EditText
             android:id="@+id/Position"
             android:layout_width="206dp"
