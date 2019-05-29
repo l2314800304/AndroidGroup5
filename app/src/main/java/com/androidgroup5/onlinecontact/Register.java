@@ -44,42 +44,6 @@ public class Register extends AppCompatActivity {
         }
 
     };
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        init();
-    }
-
-    private void init() {
-        btn_backToLogin = (Button) findViewById(R.id.btn_backToLogin);
-        btn_register = (Button) findViewById(R.id.btn_register);
-        et_user = (EditText) findViewById(R.id.et_user);
-        et_pass = (EditText) findViewById(R.id.et_pass);
-        et_pass1 = (EditText) findViewById(R.id.et_pass1);
-        et_remark = (EditText) findViewById(R.id.et_remark);
-        et_location = (EditText) findViewById(R.id.et_location);
-        rbtn_man = (RadioButton) findViewById(R.id.rbtn_man);
-        btn_backToLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backToLogin();
-            }
-        });
-        btn_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkData()) {
-                    Toast.makeText(Register.this, "注册中...", Toast.LENGTH_LONG).show();
-                    register();
-                } else {
-                    Toast.makeText(Register.this, "注册失败，请检查注册信息！", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
     private void register() {
         String user = et_user.getText().toString(),
                 pass = et_pass.getText().toString(),
@@ -120,6 +84,42 @@ public class Register extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register);
+        init();
+    }
+
+    private void init() {
+        btn_backToLogin = (Button) findViewById(R.id.btn_backToLogin);
+        btn_register = (Button) findViewById(R.id.btn_register);
+        et_user = (EditText) findViewById(R.id.et_user);
+        et_pass = (EditText) findViewById(R.id.et_pass);
+        et_pass1 = (EditText) findViewById(R.id.et_pass1);
+        et_remark = (EditText) findViewById(R.id.et_remark);
+        et_location = (EditText) findViewById(R.id.et_location);
+        rbtn_man = (RadioButton) findViewById(R.id.rbtn_man);
+        btn_backToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backToLogin();
+            }
+        });
+        btn_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkData()) {
+                    Toast.makeText(Register.this, "注册中...", Toast.LENGTH_LONG).show();
+                    register();
+                } else {
+                    Toast.makeText(Register.this, "注册失败，请检查注册信息！", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+
 
     private void backToLogin() {
         startActivity(new Intent().setClass(Register.this, Login.class));

@@ -1,12 +1,30 @@
 package com.androidgroup5.onlinecontact;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.androidgroup5.onlinecontact.EntityClass.User;
 import com.androidgroup5.onlinecontact.QRCode.QRCodeActivity;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     Button btn01,btn02,
@@ -19,11 +37,64 @@ public class MainActivity extends AppCompatActivity {
             btn71,btn72,
             btn81,btn82,
             btn91,btn92;
+    User user=null;
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 10:
+                    UserParameter p = (UserParameter) getApplication();
+                    p.setUser(user);
+                    Toast.makeText(MainActivity.this,"数据加载成功",Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+
+    };
+
+    public void GetAllInfo(String UserName) {
+        HashMap<String, String> paramsMap = new HashMap<>();
+        paramsMap.put("UserName", UserName);
+        paramsMap.put("Contact", "[]");
+        paramsMap.put("Record", "[]");
+        FormBody.Builder builder = new FormBody.Builder();
+        for (String key : paramsMap.keySet()) {
+            builder.add(key, paramsMap.get(key));
+        }
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(1000, TimeUnit.SECONDS)
+                .readTimeout(1000, TimeUnit.SECONDS).build();
+        RequestBody body = builder.build();
+        Request request = new Request.Builder()
+                .url("http://114.116.171.181:80/SyncAllContactByUserName.ashx")
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String json = response.body().string();
+                    Gson gson = new Gson();
+                    user = gson.fromJson(json, User.class);
+                    Message message = new Message();
+                    message.what = 10;
+                    handler.sendMessage(message);
+                }
+            }
+        });
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+        GetAllInfo("宋甜乐");
     }
 
     @Override
@@ -89,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this,SyncAddressBook.class).putExtra("UserName","宋甜乐"));
                     break;
                 case 11:
+                    startActivity(new Intent().setClass(MainActivity.this,SkipActivity.class));
                     break;
                 case 12:
                     break;

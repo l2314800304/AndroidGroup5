@@ -1,9 +1,11 @@
 package com.androidgroup5.onlinecontact;
 
 import android.content.Intent;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -17,6 +19,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +44,7 @@ public class ShowContactActivity extends AppCompatActivity implements AdapterVie
 
     private String userName;
 
-    private BaseAdapter adapter;
+    private ArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,63 +53,17 @@ public class ShowContactActivity extends AppCompatActivity implements AdapterVie
         Intent intent = getIntent();
         userName =  intent.getStringExtra("UserName");
         userId = Integer.parseInt(intent.getStringExtra("ID"));
-        init();
+        names = intent.getStringArrayListExtra("contacts");
+        initData();
     }
 
 
-    public void init(){
+    private void initData(){
 
         listView = findViewById(R.id.listView);
-        fetchData(userId);
-        adapter = new ArrayAdapter<String>(ShowContactActivity.this, android.R.layout.simple_list_item_1, names);
-        listView.setAdapter(adapter);
         listView.setOnItemClickListener(ShowContactActivity.this);
-
-    }
-
-
-
-
-    private void fetchData(int id){
-
-
-        names.add(userName);
-
-//        OkHttpClient client = new OkHttpClient.Builder()
-//                .connectTimeout(10, TimeUnit.SECONDS)
-//                .readTimeout(20, TimeUnit.SECONDS)
-//                .writeTimeout(20, TimeUnit.SECONDS)
-//                .build();
-//        Request request = new Request.Builder().url("http://wuwensen007.ticp.io/contacts?userId=" + id).get().build();
-//
-//
-//
-//        client.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                Toast.makeText(ShowContactActivity.this,"连接失败",Toast.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                if (response.isSuccessful()){
-//                    // 加载个人联系人列表
-//
-//                    Gson gson = new Gson();
-//                    String json =  response.body().string();
-//
-////                    Toast.makeText(ShowContactActivity.this,json,Toast.LENGTH_LONG).show();
-//                    List<String> data = gson.fromJson(json, new TypeToken< ArrayList<String>>(){}.getType());
-//                    names.addAll(data);
-//
-//                }else {
-//                    // 用户名或密码错误
-//                    Toast.makeText(ShowContactActivity.this,"数据加载失败",Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        });
-
-
+        adapter = new ArrayAdapter(ShowContactActivity.this, android.R.layout.simple_list_item_1, names);
+        listView.setAdapter(adapter);
 
     }
 
