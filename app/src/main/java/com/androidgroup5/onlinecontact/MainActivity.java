@@ -1,16 +1,32 @@
 package com.androidgroup5.onlinecontact;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.androidgroup5.onlinecontact.EntityClass.User;
 import com.androidgroup5.onlinecontact.QRCode.QRCodeActivity;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
-
     Button btn01,btn02,
             btn11,btn12,
             btn21,btn22,
@@ -21,12 +37,64 @@ public class MainActivity extends AppCompatActivity {
             btn71,btn72,
             btn81,btn82,
             btn91,btn92;
+    User user=null;
+    private Handler handler = new Handler() {
 
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 10:
+                    UserParameter p = (UserParameter) getApplication();
+                    p.setUser(user);
+                    Toast.makeText(MainActivity.this,"数据加载成功",Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+
+    };
+
+    public void GetAllInfo(String UserName) {
+        HashMap<String, String> paramsMap = new HashMap<>();
+        paramsMap.put("UserName", UserName);
+        paramsMap.put("Contact", "[]");
+        paramsMap.put("Record", "[]");
+        FormBody.Builder builder = new FormBody.Builder();
+        for (String key : paramsMap.keySet()) {
+            builder.add(key, paramsMap.get(key));
+        }
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(1000, TimeUnit.SECONDS)
+                .readTimeout(1000, TimeUnit.SECONDS).build();
+        RequestBody body = builder.build();
+        Request request = new Request.Builder()
+                .url("http://114.116.171.181:80/SyncAllContactByUserName.ashx")
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String json = response.body().string();
+                    Gson gson = new Gson();
+                    user = gson.fromJson(json, User.class);
+                    Message message = new Message();
+                    message.what = 10;
+                    handler.sendMessage(message);
+                }
+            }
+        });
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+        GetAllInfo("宋甜乐");
     }
 
     @Override
@@ -92,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this,SyncAddressBook.class).putExtra("UserName","宋甜乐"));
                     break;
                 case 11:
+                    startActivity(new Intent().setClass(MainActivity.this,SkipActivity.class));
                     break;
                 case 12:
                     break;
@@ -108,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this, ShowContactActivity.class));
                     break;
                 case 41://通讯录详情页
-                    startActivity(new Intent().setClass(MainActivity.this, ContactDetailActivity.class));
+                    startActivity(new Intent().setClass(MainActivity.this, ContactDetailActivity.class).putExtra("rawContactId",5364));
                     break;
                 case 42://通话记录
                     startActivity(new Intent().setClass(MainActivity.this, CallLogActivity.class));
@@ -118,11 +187,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 52:
                     break;
-                case 61://日历签到
-                    startActivity(new Intent().setClass(MainActivity.this,SignDate.class));
+                case 61:
                     break;
-                case 62://引导页
-                    startActivity(new Intent().setClass(MainActivity.this,ActivitySlip.class));
+                case 62:
                     break;
                 case 71:
                     startActivity(new Intent().setClass(MainActivity.this,Phone.class));
@@ -131,13 +198,14 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this,Birthday.class));
                     break;
                 case 81:
-                    startActivity(new Intent().setClass(MainActivity.this,QRCodeActivity.class));
+                    startActivity(new Intent().setClass(MainActivity.this,QRCodeActivity.class).putExtra("ContactName1","张三")
+                    .putExtra("ContactNumber","31321231"));
                     break;
                 case 82:
-                    startActivity(new Intent().setClass(MainActivity.this,EditContactDetailActivity.class));
+                    startActivity(new Intent().setClass(MainActivity.this,EditContactDetailActivity.class).putExtra("ContactName","张三"));
                     break;
                 case 91:
-                    startActivity(new Intent().setClass(MainActivity.this,Find.class));
+                    startActivity(new Intent().setClass(MainActivity.this,Find.class).putExtra("UserName","宋甜乐"));
                     break;
                 case 92:
                     startActivity(new Intent().setClass(MainActivity.this,Export.class));

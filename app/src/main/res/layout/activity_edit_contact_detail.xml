@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@drawable/register">
 
     <LinearLayout
         android:id="@+id/title"
@@ -14,10 +15,10 @@
         android:gravity="center">
 
         <TextView
+            android:id="@+id/tv_contact_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="联系人姓名"
             android:textColor="#000"
             android:textSize="25sp" />
     </LinearLayout>
@@ -35,7 +36,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="5dp"
             android:text="号码:"
-            android:textColor="#000"
+            android:textColor="#fff"
             android:textSize="14sp" />
 
         <EditText
@@ -43,18 +44,18 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_contact_number"
+            android:background="@drawable/login_edit"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:textColorHint="#aaa"
-            android:textColor="#000"
+            android:textColor="#fff"
             android:inputType="text"
             android:paddingBottom="7dp"
             android:paddingLeft="9dp"
             android:paddingRight="8dp"
             android:paddingTop="7dp"
             android:singleLine="true"
-            android:textSize="15sp"
-            android:text="17355903513"/>
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/tv_contact_email"
@@ -63,7 +64,7 @@
             android:layout_below="@id/et_contact_number"
             android:layout_marginTop="8dp"
             android:text="电子邮箱:"
-            android:textColor="#000"
+            android:textColor="#fff"
             android:textSize="14sp" />
 
         <EditText
@@ -71,15 +72,15 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_contact_email"
+            android:background="@drawable/login_edit"
             android:textColorHint="#aaa"
-            android:textColor="#000"
+            android:textColor="#fff"
             android:paddingBottom="7dp"
             android:paddingLeft="9dp"
             android:paddingRight="8dp"
             android:paddingTop="7dp"
             android:singleLine="true"
-            android:textSize="15sp"
-            android:text="1012600207@qq.com"/>
+            android:textSize="15sp" />
         <TextView
             android:id="@+id/tv_contact_type"
             android:layout_width="wrap_content"
@@ -87,22 +88,22 @@
             android:layout_below="@id/et_contact_email"
             android:layout_marginTop="8dp"
             android:text="号码类型:"
-            android:textColor="#000"
+            android:textColor="#fff"
             android:textSize="14sp" />
         <EditText
             android:id="@+id/et_contact_type"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_contact_type"
+            android:background="@drawable/login_edit"
             android:textColorHint="#aaa"
-            android:textColor="#000"
+            android:textColor="#fff"
             android:paddingBottom="7dp"
             android:paddingLeft="9dp"
             android:paddingRight="8dp"
             android:paddingTop="7dp"
             android:singleLine="true"
-            android:textSize="15sp"
-            android:text="1"/>
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/btn_backToDetail"
@@ -113,6 +114,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="120dp"
+            android:background="@drawable/login_btn_ok"
             android:drawablePadding="5dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
@@ -125,6 +127,7 @@
             android:layout_height="40dp"
             android:layout_alignRight="@id/et_contact_type"
             android:layout_below="@id/et_contact_type"
+            android:background="@drawable/login_btn_ok"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:drawablePadding="5dp"

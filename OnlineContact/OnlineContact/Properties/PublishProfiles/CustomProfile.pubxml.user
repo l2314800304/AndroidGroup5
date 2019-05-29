@@ -26,10 +26,10 @@
       <publishTime>05/21/2019 01:00:16</publishTime>
     </File>
     <File Include="bin/OnlineContact.dll">
-      <publishTime>05/24/2019 22:58:37</publishTime>
+      <publishTime>05/27/2019 18:09:14</publishTime>
     </File>
     <File Include="bin/OnlineContact.pdb">
-      <publishTime>05/24/2019 22:58:37</publishTime>
+      <publishTime>05/27/2019 18:09:14</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>05/24/2018 13:38:22</publishTime>
@@ -169,8 +169,23 @@
     <File Include="bin/roslyn/VBCSCompiler.exe.config">
       <publishTime>05/24/2018 13:38:24</publishTime>
     </File>
+    <File Include="ChangePassword.ashx">
+      <publishTime>05/27/2019 15:59:22</publishTime>
+    </File>
+    <File Include="ChangeRemark.ashx">
+      <publishTime>05/27/2019 15:59:07</publishTime>
+    </File>
+    <File Include="Delete.ashx">
+      <publishTime>05/27/2019 15:58:28</publishTime>
+    </File>
     <File Include="GetContactByUserName.ashx">
       <publishTime>05/20/2019 10:33:37</publishTime>
+    </File>
+    <File Include="GetSignDate.ashx">
+      <publishTime>05/27/2019 16:29:09</publishTime>
+    </File>
+    <File Include="InsertContact.ashx">
+      <publishTime>05/27/2019 13:03:01</publishTime>
     </File>
     <File Include="libs/Newtonsoft.Json.dll">
       <publishTime>05/21/2019 01:00:16</publishTime>
@@ -184,14 +199,20 @@
     <File Include="SetContactByUserName.ashx">
       <publishTime>05/20/2019 16:10:31</publishTime>
     </File>
+    <File Include="SetSignDate.ashx">
+      <publishTime>05/27/2019 16:29:21</publishTime>
+    </File>
     <File Include="SyncAllContactByUserName.ashx">
       <publishTime>05/23/2019 19:17:36</publishTime>
+    </File>
+    <File Include="UpdateContact.ashx">
+      <publishTime>05/27/2019 10:06:56</publishTime>
     </File>
     <File Include="UpdateContactInfo.ashx">
       <publishTime>05/22/2019 19:24:26</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/24/2019 22:58:38</publishTime>
+      <publishTime>05/27/2019 16:11:16</publishTime>
     </File>
   </ItemGroup>
 </Project>
