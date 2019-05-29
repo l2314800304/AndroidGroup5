@@ -18,11 +18,12 @@ public class Birthday extends AppCompatActivity {
         setContentView(R.layout.activity_birthday);
         TextView textView1=(TextView)findViewById(R.id.text1);
         TextView textView2=(TextView)findViewById(R.id.text2);
+        TextView textView3=(TextView)findViewById(R.id.text3);
         SimpleDateFormat formatter = new SimpleDateFormat("MM-dd");
         //ParsePosition pos = new ParsePosition(8);
         Date currentTime = new Date();
         String dateString1 = formatter.format(currentTime);
-        textView1.setText(dateString1 );
+        textView2.setText("今天日期是"+dateString1 );
         StringBuilder sb = new StringBuilder();
         for (int i=0;i<((UserParameter) getApplication()).getUser().getContact().size();i++)
         {
@@ -30,12 +31,14 @@ public class Birthday extends AppCompatActivity {
             if (date2 != null && date2.length() != 0)
             {
                 String date1=date2.substring(5,10);
-                textView2.setText(date1);
                 if (dateString1.equals(date1))
                 {
+                    textView3.setText("今天是好友的生日，打个电话送祝福吧！");
                     textView1.setText(sb.append(((UserParameter) getApplication()).getUser().getContact().get(i).getName()+"   "));
-                    //((UserParameter) getApplication()).getUser().getContact().get(i).getName());
-
+                }
+                else
+                {
+                    textView3.setText("很抱歉，今天不是好友生日，请明天查看！");
                 }
              }
          }

@@ -9,6 +9,7 @@ import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.androidgroup5.onlinecontact.EntityClass.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
  *3.在删除之后，并把删除集合中的内容清空
  */
 public class Delete extends AppCompatActivity {
+    User u;
     // 记录选中的条目数量
     private int checkNum;
     //定义TextView
@@ -38,9 +40,11 @@ public class Delete extends AppCompatActivity {
     private MyAdapter myAdapter;
     //给数据源添加数据
     private void initdata(){
+
         data=new ArrayList<>();
-        for (int i=0;i<=20;i++){
-            data.add(new Item("小明"+i,"110"+i,false));
+        for (int i = 0; i < u.getContact().size(); i++) {
+
+            data.add(new Item(u.getContact().get(i).getName(),false));
         }
     }
     //返回数据给MyAdapter使用
@@ -50,6 +54,7 @@ public class Delete extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        u=((UserParameter) getApplication()).getUser();
         setContentView(R.layout.activity_delete);
         //获取listView
         lv_data= (ListView) findViewById(R.id.lv_data);
