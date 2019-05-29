@@ -10,11 +10,23 @@
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/text3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="今天是好友的生日，打个电话送祝福吧！"
+        android:textSize="20sp"
         tools:layout_editor_absoluteX="176dp"
         tools:layout_editor_absoluteY="212dp" />
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:layout_gravity="center_horizontal"/>
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:layout_gravity="center_horizontal"/>
 </LinearLayout>

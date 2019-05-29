@@ -9,7 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import com.androidgroup5.onlinecontact.EntityClass.Contact;
@@ -39,12 +42,11 @@ public class EditContactDetailActivity extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 10:
-                    GetAllInfo("宋甜乐");
-                    Contact contact = (Contact)user.getContact();
-                    ContactInfos contactInfos = (ContactInfos)contact.getContactInfos();
-                    init();
-
-                    ///在这里进行对user的所有数据处理与展示
+                    Toast.makeText(EditContactDetailActivity.this,"修改成功",Toast.LENGTH_LONG).show();
+                    //添加跳转页面
+                    break;
+                case 11:
+                    Toast.makeText(EditContactDetailActivity.this,"网络连接出现异常，修改失败",Toast.LENGTH_LONG).show();
                     break;
             }
         }
@@ -54,6 +56,7 @@ public class EditContactDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_contact_detail);
+        user=((UserParameter)getApplication()).getUser();
         init();
     }
 
@@ -95,7 +98,63 @@ public class EditContactDetailActivity extends AppCompatActivity {
             }
         });
     }
+    public void UpadteContact(){
+        HashMap<String, String> paramsMap = new HashMap<>();
+        Contact con=new Contact();
+        con.setName("123");
+        con.setID(0);
+        con.setBirthday("");
+        List<ContactInfos> info=new ArrayList<>();
+        ContactInfos c=new ContactInfos();
+        c.setEmailOrNumber(5);
+        c.setID(0);
+        c.setNumber("17805593303");
+        c.setType("2");
+        info.add(c);
+        con.setContactInfos(info);
+        paramsMap.put("Contact_ID", "160000");
+        paramsMap.put("Contact", (new Gson().toJson(con)));
+        paramsMap.put("Birthday", "2019-04-20");
+        FormBody.Builder builder = new FormBody.Builder();
+        for (String key : paramsMap.keySet()) {
+            builder.add(key, paramsMap.get(key));
+        }
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(1200, TimeUnit.SECONDS)
+                .readTimeout(1200, TimeUnit.SECONDS).build();
+        RequestBody body = builder.build();
+        Request request = new Request.Builder()
+                .url("http://114.116.171.181:80/UpdateContact.ashx")
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                Message message = new Message();
+                message.what = 11;
+                handler.sendMessage(message);
+            }
 
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    if(response.body().string().equals("OK")){
+                        Message message = new Message();
+                        message.what = 10;
+                        handler.sendMessage(message);
+                    }else{
+                        Message message = new Message();
+                        message.what = 11;
+                        handler.sendMessage(message);
+                    }
+                } else {
+                    Message message = new Message();
+                    message.what = 11;
+                    handler.sendMessage(message);
+                }
+            }
+        });
+    }
     public void init() {
         btn_backToDetail = (Button) findViewById(R.id.btn_backToDetail);
         btn_update = (Button) findViewById(R.id.btn_update);
@@ -118,6 +177,7 @@ public class EditContactDetailActivity extends AppCompatActivity {
                     String contact_number = et_contact_number.getText().toString(),
                             contact_email = et_contact_email.getText().toString(),
                             contact_type = et_contact_type.getText().toString();
+                    UpadteContact();
                 } else {
                     Toast.makeText(EditContactDetailActivity.this, "修改失败，请检查所填写的信息！", Toast.LENGTH_LONG).show();
                 }

@@ -61,7 +61,7 @@ public class Remark extends AppCompatActivity {
             public void onClick(View v) {
                 if (checkData()) {
                     Toast.makeText(Remark.this, "修改中...", Toast.LENGTH_LONG).show();
-                    register();
+                    remark();
                 } else {
                     Toast.makeText(Remark.this, "修改失败，请检查修改信息！", Toast.LENGTH_LONG).show();
                 }
@@ -69,12 +69,13 @@ public class Remark extends AppCompatActivity {
         });
     }
 
-    private void register() {
+    private void remark() {
+        String UserName="宋甜乐";
         String remark = et_Remark.getText().toString();
         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS).build();
         Request request = new Request.Builder()
-                .url("http://114.116.171.181:80/UpdateContactInfo.ashx?contact_info_ID=303830" + "&Remark=" + URLEncoder.encode(remark))
+                .url("http://114.116.171.181:80/ChangeRemark.ashx?UserName="+ UserName+ "&Remark=" + URLEncoder.encode(remark))
                 .method("GET",null)
                 .build();
         client.newCall(request).enqueue(new Callback() {
