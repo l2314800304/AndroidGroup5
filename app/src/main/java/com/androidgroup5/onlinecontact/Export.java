@@ -84,7 +84,7 @@ public class Export extends AppCompatActivity {
 
 
 
-        adapter = new ContactAdapter(contactList);
+        adapter = new ContactAdapter(contactList,this);
         rv_main.setAdapter(adapter);
         rv_main.addItemDecoration(new StickyHeaderDecoration(adapter));
 

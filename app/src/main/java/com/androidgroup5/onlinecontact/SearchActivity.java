@@ -80,7 +80,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         rv_main = (RecyclerView) findViewById(R.id.rv_main);
         final LinearLayoutManager manager = new LinearLayoutManager(this);
         rv_main.setLayoutManager(manager);
-        adapter = new SearchAdapter(new ArrayList<CNPinyinIndex<sContact>>());
+        adapter = new SearchAdapter(new ArrayList<CNPinyinIndex<sContact>>(),this);
         rv_main.setAdapter(adapter);
 
         final View decorView = this.getWindow().getDecorView();

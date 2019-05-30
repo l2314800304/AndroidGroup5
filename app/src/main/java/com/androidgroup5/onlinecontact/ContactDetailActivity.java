@@ -72,7 +72,7 @@ public class ContactDetailActivity extends Activity {
         setContentView(R.layout.activity_contact_detail);
         //User u=((UserParameter)getApplication()).getLocal();
         //u.getContact().get(0).getContactInfos().get(0).getEmailOrNumber();
-        getPersimmionInfo();
+        init();
     }
 
     @Override
@@ -102,28 +102,6 @@ public class ContactDetailActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    //授权信息
-    private void getPersimmionInfo() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            //1. 检测是否添加权限   PERMISSION_GRANTED  表示已经授权并可以使用
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-                //手机为Android6.0的版本,未授权则动态请求授权
-                //2. 申请请求授权权限
-                //1. Activity
-                // 2. 申请的权限名称
-                // 3. 申请权限的 请求码
-                ActivityCompat.requestPermissions(this, new String[]
-                        {Manifest.permission.READ_CONTACTS,Manifest.permission.WRITE_CONTACTS}, 1008);
-            } else {//手机为Android6.0的版本,权限已授权可以使用
-                // 执行下一步
-                init();
-            }
-        } else {//手机为Android6.0以前的版本，可以使用
-            init();
-        }
-
-    }
-
     public void init() {
         cr = getContentResolver();
         getContactMessage();
@@ -132,7 +110,6 @@ public class ContactDetailActivity extends Activity {
         displayListView(); //显示listView
         displayStarred(); //设置收藏/未收藏的图标
     }
-
     public void reInit() {
         readContactName(rawContactId);
         readContactBim(rawContactId);

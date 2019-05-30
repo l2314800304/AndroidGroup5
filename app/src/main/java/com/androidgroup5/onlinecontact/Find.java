@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -90,12 +91,9 @@ public class Find extends AppCompatActivity {
                 }
             }
         });
-
-
-        adapter = new ContactAdapter(contactList);
+        adapter = new ContactAdapter(contactList,this);
         rv_main.setAdapter(adapter);
         rv_main.addItemDecoration(new StickyHeaderDecoration(adapter));
-
         getPinyinList();
     }
     private void getPinyinList() {
