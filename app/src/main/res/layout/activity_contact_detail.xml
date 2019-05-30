@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:scrollbars="vertical"
     android:showDividers="end"
-    tools:context="com.androidgroup5.onlinecontact.contextDetail.ContactDetailActivity">
+    tools:context="com.androidgroup5.onlinecontact.ContactDetailActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
