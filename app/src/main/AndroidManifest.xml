@@ -25,7 +25,6 @@
         <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -49,7 +48,6 @@
         <activity android:name=".GuidePageActivity" />
         <activity android:name=".SkipActivity" />
         <activity android:name=".Updatemm" />
-
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/network_security_config" />
