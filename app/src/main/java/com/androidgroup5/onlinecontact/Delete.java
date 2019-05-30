@@ -47,11 +47,11 @@ public class Delete extends AppCompatActivity {
     private CheckBox che_all;
     //声明一个集合（数据源）
     private List<Item> data;
-    private List<Integer> index;
+    //private List<Integer> index;
     //定义自定义适配器
     private MyAdapter myAdapter;
     //给数据源添加数据
-    private Handler handler = new Handler() {
+    /*private Handler handler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
@@ -68,7 +68,7 @@ public class Delete extends AppCompatActivity {
             }
         }
 
-    };
+    };*/
     private void initdata(){
 
         data=new ArrayList<>();
@@ -87,8 +87,8 @@ public class Delete extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        u=((UserParameter) getApplication()).getUser();
-        index=new ArrayList<>();
+        u=((UserParameter) getApplication()).getLocal();
+        //index=new ArrayList<>();
 
         setContentView(R.layout.activity_delete);
         //获取listView
@@ -143,12 +143,16 @@ public class Delete extends AppCompatActivity {
             public void onClick(View v) {
                 //创建一个要删除内容的集合，不能直接在数据源data集合中直接进行操作，否则会报异常
                 List<Item> deleSelect = new ArrayList<Item>();
-
                 //把选中的条目要删除的条目放在deleSelect这个集合中
                 for (int i = 0; i < data.size(); i++) {
                     if (data.get(i).getChecked()) {
                         deleSelect.add(data.get(i));
-                        index.add(i);
+                        Random random = new Random(System.currentTimeMillis());
+                        int[] URLS = {R.drawable.header0, R.drawable.header1, R.drawable.header2, R.drawable.header3};
+                        int urlIndex = random.nextInt(URLS.length - 1);
+                        int url = URLS[urlIndex];
+                        data.remove(new Item(u.getContact().get(i).getName(),u.getContact().get(i).getContactInfos().get(0).getNumber(),false,url));
+                        //index.add(i);
                     }
                 }
                 //判断用户是否选中要删除的数据及是否有数据
@@ -161,7 +165,7 @@ public class Delete extends AppCompatActivity {
                     che_all.setChecked(false);
                     //通知适配器更新UI
                     myAdapter.notifyDataSetChanged();
-                    delete();
+                    //delete();
                 } else if (data.size() == 0) {
                     Toast.makeText(Delete.this, "没有要删除的数据", Toast.LENGTH_SHORT).show();
                 } else if (deleSelect.size() == 0) {
@@ -171,7 +175,7 @@ public class Delete extends AppCompatActivity {
         });
 
     }
-    private void delete() {
+    /*private void delete() {
         String id="";
         for(int i=0;i<index.size();i++){
             if(i==0)id=""+i;
@@ -210,6 +214,6 @@ public class Delete extends AppCompatActivity {
                 }
             }
         });
-    }
+    }*/
 }
 

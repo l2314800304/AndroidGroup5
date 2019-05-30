@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
+import android.view.View.OnClickListener;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -50,6 +51,11 @@ public class Remark extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remark);
         init();
+        btn_cancel.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                Remark.this.finish();
+            }
+        });
     }
 
     private void init() {
