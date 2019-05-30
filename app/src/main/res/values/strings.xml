@@ -13,5 +13,9 @@
     <string name="btn_insert">添加</string>
     <string name="btn_clear">清空</string>
     <string name="search">查找</string>
+    <string name="title_activity_navigation">Navigation</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 </resources>

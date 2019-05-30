@@ -3,6 +3,10 @@ package com.androidgroup5.onlinecontact;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Contacts;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -32,12 +36,35 @@ public class Phone extends Activity {
 
     private TextView tempText;
     private String all = "";
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_contact:
+                    startActivity(new Intent().setClass(Phone.this,Find.class));
+                    return true;
+                case R.id.navigation_record:
+                    startActivity(new Intent().setClass(Phone.this,CallLogActivity.class));
+                    return true;
+                case R.id.navigation_sync:
+                    startActivity(new Intent().setClass(Phone.this,SyncAddressBook.class));
+                    return true;
+                case R.id.navigation_call:
+                    return true;
+                case R.id.navigation_mine:
+                    startActivity(new Intent().setClass(Phone.this,SkipActivity.class));
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone);
-
         tv_text1 = (TextView) findViewById(R.id.tv_text1);
         tv_text2 = (TextView) findViewById(R.id.tv_text2);
         bt_delete = (Button) findViewById(R.id.bt_delete);
@@ -197,6 +224,9 @@ public class Phone extends Activity {
                 Phone.this.finish();
             }
         });
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(navigation.getMenu().getItem(3).getItemId());
 
     }
 }

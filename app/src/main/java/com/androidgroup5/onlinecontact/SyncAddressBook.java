@@ -1,12 +1,14 @@
 package com.androidgroup5.onlinecontact;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -20,13 +22,16 @@ import android.os.RemoteException;
 import android.os.TransactionTooLargeException;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -55,10 +60,34 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class SyncAddressBook extends AppCompatActivity {
+public class SyncAddressBook extends Activity {
     private String UserName = "";
     TextView state;
     User u = new User();
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_contact:
+                    startActivity(new Intent().setClass(SyncAddressBook.this,Find.class));
+                    return true;
+                case R.id.navigation_record:
+                    startActivity(new Intent().setClass(SyncAddressBook.this,CallLogActivity.class));
+                    return true;
+                case R.id.navigation_sync:
+                    return true;
+                case R.id.navigation_call:
+                    startActivity(new Intent().setClass(SyncAddressBook.this,Phone.class));
+                    return true;
+                case R.id.navigation_mine:
+                    startActivity(new Intent().setClass(SyncAddressBook.this,SkipActivity.class));
+                    return true;
+            }
+            return false;
+        }
+    };
     private Handler handler = new Handler() {
 
         @Override
@@ -90,7 +119,7 @@ public class SyncAddressBook extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync_address_book);
-        UserName = this.getIntent().getExtras().getString("UserName");
+        UserName = ((User)((UserParameter)getApplication()).getUser()).getUserName();
         state = (TextView) findViewById(R.id.txt_state);
         ((Button) findViewById(R.id.btn_sync)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +127,9 @@ public class SyncAddressBook extends AppCompatActivity {
                 Update();
             }
         });
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(navigation.getMenu().getItem(2).getItemId());
     }
 
     private void Update() {
@@ -139,6 +171,7 @@ public class SyncAddressBook extends AppCompatActivity {
                     String json = response.body().string();
                     Gson gson = new Gson();
                     u = gson.fromJson(json, User.class);
+                    ((UserParameter)getApplication()).setUser(u);
                     List<Contact> contact = u.getContact();
                     if(contact.size()>0)
                     syncTSContactsToContactsProvider(contact);

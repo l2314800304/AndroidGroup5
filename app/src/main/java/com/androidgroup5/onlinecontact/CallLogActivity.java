@@ -1,13 +1,18 @@
 package com.androidgroup5.onlinecontact;
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.CallLog;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -28,7 +33,7 @@ import java.util.regex.Pattern;
 
 import static android.icu.text.DateTimePatternGenerator.DAY;
 
-public class CallLogActivity extends AppCompatActivity {
+public class CallLogActivity extends Activity {
     private ListView listView;
     private List<Map<String, String>> dataList;
     private ContentResolver resolver;
@@ -36,41 +41,45 @@ public class CallLogActivity extends AppCompatActivity {
 
     private callLogAdapter adapter;
     private String mobile;//被授权人电话号码
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_contact:
+                    startActivity(new Intent().setClass(CallLogActivity.this,Find.class));
+                    return true;
+                case R.id.navigation_record:
+                    return true;
+                case R.id.navigation_sync:
+                    startActivity(new Intent().setClass(CallLogActivity.this,SyncAddressBook.class));
+                    return true;
+                case R.id.navigation_call:
+                    startActivity(new Intent().setClass(CallLogActivity.this,Phone.class));
+                    return true;
+                case R.id.navigation_mine:
+                    startActivity(new Intent().setClass(CallLogActivity.this,SkipActivity.class));
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phonelist);
         initView();
-        getPersimmionInfo();
+        initContacts();
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(navigation.getMenu().getItem(1).getItemId());
 
     }
 
     private void initView() {
         listView = findViewById(R.id.list_view);
-    }
-
-    //授权信息
-    private void getPersimmionInfo() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            //1. 检测是否添加权限   PERMISSION_GRANTED  表示已经授权并可以使用
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
-                //手机为Android6.0的版本,未授权则动态请求授权
-                //2. 申请请求授权权限
-                //1. Activity
-                // 2. 申请的权限名称
-                // 3. 申请权限的 请求码
-                ActivityCompat.requestPermissions(this, new String[]
-                        {Manifest.permission.READ_CALL_LOG//通话记录
-                        }, 1005);
-            } else {//手机为Android6.0的版本,权限已授权可以使用
-                // 执行下一步
-                initContacts();
-            }
-        } else {//手机为Android6.0以前的版本，可以使用
-            initContacts();
-        }
-
     }
 
     private void initContacts() {
