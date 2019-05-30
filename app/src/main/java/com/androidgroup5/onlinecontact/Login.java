@@ -1,8 +1,10 @@
 package com.androidgroup5.onlinecontact;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -13,6 +15,7 @@ import android.os.Message;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -114,14 +117,38 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    public boolean checkDangerousPermissions() {
+        String[] permissions={
+                "android.permission.INTERNET",
+                "android.permission.READ_CONTACTS",
+                "android.permission.WRITE_CONTACTS",
+                "android.permission.WRITE_CALL_LOG",
+                "android.permission.READ_CALL_LOG",
+                "android.permission.READ_PHONE_STATE",
+                "android.permission.CALL_PHONE",
+                "android.permission.WRITE_EXTERNAL_STORAGE",
+                "android.permission.READ_EXTERNAL_STORAGE"};
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true;
+        }
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED || ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                ActivityCompat.requestPermissions(this, permissions, 1008);
+                return true;
+            }
+        }
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        init();
+        checkDangerousPermissions();
         new Thread() {
             @Override
-            public void run() {;
+            public void run() {
+                ;
                 UserParameter p = (UserParameter) getApplication();
                 User u = new User();
                 u.setContact(GetContactFromLocal());
@@ -129,6 +156,16 @@ public class Login extends AppCompatActivity {
                 p.setLocal(u);
             }
         }.start();
+        init();
+        SharedPreferences sharedPreferences = getSharedPreferences("FirstRun", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (sharedPreferences.getBoolean("guideTF", true)) {
+            Intent intent = new Intent(Login.this, GuidePageActivity.class);
+            startActivity(intent);
+            finish();
+            editor.putBoolean("guideTF", false);
+            editor.commit();
+        }
     }
 
     private List<Contact> GetContactFromLocal() {
@@ -199,7 +236,7 @@ public class Login extends AppCompatActivity {
                         Manifest.permission.CALL_PHONE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE
-                        }, 1012);
+                }, 1012);
             }
         }
 
@@ -225,7 +262,8 @@ public class Login extends AppCompatActivity {
         recor.close();
         return records;
     }
-    private void init(){
+
+    private void init() {
         usernameField = findViewById(R.id.login_et_user);
         passwordField = findViewById(R.id.login_et_pass);
         loginBtn = findViewById(R.id.login_btn_login);
@@ -234,18 +272,18 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 String u = usernameField.getText().toString();
                 String p = passwordField.getText().toString();
-                if (u.isEmpty() || p.isEmpty()){
-                    Toast.makeText(Login.this,"输入信息不合法",Toast.LENGTH_LONG).show();
-                }else {
-                    Toast.makeText(Login.this,"正在登录...",Toast.LENGTH_LONG).show();
+                if (u.isEmpty() || p.isEmpty()) {
+                    Toast.makeText(Login.this, "输入信息不合法", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(Login.this, "正在登录...", Toast.LENGTH_LONG).show();
                     GetAllInfo(u);
                 }
             }
         });
-        ((Button)findViewById(R.id.login_btn_toRegister)).setOnClickListener(new View.OnClickListener() {
+        ((Button) findViewById(R.id.login_btn_toRegister)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent().setClass(Login.this,Register.class));
+                startActivity(new Intent().setClass(Login.this, Register.class));
             }
         });
     }
