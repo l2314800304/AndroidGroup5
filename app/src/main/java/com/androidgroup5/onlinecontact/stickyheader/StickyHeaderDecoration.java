@@ -7,10 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * sticky header decoration.
- * Created by muyangmin on Aug 01, 2017.
- */
 public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
 
     private LongSparseArray<RecyclerView.ViewHolder> mHeaderCache;

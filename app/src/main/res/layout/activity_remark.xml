@@ -5,47 +5,67 @@
     android:background="@drawable/register"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="修改备注"
+            android:textColor="#fff"
+            android:textSize="25sp" />
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:baselineAligned="false">
+        android:layout_height="400dp"
+        android:layout_margin="20dip"
+        android:padding="15dp">
 
         <Button
             android:id="@+id/buttonCancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/buttonRemark"
             android:layout_alignParentLeft="true"
-            android:background="@android:color/transparent"
+            android:layout_marginLeft="160dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/login_btn_cancel"
             android:text="取消"
             android:textColor="#fff"
-            android:textSize="25sp" />
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/buttonOk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/buttonRemark"
             android:layout_alignParentRight="true"
-            android:background="@android:color/transparent"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="0dp"
+            android:background="@drawable/login_btn_ok"
             android:text="确定"
             android:textColor="#fff"
-            android:textSize="25sp" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="20dp">
+            android:textSize="15sp" />
 
         <EditText
-            android:id="@+id/et_remark"
+            android:id="@+id/buttonRemark"
             android:layout_width="match_parent"
-            android:layout_height="192dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="150dp"
             android:background="@drawable/login_edit"
             android:inputType="textMultiLine"
-            android:maxLines="5"
+            android:maxLines="8"
             android:scrollHorizontally="false"
             android:textColor="#fff"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:gravity="top"/>
     </RelativeLayout>
 
 </LinearLayout>

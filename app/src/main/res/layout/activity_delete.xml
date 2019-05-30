@@ -6,34 +6,52 @@
     android:orientation="vertical"
     tools:context="com.androidgroup5.onlinecontact.Delete">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            >
+
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:text="选择删除的联系人" />
+
+            <CheckBox
+                android:id="@+id/che_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="全选" />
+        </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="580dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ListView
+                android:id="@+id/lv_data"
+                android:layout_width="match_parent"
+                android:layout_height="580dp">
+            </ListView>
+        </LinearLayout>
+    </ScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
         <Button
             android:id="@+id/btn_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="删除" />
 
-        <CheckBox
-            android:id="@+id/che_all"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="150dp"
-            android:text="全选" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-
-        <ListView
-            android:id="@+id/lv_data"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"></ListView>
     </LinearLayout>
 
 

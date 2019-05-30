@@ -145,7 +145,7 @@ public class ContactDetailActivity extends Activity {
     //读取联系人信息
     public void getContactMessage() {
         Intent intent = getIntent();
-        rawContactId = (int) intent.getLongExtra("rawContactId", 1);
+        rawContactId = (int) intent.getLongExtra("rawContactId", 5364);
         //getRawContactId(contactId);
         readContactName(rawContactId);
         readContactBim(rawContactId);

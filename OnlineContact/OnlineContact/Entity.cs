@@ -28,6 +28,7 @@ namespace OnlineContact
         public List<ContactInfos> ContactInfos { get; set; }
         public string ID { get; set; }
         public string Name { get; set; }
+        public string Birthday { get; set; }
 
         public bool Equals(Contact other)
         {

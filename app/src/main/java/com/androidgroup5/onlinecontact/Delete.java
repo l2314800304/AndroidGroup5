@@ -7,7 +7,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+import com.androidgroup5.onlinecontact.EntityClass.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,11 @@ import java.util.List;
  *3.在删除之后，并把删除集合中的内容清空
  */
 public class Delete extends AppCompatActivity {
+    User u;
+    // 记录选中的条目数量
+    private int checkNum;
+    //定义TextView
+    private TextView tv_show;
     //定义listview
     private ListView lv_data;
     //定义控件
@@ -33,9 +40,11 @@ public class Delete extends AppCompatActivity {
     private MyAdapter myAdapter;
     //给数据源添加数据
     private void initdata(){
+
         data=new ArrayList<>();
-        for (int i=0;i<=10;i++){
-            data.add(new Item("小明"+i,"110"+i,false));
+        for (int i = 0; i < u.getContact().size(); i++) {
+
+            data.add(new Item(u.getContact().get(i).getName(),u.getContact().get(i).getContactInfos().get(0).getNumber(),false));
         }
     }
     //返回数据给MyAdapter使用
@@ -45,12 +54,14 @@ public class Delete extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        u=((UserParameter) getApplication()).getUser();
         setContentView(R.layout.activity_delete);
         //获取listView
         lv_data= (ListView) findViewById(R.id.lv_data);
         //获取控件
         btn_delete= (Button) findViewById(R.id.btn_delete);
         che_all= (CheckBox) findViewById(R.id.che_all);
+        tv_show=(TextView)findViewById(R.id.tv);
         //初始化数据源
         initdata();
         //实例化自定义适配器，把listview传到自定义适配器中
@@ -75,6 +86,7 @@ public class Delete extends AppCompatActivity {
                     if (isChecked) {
                         for (int i = 0; i < data.size(); i++) {
                             data.get(i).setChecked(true);
+
                         }
                         //通知适配器更新UI
                         myAdapter.notifyDataSetChanged();
@@ -85,7 +97,7 @@ public class Delete extends AppCompatActivity {
                         //通知适配器更新UI
                         myAdapter.notifyDataSetChanged();
                     }
-                }else{//若列表中没有数据则隐藏全选复选框
+                }else {//若列表中没有数据则隐藏全选复选框
                     che_all.setVisibility(View.GONE);
                 }
             }
