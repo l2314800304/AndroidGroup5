@@ -12,7 +12,7 @@
         android:src="@drawable/header0"/>
 
     <RelativeLayout
-        android:layout_width="50dp"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="15dp">
 
@@ -31,26 +31,4 @@
             android:background="#e0e0e0"/>
 
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="15dp">
-
-        <TextView
-            android:id="@+id/tv_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:layout_centerVertical="true"
-            android:text="13955221417"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_alignParentBottom="true"
-            android:background="#e0e0e0"/>
-
-    </RelativeLayout>
-
-
 </LinearLayout>
