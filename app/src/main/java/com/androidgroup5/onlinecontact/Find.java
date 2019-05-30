@@ -1,11 +1,15 @@
 package com.androidgroup5.onlinecontact;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -41,7 +45,7 @@ public class Find extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avtivity_find);
-        u=((UserParameter) getApplication()).getUser();
+        u=((UserParameter) getApplication()).getLocal();
         rv_main = (RecyclerView) findViewById(R.id.rv_main);
         iv_main = (CharIndexView) findViewById(R.id.iv_main);
         tv_index = (TextView) findViewById(R.id.tv_index);
@@ -53,7 +57,18 @@ public class Find extends AppCompatActivity {
         });
         final LinearLayoutManager manager = new LinearLayoutManager(this);
         rv_main.setLayoutManager(manager);
-
+        ((ImageButton)findViewById(R.id.btn_find_insert)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent().setClass(Find.this, Insert.class));
+            }
+        });
+        ((Button)findViewById(R.id.btn_export)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent().setClass(Find.this, Export.class));
+            }
+        });
         iv_main.setOnCharIndexChangedListener(new CharIndexView.OnCharIndexChangedListener() {
             @Override
             public void onCharIndexChanged(char currentIndex) {
@@ -131,4 +146,12 @@ public class Find extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

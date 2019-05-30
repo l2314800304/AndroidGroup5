@@ -22,7 +22,7 @@ namespace OnlineContact
                 Location = context.Request["Location"],
                 Remark = context.Request["Remark"];
             //构建数据库操作语句
-            String sql = "insert into user (UserName,Password,Sex,Location,Remark) Values (@u,@p,@s,@l,@r);";
+            String sql = "insert into user (UserName,Password,Sex,Location,Remark,Signcount) Values (@u,@p,@s,@l,@r,0);";
             //构建参数数组
             MySqlParameter[] pms={
                 new MySqlParameter("@u",UserName),

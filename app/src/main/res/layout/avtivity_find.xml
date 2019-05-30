@@ -4,22 +4,42 @@
     android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:background="@color/whites"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="?attr/colorPrimary"
+        android:layout_height="30dp"
         android:minHeight="48dp"
         app:contentInsetRight="0dp"
         app:contentInsetStart="0dp"
-        app:titleMarginStart="0dp" />
+        android:gravity="right"
+        app:titleMarginStart="0dp" >
 
-    <Button android:id="@+id/bt_search"
+        <ImageButton
+            android:id="@+id/btn_find_insert"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/insert"
+            android:background="@color/whites"
+            android:scaleType="fitXY"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="查找"/>
+        android:layout_height="wrap_content">
+        <Button android:id="@+id/bt_search"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="查找"/>
+        <Button android:id="@+id/btn_export"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="导出"/>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

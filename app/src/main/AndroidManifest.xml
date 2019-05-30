@@ -23,7 +23,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,7 +32,6 @@
         </activity>
         <activity android:name=".SyncAddressBook" />
         <activity android:name=".Register" />
-        <activity android:name=".Login" />
         <activity android:name=".QRCode.QRCodeActivity" />
         <activity android:name=".Birthday" />
         <activity android:name=".EditContactDetailActivity" />
@@ -46,6 +45,7 @@
             tools:ignore="DuplicateActivity" />
         <activity android:name=".ContactDetailActivity" />
         <activity android:name=".CallLogActivity" />
+        <activity android:name=".SearchActivity" />
 
         <meta-data
             android:name="com.google.android.actions"
