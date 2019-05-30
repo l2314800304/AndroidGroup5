@@ -14,13 +14,15 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <TextView
-            android:id="@+id/tv_contact_name"
+        <EditText
+            android:id="@+id/et_contact_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="#000"
-            android:textSize="25sp" />
+            android:textColor="#fff"
+            android:textSize="25sp"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
     </LinearLayout>
 
     <RelativeLayout
@@ -49,7 +51,6 @@
             android:focusableInTouchMode="true"
             android:textColorHint="#aaa"
             android:textColor="#fff"
-            android:inputType="text"
             android:paddingBottom="7dp"
             android:paddingLeft="9dp"
             android:paddingRight="8dp"
@@ -58,15 +59,38 @@
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/tv_contact_email"
+            android:id="@+id/tv_contact_birthday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/et_contact_number"
             android:layout_marginTop="8dp"
-            android:text="电子邮箱:"
+            android:text="生日:"
             android:textColor="#fff"
             android:textSize="14sp" />
 
+        <EditText
+            android:id="@+id/et_contact_birthday"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_contact_birthday"
+            android:background="@drawable/login_edit"
+            android:textColorHint="#aaa"
+            android:textColor="#fff"
+            android:paddingBottom="7dp"
+            android:paddingLeft="9dp"
+            android:paddingRight="8dp"
+            android:paddingTop="7dp"
+            android:singleLine="true"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tv_contact_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_contact_birthday"
+            android:layout_marginTop="8dp"
+            android:text="电子邮箱:"
+            android:textColor="#fff"
+            android:textSize="14sp" />
         <EditText
             android:id="@+id/et_contact_email"
             android:layout_width="fill_parent"

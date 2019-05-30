@@ -303,11 +303,10 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this, Birthday.class));
                     break;
                 case 81:
-                    startActivity(new Intent().setClass(MainActivity.this, QRCodeActivity.class).putExtra("ContactName1", "张三")
-                            .putExtra("ContactNumber", "31321231"));
+                    startActivity(new Intent().setClass(MainActivity.this, QRCodeActivity.class).putExtra("contact_index", "0"));
                     break;
                 case 82:
-                    startActivity(new Intent().setClass(MainActivity.this, EditContactDetailActivity.class).putExtra("ContactName", "张三"));
+                    startActivity(new Intent().setClass(MainActivity.this, EditContactDetailActivity.class).putExtra("index", "0"));
                     break;
                 case 91:
                     startActivity(new Intent().setClass(MainActivity.this, Find.class).putExtra("UserName", "宋甜乐"));

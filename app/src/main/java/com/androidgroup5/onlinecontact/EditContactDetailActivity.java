@@ -44,6 +44,7 @@ public class EditContactDetailActivity extends AppCompatActivity {
                 case 10:
                     Toast.makeText(EditContactDetailActivity.this,"修改成功",Toast.LENGTH_LONG).show();
                     //添加跳转页面
+                    backToDetail();
                     break;
                 case 11:
                     Toast.makeText(EditContactDetailActivity.this,"网络连接出现异常，修改失败",Toast.LENGTH_LONG).show();
@@ -56,15 +57,59 @@ public class EditContactDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_contact_detail);
-        user=((UserParameter)getApplication()).getUser();
-        init();
+        int index = this.getIntent().getExtras().getInt("index");
+        user=((UserParameter)getApplication()).getLocal();
+        Contact con = user.getContact().get(index);
+        String contact_name = con.getName(),
+                contact_birthday = con.getBirthday(),
+                contact_id = String.valueOf(con.getID());
+        List<ContactInfos> info=con.getContactInfos();
+        ContactInfos cin = info.get(0);
+        String contact_number = cin.getNumber(),
+                contact_type = cin.getType();
+        init(contact_name, contact_birthday,contact_number,contact_type,contact_id);
     }
-    public void UpadteContact(String ID,String Name,String Birthday,String Number,String Email){
+
+    public void init(String contact_name, String contact_birthday, String contact_number, String contact_type, final String contact_id) {
+        btn_backToDetail = (Button) findViewById(R.id.btn_backToDetail);
+        btn_update = (Button) findViewById(R.id.btn_update);
+        final EditText et_contact_name =(EditText)findViewById(R.id.et_contact_name);
+        et_contact_name.setText(contact_name);
+        et_contact_number = (EditText) findViewById(R.id.et_contact_number);
+        et_contact_number.setText(contact_number);
+        final EditText et_contact_birthday =(EditText)findViewById(R.id.et_contact_birthday);
+        et_contact_birthday.setText(contact_birthday);
+        EditText et_contact_type =(EditText)findViewById(R.id.et_contact_type);
+        et_contact_type.setText(contact_type);
+        btn_backToDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backToDetail();
+            }
+        });
+        btn_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkData()) {
+                    Toast.makeText(EditContactDetailActivity.this, "修改中...", Toast.LENGTH_LONG).show();
+                    String  id = contact_id,
+                            contact_name = et_contact_name.getText().toString(),
+                            contact_number = et_contact_number.getText().toString(),
+                            birthday=et_contact_birthday.getText().toString();
+                    UpadteContact(id,contact_name,birthday,contact_number);
+                } else {
+                    Toast.makeText(EditContactDetailActivity.this, "修改失败，请检查所填写的信息！", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    public void UpadteContact(String ID,String Name,String Birthday,String Number){
         HashMap<String, String> paramsMap = new HashMap<>();
         Contact con=new Contact();
         con.setName(Name);
-        con.setID(0);
-        con.setBirthday("");
+        con.setID(Integer.parseInt(ID));
+        con.setBirthday(Birthday);
         List<ContactInfos> info=new ArrayList<>();
         ContactInfos c=new ContactInfos();
         c.setEmailOrNumber(5);
@@ -72,14 +117,6 @@ public class EditContactDetailActivity extends AppCompatActivity {
         c.setNumber(Number);
         c.setType("2");
         info.add(c);
-        if(!Email.isEmpty()){
-            ContactInfos c1=new ContactInfos();
-            c1.setEmailOrNumber(7);
-            c1.setID(0);
-            c1.setNumber(Email);
-            c1.setType("2");
-            info.add(c1);
-        }
         con.setContactInfos(info);
         paramsMap.put("Contact_ID", ID);
         paramsMap.put("Contact", (new Gson().toJson(con)));
@@ -120,36 +157,6 @@ public class EditContactDetailActivity extends AppCompatActivity {
                     Message message = new Message();
                     message.what = 11;
                     handler.sendMessage(message);
-                }
-            }
-        });
-    }
-    public void init() {
-        btn_backToDetail = (Button) findViewById(R.id.btn_backToDetail);
-        btn_update = (Button) findViewById(R.id.btn_update);
-        TextView tv_contact_name =findViewById(R.id.tv_contact_name);
-        tv_contact_name.setText(this.getIntent().getExtras().getString("ContactName"));
-        et_contact_number = (EditText) findViewById(R.id.et_contact_number);
-        et_contact_email = (EditText) findViewById(R.id.et_contact_email);
-        et_contact_type = (EditText) findViewById(R.id.et_contact_type);
-        btn_backToDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backToDetail();
-            }
-        });
-        btn_update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkData()) {
-                    Toast.makeText(EditContactDetailActivity.this, "修改中...", Toast.LENGTH_LONG).show();
-                    String contact_number = et_contact_number.getText().toString(),
-                            contact_email = et_contact_email.getText().toString(),
-                            contact_name = et_contact_type.getText().toString(),
-                            id="",birthday="";
-                    UpadteContact(id,contact_name,birthday,contact_number,contact_email);
-                } else {
-                    Toast.makeText(EditContactDetailActivity.this, "修改失败，请检查所填写的信息！", Toast.LENGTH_LONG).show();
                 }
             }
         });

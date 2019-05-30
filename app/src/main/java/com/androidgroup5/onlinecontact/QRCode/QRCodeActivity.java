@@ -25,9 +25,9 @@ public class QRCodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode);
-        int index = this.getIntent().getExtras().getInt("ContactNumber");
+        int index = this.getIntent().getExtras().getInt("contact_index");
         User u=((UserParameter)getApplication()).getLocal();
-        ContactName=u.getContact().get(0).getName();
+        ContactName=u.getContact().get(index).getName();
         ContactNumber=u.getContact().get(index).getContactInfos().get(0).getNumber();
         //内容
         final TextView tv_contactname = (TextView) findViewById(R.id.tv_contactname);
