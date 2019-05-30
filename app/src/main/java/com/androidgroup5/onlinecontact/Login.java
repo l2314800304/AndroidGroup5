@@ -119,11 +119,16 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
-        UserParameter p = (UserParameter) getApplication();
-        User u = new User();
-        u.setContact(GetContactFromLocal());
-        u.setRecord(GetRecordFromLocal());
-        p.setLocal(u);
+        new Thread() {
+            @Override
+            public void run() {;
+                UserParameter p = (UserParameter) getApplication();
+                User u = new User();
+                u.setContact(GetContactFromLocal());
+                u.setRecord(GetRecordFromLocal());
+                p.setLocal(u);
+            }
+        }.start();
     }
 
     private List<Contact> GetContactFromLocal() {
@@ -141,6 +146,7 @@ public class Login extends AppCompatActivity {
                     null,
                     ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id,
                     null, null);
+            contact.setID(new Integer(id));
             while (phones.moveToNext()) {
                 ContactInfos info = new ContactInfos();
                 String phoneNumber = phones.getString(phones.getColumnIndex(

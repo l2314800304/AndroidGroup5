@@ -180,15 +180,12 @@ public class Phone extends Activity {
 
             public void onClick(View v) {
                 tempText = (TextView) findViewById(R.id.bt_call);
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri
-                        .parse("tel:" + tempText.getText().toString().trim()));
+                Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:" + tempText.getText().toString().trim()));
                 startActivity(intent);
             }
         });
 
         bt_delete.setOnClickListener(new OnClickListener() {
-
             public void onClick(View v) {
                 all = all.substring(0, all.length() - 1);
                 tv_text1.setText(all);
