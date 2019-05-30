@@ -1,14 +1,18 @@
 package com.androidgroup5.onlinecontact;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -107,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         init();
         UserParameter p = (UserParameter) getApplication();
-        User u=new User();
+        User u = new User();
         u.setContact(GetContactFromLocal());
         u.setRecord(GetRecordFromLocal());
         p.setLocal(u);
@@ -169,6 +173,14 @@ public class MainActivity extends AppCompatActivity {
     private List<Record> GetRecordFromLocal() {
         List<Record> records = new ArrayList<Record>();
         ContentResolver contentResolver = MainActivity.this.getContentResolver();
+        //获取权限
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{
+                        Manifest.permission.READ_CALL_LOG
+                }, 1013);
+            }
+        }
         Cursor recor = contentResolver.query(CallLog.Calls.CONTENT_URI,
                 null,
                 null,
