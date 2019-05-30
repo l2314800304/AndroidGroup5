@@ -2,8 +2,6 @@ package com.androidgroup5.onlinecontact;
 import android.Manifest;
 import android.content.ContentResolver;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.CallLog;
@@ -15,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.androidgroup5.onlinecontact.EntityClass.User;
 import com.androidgroup5.onlinecontact.callLog.adapter.callLogAdapter;
 
 import java.text.SimpleDateFormat;
@@ -33,12 +32,8 @@ public class CallLogActivity extends AppCompatActivity {
     private ListView listView;
     private List<Map<String, String>> dataList;
     private ContentResolver resolver;
-    private Uri callUri = CallLog.Calls.CONTENT_URI;
-    private String[] columns = {CallLog.Calls.CACHED_NAME// 通话记录的联系人
-            , CallLog.Calls.NUMBER// 通话记录的电话号码
-            , CallLog.Calls.DATE// 通话记录的日期
-            , CallLog.Calls.DURATION// 通话时长
-            , CallLog.Calls.TYPE};// 通话类型}
+
+
     private callLogAdapter adapter;
     private String mobile;//被授权人电话号码
 
@@ -48,6 +43,7 @@ public class CallLogActivity extends AppCompatActivity {
         setContentView(R.layout.activity_phonelist);
         initView();
         getPersimmionInfo();
+
     }
 
     private void initView() {
@@ -100,33 +96,31 @@ public class CallLogActivity extends AppCompatActivity {
      * @return 读取到的数据
      */
     private List<Map<String, String>> getDataList() {
-        // 1.获得ContentResolver
-        resolver = getContentResolver();
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
         }
-        // 2.利用ContentResolver的query方法查询通话记录数据库
-        /**
-         * @param uri 需要查询的URI，（这个URI是ContentProvider提供的）
-         * @param projection 需要查询的字段
-         * @param selection sql语句where之后的语句
-         * @param selectionArgs ?占位符代表的数据
-         * @param sortOrder 排序方式
-         */
-        Cursor cursor = resolver.query(callUri, // 查询通话记录的URI
-                columns
-                , null, null, CallLog.Calls.DEFAULT_SORT_ORDER// 按照时间逆序排列，最近打的最先显示
-        );
-        // 3.通过Cursor获得数据
+
+        User u=((UserParameter)getApplication()).getLocal();
+
         List<Map<String, String>> list = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            String name = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME));
-            String number = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
-            long dateLong = cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE));
+
+
+        for (int i = 0; i<u.getRecord().size(); i++) {
+            String[] columns = {
+                    u.getRecord().get(i).getNumber(),// 通话记录的电话号码
+                    u.getRecord().get(i).getDate(),// 通话记录的日期
+                    u.getRecord().get(i).getDuration(),// 通话时长
+                    u.getRecord().get(i).getType() // 通话类型
+            };
+
+            String name = u.getContact().get(0).getName();
+            String number = columns[0];
+            long dateLong = Long.parseLong(columns[1]);
             String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(dateLong));
             String time = new SimpleDateFormat("HH:mm").format(new Date(dateLong));
 
-            int duration = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.DURATION));
-            int type = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.TYPE));
+            int duration = Integer.parseInt(columns[2]);
+            int type = Integer.parseInt(columns[3]);
 
             String dayCurrent = new SimpleDateFormat("dd").format(new Date());
             String dayRecord = new SimpleDateFormat("dd").format(new Date(dateLong));

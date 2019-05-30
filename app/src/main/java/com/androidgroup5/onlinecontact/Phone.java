@@ -28,7 +28,7 @@ public class Phone extends Activity {
     private Button bt_star;
     private Button bt_bottom;
     private Button bt_call;
-    private Button bt_all;
+    private Button bt_function;
 
     private TextView tempText;
     private String all = "";
@@ -54,9 +54,7 @@ public class Phone extends Activity {
         bt_star = (Button) findViewById(R.id.bt_star);
         bt_bottom = (Button) findViewById(R.id.bt_bottom);
         bt_call = (Button) findViewById(R.id.bt_call);
-        bt_all = (Button) findViewById(R.id.bt_all);
-
-
+        bt_function = (Button) findViewById(R.id.bt_function);
 
         bt_zero.setOnClickListener(new OnClickListener() {
 
@@ -189,22 +187,17 @@ public class Phone extends Activity {
             }
         });
 
-        bt_all.setOnClickListener(new OnClickListener() {
-
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setData(Contacts.People.CONTENT_URI);
-                startActivity(intent);
-            }
-        });
-
         bt_delete.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
                 all = all.substring(0, all.length() - 1);
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+            }
+        });
+        bt_function.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                Phone.this.finish();
             }
         });
 

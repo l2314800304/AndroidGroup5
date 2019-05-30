@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.androidgroup5.onlinecontact.EntityClass.User;
 import com.androidgroup5.onlinecontact.R;
 import com.androidgroup5.onlinecontact.contextDetail.adapter.ContactDetailAdapter;
 
@@ -69,6 +70,8 @@ public class ContactDetailActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
+        //User u=((UserParameter)getApplication()).getLocal();
+        //u.getContact().get(0).getContactInfos().get(0).getEmailOrNumber();
         getPersimmionInfo();
     }
 
