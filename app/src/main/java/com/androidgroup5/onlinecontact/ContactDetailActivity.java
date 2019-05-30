@@ -1,15 +1,19 @@
 package com.androidgroup5.onlinecontact;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -65,8 +69,7 @@ public class ContactDetailActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
-        init();
-
+        getPersimmionInfo();
     }
 
     @Override
@@ -94,6 +97,28 @@ public class ContactDetailActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //授权信息
+    private void getPersimmionInfo() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            //1. 检测是否添加权限   PERMISSION_GRANTED  表示已经授权并可以使用
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                //手机为Android6.0的版本,未授权则动态请求授权
+                //2. 申请请求授权权限
+                //1. Activity
+                // 2. 申请的权限名称
+                // 3. 申请权限的 请求码
+                ActivityCompat.requestPermissions(this, new String[]
+                        {Manifest.permission.READ_CONTACTS,Manifest.permission.WRITE_CONTACTS}, 1008);
+            } else {//手机为Android6.0的版本,权限已授权可以使用
+                // 执行下一步
+                init();
+            }
+        } else {//手机为Android6.0以前的版本，可以使用
+            init();
+        }
+
     }
 
     public void init() {
