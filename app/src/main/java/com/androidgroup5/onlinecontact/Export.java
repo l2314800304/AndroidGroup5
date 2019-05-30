@@ -2,6 +2,7 @@ package com.androidgroup5.onlinecontact;
 
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.net.Uri;
@@ -61,7 +62,7 @@ public class Export extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export);
-        u=((UserParameter) getApplication()).getUser();
+        u=((UserParameter) getApplication()).getLocal();
         rv_main = (RecyclerView) findViewById(R.id.rv_main);
 
         btnExported=(Button)findViewById(R.id.btnExported) ;
@@ -72,7 +73,12 @@ public class Export extends AppCompatActivity {
                 export();
             }
         });
-
+        ((Button)findViewById(R.id.iv_return)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent().setClass(Export.this, Find.class));
+            }
+        });
         final LinearLayoutManager manager = new LinearLayoutManager(this);
         rv_main.setLayoutManager(manager);
 
@@ -84,6 +90,7 @@ public class Export extends AppCompatActivity {
 
         getPinyinList();
     }
+
     private void getPinyinList() {
         subscription = Observable.create(new Observable.OnSubscribe<List<CNPinyin<sContact>>>() {
             @Override
@@ -123,6 +130,7 @@ public class Export extends AppCompatActivity {
                     }
                 });
     }
+
 
     @Override
     protected void onDestroy() {
@@ -193,6 +201,7 @@ public class Export extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
     private void export() {
         try{
             Uri uri1 = ContactsContract.Contacts.CONTENT_URI;
@@ -200,7 +209,10 @@ public class Export extends AppCompatActivity {
             Cursor cur = contentResolver.query(uri1, null, null, null, null);
             int index = cur.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY);
             Date d=new Date();
-            File fs = new File(Environment.getExternalStorageDirectory().toString()+"/"+d.getYear()+""+d.getMonth()+""+d.getDay()+""+d.getHours()+""+d.getMinutes()+""+d.getSeconds()+".vcf");
+
+                File fs = new File(Environment.getExternalStorageDirectory().toString()+"/"+d.getYear()+""+d.getMonth()+""+d.getDay()+""+d.getHours()+""+d.getMinutes()+""+d.getSeconds()+".vcf");
+
+
             FileOutputStream fout = new FileOutputStream(fs);
             byte[] data = new byte[1024 * 1];
 			while(cur.moveToNext()) {

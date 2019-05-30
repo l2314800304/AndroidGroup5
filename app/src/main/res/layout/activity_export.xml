@@ -15,7 +15,11 @@
         android:background="#f0f0f0"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
-
+        <Button android:id="@+id/iv_return"
+            android:layout_width="100dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="返回"/>
         <Button
             android:id="@+id/btnExported"
             android:layout_width="wrap_content"
@@ -36,17 +40,6 @@
             android:layout_toLeftOf="@id/btnExported"
             android:gravity="center_vertical">
 
-            <EditText
-                android:id="@+id/etSearch"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:background="#f0f0f0"
-                android:hint="请输入文字..."
-                android:paddingLeft="32dp"
-                android:singleLine="true"
-                android:textSize="12sp" />
-
             <ImageView
                 android:id="@+id/ivDeleteText"
                 android:layout_width="wrap_content"
@@ -60,10 +53,12 @@
         </RelativeLayout>
 
     </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true" />
     <com.androidgroup5.onlinecontact.search.CharIndexView
         android:id="@+id/iv_main"
         android:layout_width="30dp"
