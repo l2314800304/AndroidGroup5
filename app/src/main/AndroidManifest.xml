@@ -47,6 +47,8 @@
         <activity android:name=".CallLogActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".GuidePageActivity" />
+        <activity android:name=".SkipActivity" />
+        <activity android:name=".Updatemm" />
 
         <meta-data
             android:name="com.google.android.actions"
