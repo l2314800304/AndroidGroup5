@@ -147,29 +147,6 @@
             android:inputType="text"></EditText>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/otherinfo"
-        android:layout_width="203dp"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:textColor="#fff"
-        android:text="其它信息：" />
-
-    <EditText
-        android:id="@+id/otherInfo"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/tv_pass_register5"
-        android:background="@drawable/login_edit"
-        android:singleLine="false"
-        android:maxLines="5"
-        android:inputType="textMultiLine"
-        android:scrollHorizontally="false"
-        android:textSize="15sp"
-        android:hint="(50个字符以内)"
-        android:textColorHint="#aaa"
-        android:textColor="#fff"/>
-
     <LinearLayout
         android:id="@+id/seventh"
         android:layout_width="match_parent"

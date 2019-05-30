@@ -1,15 +1,28 @@
 package com.androidgroup5.onlinecontact;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidgroup5.onlinecontact.EntityClass.ContactInfos;
 
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class Insert extends AppCompatActivity {
     private TextView contactName;
@@ -18,7 +31,6 @@ public class Insert extends AppCompatActivity {
     private TextView contactTelPhone;
     private TextView contactCorpPhone;
     private TextView contactCorpEmail;
-    private TextView contactOtherInfo;
     private Button insert;
     private Button clear;
 
@@ -34,6 +46,30 @@ public class Insert extends AppCompatActivity {
 
     private List<ContactInfos> list = new ArrayList();
 
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    Toast.makeText(Insert.this, "插入成功，返回主界面...", Toast.LENGTH_LONG).show();
+                    backToMainActivity();
+                    break;
+                case 1:
+                    Toast.makeText(Insert.this, "插入失败，请检查网络连接！", Toast.LENGTH_LONG).show();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    };
+
+    private void backToMainActivity() {
+        startActivity(new Intent().setClass(Insert.this, MainActivity.class));
+    }
+
     private void init() {
         contactName = (TextView)findViewById(R.id.contactName);
         contactEmail = (TextView)findViewById(R.id.contactEmail);
@@ -41,7 +77,6 @@ public class Insert extends AppCompatActivity {
         contactTelPhone = (TextView)findViewById(R.id.contactTelPhone);
         contactCorpPhone = (TextView)findViewById(R.id.contactCorpPhone);
         contactCorpEmail = (TextView)findViewById(R.id.contactCorpEmail);
-        contactOtherInfo = (TextView)findViewById(R.id.otherInfo);
         insert = (Button)findViewById(R.id.btn_insert);
         clear = (Button)findViewById(R.id.btn_clear);
     }
@@ -51,6 +86,7 @@ public class Insert extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert);
         init();
+        judge();
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,27 +96,56 @@ public class Insert extends AppCompatActivity {
                 contactTelPhone.setText("");
                 contactCorpPhone.setText("");
                 contactCorpEmail.setText("");
-                contactOtherInfo.setText("");
             }
         });
 
         insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                insert();
+                for(ContactInfos ci : list) {
+                    insert(ci.getEmailOrNumber(), ci.getNumber(), ci.getType());
+                }
             }
         });
     }
 
-    private void insert() {
-        judge();
-        //
-        //
-
-
-
+    private void insert(int emailOrNumber, String number, String type) {
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS).build();
+        Request request = new Request.Builder()
+                .url("http://114.116.171.181:80/Register.ashx?EmailOrNumber=" + URLEncoder.encode(new Integer(emailOrNumber).toString()) + "&Number=" + number + "&Type=" + URLEncoder.encode(type))
+                .method("GET",null)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Message message = new Message();
+                message.what = 1;
+                handler.sendMessage(message);
+                e.printStackTrace();
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()){//回调的方法执行在子线程。
+                    if (response.body().string().equals("OK")) {
+                        Message message = new Message();
+                        message.what = 0;
+                        handler.sendMessage(message);
+                    } else {
+                        Message message = new Message();
+                        message.what = 1;
+                        handler.sendMessage(message);
+                    }
+                }else{
+                    Message message = new Message();
+                    message.what = 1;
+                    handler.sendMessage(message);
+                }
+            }
+        });
     }
 
+    //初始化ContactInfos的ArrayList
     private void judge() {
         if(!email.isEmpty()) {
             ContactInfos  ci = new ContactInfos();
@@ -108,7 +173,7 @@ public class Insert extends AppCompatActivity {
 
         if(!corpEmail.isEmpty()) {
             ContactInfos ci = new ContactInfos();
-            ci.setEmailOrNumber(1);
+            ci.setEmailOrNumber(0);
             ci.setType("公司邮箱");
             ci.setNumber(corpEmail);
         }
