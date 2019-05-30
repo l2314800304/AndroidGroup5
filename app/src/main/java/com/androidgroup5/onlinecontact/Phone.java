@@ -90,6 +90,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -100,6 +101,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -110,6 +112,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -120,6 +123,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -130,6 +134,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -140,6 +145,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -150,6 +156,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -160,6 +167,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -170,6 +178,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -180,6 +189,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -190,6 +200,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -200,13 +211,14 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
         bt_call.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-                tempText = (TextView) findViewById(R.id.bt_call);
+                tempText = (TextView) findViewById(R.id.tv_text2);
                 Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:" + tempText.getText().toString().trim()));
                 startActivity(intent);
             }
@@ -214,14 +226,25 @@ public class Phone extends Activity {
 
         bt_delete.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                all = all.substring(0, all.length() - 1);
-                tv_text1.setText(all);
-                tv_text2.setText(all);
+                tempText = (TextView) findViewById(R.id.tv_text2);
+                 if(tempText.getText().toString().length()>0)
+                  {
+                    all = all.substring(0, all.length() - 1);
+                     tv_text1.setText(all);
+                     tv_text2.setText(all);
+                  }
+                else
+                {
+                    bt_delete.setEnabled(false);
+                    //bt_delete.setEnabled(true);
+                }
+
             }
         });
         bt_function.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Phone.this.finish();
+
             }
         });
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
