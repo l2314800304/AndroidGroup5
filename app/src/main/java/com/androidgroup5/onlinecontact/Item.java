@@ -1,16 +1,15 @@
 package com.androidgroup5.onlinecontact;
 
-public class Item{
+public class Item {
     private String name;
     private String phone;
     private Boolean checked;
 
-    public Item(String name,String phone,Boolean checked) {
+    public Item(String name, String phone,Boolean checked) {
         this.name = name;
         this.phone = phone;
         this.checked = checked;
     }
-
     public String getName() {
         return name;
     }
