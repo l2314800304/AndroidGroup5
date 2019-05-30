@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -50,6 +51,7 @@ public class MyAdapter extends BaseAdapter {
      * 定义coverView的Recyler(缓存)，该类名自定义的
      */
     class ViewHodler{
+        ImageView tvimage;
         TextView tvName;
         TextView tvPhone;
         CheckBox ch_delete;
@@ -73,6 +75,7 @@ public class MyAdapter extends BaseAdapter {
             convertView=layoutInflater.inflate(R.layout.item_layout,parent,false);
             //产生缓存
             viewHodler=new ViewHodler();
+            viewHodler.tvimage=(ImageView)convertView.findViewById(R.id.tv_image);
             viewHodler.tvName=(TextView)convertView.findViewById(R.id.tv_name);
             viewHodler.tvPhone=(TextView)convertView.findViewById(R.id.tv_phone);
             viewHodler.ch_delete= (CheckBox) convertView.findViewById(R.id.ch_delete);
@@ -84,6 +87,7 @@ public class MyAdapter extends BaseAdapter {
         }
         //为缓存的布局ViewHodler控件设置新的数据
         Item currItem=data.get(position);
+        viewHodler.tvimage.setImageResource(currItem.getImage());
         viewHodler.tvName.setText(currItem.getName());
         viewHodler.tvPhone.setText(currItem.getPhone());
         viewHodler.ch_delete.setChecked(currItem.getChecked());
