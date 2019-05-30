@@ -44,7 +44,7 @@ public class Insert extends AppCompatActivity {
     private String corpPhone = contactCorpPhone.getText().toString().trim();
     private String corpEmail = contactCorpEmail.getText().toString().trim();
 
-    private List<ContactInfos> list = new ArrayList();
+    private List<ContactInfos> list = new ArrayList();86
 
     private Handler handler = new Handler() {
 
@@ -85,8 +85,11 @@ public class Insert extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert);
+
         init();
+
         judge();
+
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
