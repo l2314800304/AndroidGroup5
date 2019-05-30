@@ -44,7 +44,7 @@ public class Delete extends AppCompatActivity {
         data=new ArrayList<>();
         for (int i = 0; i < u.getContact().size(); i++) {
 
-            data.add(new Item(u.getContact().get(i).getName(),false));
+            data.add(new Item(u.getContact().get(i).getName(),u.getContact().get(i).getContactInfos().get(0).getNumber(),false));
         }
     }
     //返回数据给MyAdapter使用
