@@ -44,7 +44,7 @@ public class Insert extends AppCompatActivity {
     private String corpPhone = contactCorpPhone.getText().toString().trim();
     private String corpEmail = contactCorpEmail.getText().toString().trim();
 
-    private List<ContactInfos> list = new ArrayList();86
+    private List<ContactInfos> list = new ArrayList();
 
     private Handler handler = new Handler() {
 
