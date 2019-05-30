@@ -59,62 +59,31 @@ public class EditContactDetailActivity extends AppCompatActivity {
         user=((UserParameter)getApplication()).getUser();
         init();
     }
-
-    public void GetAllInfo(String UserName){
-        HashMap<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("UserName", UserName);
-        paramsMap.put("Contact", "[]");
-        paramsMap.put("Record", "[]");
-        FormBody.Builder builder = new FormBody.Builder();
-        for (String key : paramsMap.keySet()) {
-            builder.add(key, paramsMap.get(key));
-        }
-        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(1200, TimeUnit.SECONDS)
-                .readTimeout(1200, TimeUnit.SECONDS).build();
-        RequestBody body = builder.build();
-        Request request = new Request.Builder()
-                .url("http://114.116.171.181:80/SyncAllContactByUserName.ashx")
-                .post(body)
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-                user=null;
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String json = response.body().string();
-                    Gson gson = new Gson();
-                    user = gson.fromJson(json, User.class);
-                    Message message = new Message();
-                    message.what = 10;
-                    handler.sendMessage(message);
-                } else {
-                    user=null;
-                }
-            }
-        });
-    }
-    public void UpadteContact(){
+    public void UpadteContact(String ID,String Name,String Birthday,String Number,String Email){
         HashMap<String, String> paramsMap = new HashMap<>();
         Contact con=new Contact();
-        con.setName("123");
+        con.setName(Name);
         con.setID(0);
         con.setBirthday("");
         List<ContactInfos> info=new ArrayList<>();
         ContactInfos c=new ContactInfos();
         c.setEmailOrNumber(5);
         c.setID(0);
-        c.setNumber("17805593303");
+        c.setNumber(Number);
         c.setType("2");
         info.add(c);
+        if(!Email.isEmpty()){
+            ContactInfos c1=new ContactInfos();
+            c1.setEmailOrNumber(7);
+            c1.setID(0);
+            c1.setNumber(Email);
+            c1.setType("2");
+            info.add(c1);
+        }
         con.setContactInfos(info);
-        paramsMap.put("Contact_ID", "160000");
+        paramsMap.put("Contact_ID", ID);
         paramsMap.put("Contact", (new Gson().toJson(con)));
-        paramsMap.put("Birthday", "2019-04-20");
+        paramsMap.put("Birthday", Birthday);
         FormBody.Builder builder = new FormBody.Builder();
         for (String key : paramsMap.keySet()) {
             builder.add(key, paramsMap.get(key));
@@ -176,8 +145,9 @@ public class EditContactDetailActivity extends AppCompatActivity {
                     Toast.makeText(EditContactDetailActivity.this, "修改中...", Toast.LENGTH_LONG).show();
                     String contact_number = et_contact_number.getText().toString(),
                             contact_email = et_contact_email.getText().toString(),
-                            contact_type = et_contact_type.getText().toString();
-                    UpadteContact();
+                            contact_name = et_contact_type.getText().toString(),
+                            id="",birthday="";
+                    UpadteContact(id,contact_name,birthday,contact_number,contact_email);
                 } else {
                     Toast.makeText(EditContactDetailActivity.this, "修改失败，请检查所填写的信息！", Toast.LENGTH_LONG).show();
                 }

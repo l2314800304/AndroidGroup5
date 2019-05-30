@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.Intent;
 
+import com.androidgroup5.onlinecontact.EntityClass.User;
 import com.androidgroup5.onlinecontact.R;
+import com.androidgroup5.onlinecontact.UserParameter;
 
 import java.io.File;
 
@@ -23,6 +25,10 @@ public class QRCodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode);
+        int index = this.getIntent().getExtras().getInt("ContactNumber");
+        User u=((UserParameter)getApplication()).getLocal();
+        ContactName=u.getContact().get(0).getName();
+        ContactNumber=u.getContact().get(index).getContactInfos().get(0).getNumber();
         //内容
         final TextView tv_contactname = (TextView) findViewById(R.id.tv_contactname);
         tv_contactname.setText(ContactName);

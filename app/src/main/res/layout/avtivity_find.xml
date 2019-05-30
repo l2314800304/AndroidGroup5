@@ -25,7 +25,6 @@
             android:background="@color/whites"
             android:scaleType="fitXY"/>
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
