@@ -5,8 +5,9 @@ public class Item{
     private String phone;
     private Boolean checked;
 
-    public Item(String name,Boolean checked) {
+    public Item(String name,String phone,Boolean checked) {
         this.name = name;
+        this.phone = phone;
         this.checked = checked;
     }
 

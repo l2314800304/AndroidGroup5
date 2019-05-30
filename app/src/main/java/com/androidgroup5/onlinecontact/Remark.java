@@ -33,7 +33,7 @@ public class Remark extends AppCompatActivity {
             switch (msg.what) {
                 case 0:
                     Toast.makeText(Remark.this, "修改成功！返回详情页面...", Toast.LENGTH_LONG).show();
-                    //backToInsert();
+                    backToInsert();
                     break;
                 case 1:
                     Toast.makeText(Remark.this, "修改失败，请检查网络连接！", Toast.LENGTH_LONG).show();
@@ -107,9 +107,9 @@ public class Remark extends AppCompatActivity {
         });
     }
 
-    //private void backToInsert(){
-    //   startActivity(new Intent().setClass(Remark.this, Insert.class));
-    // }
+    private void backToInsert(){
+       startActivity(new Intent().setClass(Remark.this, Insert.class));
+     }
 
     private boolean checkData() {
         String
