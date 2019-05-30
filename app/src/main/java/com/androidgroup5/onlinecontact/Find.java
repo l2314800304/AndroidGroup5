@@ -95,7 +95,7 @@ public class Find extends AppCompatActivity {
                     for (int i = 0; i < u.getContact().size(); i++) {
                         int urlIndex = random.nextInt(URLS.length - 1);
                         int url = URLS[urlIndex];
-                        contactLists.add(new sContact(u.getContact().get(i).getName(), url));
+                        contactLists.add(new sContact(u.getContact().get(i).getName(),u.getContact().get(i).getContactInfos().get(0).getNumber(), url));
                     }
                     List<CNPinyin<sContact>> contactList = CNPinyinFactory.createCNPinyinList(contactLists);
                     Collections.sort(contactList);

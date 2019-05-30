@@ -12,6 +12,93 @@ namespace OnlineContact
     /// </summary>
     public class SyncAllContactByUserName : IHttpHandler
     {
+        RootObject Check(RootObject rb_local)
+        {
+            if(rb_local.Contact!=null)
+            for (int i = 0; i < rb_local.Contact.Count; i++)
+            {
+                for (int j = i + 1; j < rb_local.Contact.Count; j++)
+                {
+                    if (rb_local.Contact[i].Name.Equals(rb_local.Contact[j].Name) )
+                    {
+                        if (rb_local.Contact[i].ContactInfos != null && rb_local.Contact[i].ContactInfos.Count == rb_local.Contact[j].ContactInfos.Count)
+                            for (int m = 0; m < rb_local.Contact[i].ContactInfos.Count; m++)
+                            {
+                                if (!rb_local.Contact[i].ContactInfos[m].Number.Equals(rb_local.Contact[j].ContactInfos[m].Number))
+                                {
+                                    m = rb_local.Contact[i].ContactInfos.Count;
+                                }
+                                else if (m == rb_local.Contact[i].ContactInfos.Count - 1)
+                                {
+                                    rb_local.Contact.RemoveAt(j);
+                                    m = rb_local.Contact[i].ContactInfos.Count;
+                                    j--;
+                                }
+                            }
+                    }
+                    else
+                    {
+                        if(rb_local.Contact[i].ContactInfos!=null)
+                        for (int m = 0; m < rb_local.Contact[i].ContactInfos.Count; m++)
+                        {
+                            ContactInfos i1 = rb_local.Contact[i].ContactInfos[m];
+                            for (int n = m + 1; n < rb_local.Contact[i].ContactInfos.Count; n++)
+                            {
+                                ContactInfos i2 = rb_local.Contact[i].ContactInfos[n];
+                                if (i1.Number.Equals(i2.Number) && i1.Type.Equals(i2.Type) && i1.EmailOrNumber.Equals(i2.EmailOrNumber))
+                                {
+                                    rb_local.Contact[i].ContactInfos.RemoveAt(n);
+                                    n--;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return rb_local;
+        }
+        RootObject Check(RootObject rb_local, RootObject rb_cloud)
+        {
+            for (int i = 0; i < rb_local.Contact.Count; i++)
+            {
+                for (int j = i + 1; j < rb_local.Contact.Count; j++)
+                {
+                    if (rb_local.Contact[i].Name.Equals(rb_local.Contact[j].Name) && rb_local.Contact[i].ContactInfos.Count == rb_local.Contact[j].ContactInfos.Count)
+                    {
+                        for (int m = 0; m < rb_local.Contact[i].ContactInfos.Count; m++)
+                        {
+                            if (!rb_local.Contact[i].ContactInfos[m].Number.Equals(rb_local.Contact[j].ContactInfos[m].Number))
+                            {
+                                m = rb_local.Contact[i].ContactInfos.Count;
+                            }
+                            else if (m == rb_local.Contact[i].ContactInfos.Count - 1)
+                            {
+                                rb_local.Contact.RemoveAt(j);
+                                m = rb_local.Contact[i].ContactInfos.Count;
+                                j--;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int m = 0; m < rb_local.Contact[i].ContactInfos.Count; m++)
+                        {
+                            ContactInfos i1 = rb_local.Contact[i].ContactInfos[m];
+                            for (int n = m + 1; n < rb_local.Contact[i].ContactInfos.Count; n++)
+                            {
+                                ContactInfos i2 = rb_local.Contact[i].ContactInfos[n];
+                                if (i1.Number.Equals(i2.Number) && i1.Type.Equals(i2.Type) && i1.EmailOrNumber.Equals(i2.EmailOrNumber))
+                                {
+                                    rb_local.Contact[i].ContactInfos.RemoveAt(n);
+                                    n--;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return rb_local;
+        }
 
         public void ProcessRequest(HttpContext context)
         {
@@ -21,6 +108,7 @@ namespace OnlineContact
             String record = context.Request["Record"];
             String res = "";
             RootObject rb_local = JsonConvert.DeserializeObject<RootObject>("{\"Contact\":" + contact + ",\"Record\":" + record + "}");
+            rb_local = Check(rb_local);
             String sql = "select * from user where UserName=@u ORDER BY ID;";
             MySqlParameter[] pms ={
                 new MySqlParameter("@u",UserName)
@@ -49,6 +137,7 @@ namespace OnlineContact
                     con.ContactInfos = new List<ContactInfos>();
                     con.ID = reader1.GetInt32(0) + "";
                     con.Name = reader1.GetString(2);
+                    con.Birthday = Convert.IsDBNull(reader1[3])?"":reader1.GetString(3);
                     MySqlHelper helper12 = new MySqlHelper();
                     MySqlDataReader reader12 = helper12.getMySqlReader("select * from contact_info where Contact_ID=" + reader1.GetInt32(0)+ "  ORDER BY ID");
                     List<ContactInfos> contactInfos = new List<ContactInfos>();
@@ -72,6 +161,7 @@ namespace OnlineContact
                 helper1.mysqlcom.Dispose();
                 helper1.mysqlcon.Close();
                 helper1.mysqlcon.Dispose();
+                rb_cloud = Check(rb_cloud);
                 sql = "select * from record where User_ID=@id ORDER BY ID;";
                 MySqlHelper helper2 = new MySqlHelper();
                 MySqlDataReader reader2 = helper2.getMySqlReader(sql, new MySqlParameter("@id", id));
@@ -107,25 +197,23 @@ namespace OnlineContact
                                     rb_local.Contact.RemoveAt(j);
                                     flag = true;
                                     j--;
-                                }
-                                for(int k = 0; k < a.ContactInfos.Count; k++)
-                                {
-                                    c = a.ContactInfos[k];
-                                    d = b.ContactInfos[k];
-                                    if (c.EmailOrNumber.Equals(d.EmailOrNumber)&&c.ID.Equals(d.ID)&&c.Number.Equals(d.Number
-                                        ) && c.Type.Equals(d.Type)&&k== a.ContactInfos.Count-1)
+                                }else
+                                    for(int k = 0; k < a.ContactInfos.Count; k++)
                                     {
-                                        rb_local.Contact.RemoveAt(j);
-                                        flag = true;
-                                        j--;
+                                        c = a.ContactInfos[k];
+                                        d = b.ContactInfos[k];
+                                        if (!c.EmailOrNumber.Equals(d.EmailOrNumber)||!c.Number.Equals(d.Number
+                                            ) ||! c.Type.Equals(d.Type))
+                                        {
+                                            k = a.ContactInfos.Count;
+                                        }
+                                        else if(k == a.ContactInfos.Count - 1)
+                                        {
+                                            rb_local.Contact.RemoveAt(j);
+                                            flag = true;
+                                            j--;
+                                        }
                                     }
-                                    else if(c.EmailOrNumber.Equals(d.EmailOrNumber) && c.ID.Equals(d.ID) && c.Number.Equals(d.Number) && c.Type.Equals(d.Type))
-                                    {}
-                                    else
-                                    {
-                                        k = a.ContactInfos.Count;
-                                    }
-                                }
                             }
                         }
                         if (flag == true)
@@ -146,20 +234,23 @@ namespace OnlineContact
                                         }
                                         for (int m = 0; m < a.ContactInfos.Count; m++)
                                         {
-                                            c = a.ContactInfos[m];
-                                            d = b.ContactInfos[m];
-                                            if (c.EmailOrNumber.Equals(d.EmailOrNumber) && c.ID.Equals(d.ID) && c.Number.Equals(d.Number
-                                                ) && c.Type.Equals(d.Type) && m == a.ContactInfos.Count - 1)
+                                            for (int n = 0; m < b.ContactInfos.Count; n++)
                                             {
-                                                rb_cloud.Contact.RemoveAt(k);
-                                                flag = true;
-                                                k--;
-                                            }
-                                            else if (c.EmailOrNumber.Equals(d.EmailOrNumber) && c.ID.Equals(d.ID) && c.Number.Equals(d.Number) && c.Type.Equals(d.Type))
-                                            { }
-                                            else
-                                            {
-                                                k = a.ContactInfos.Count;
+                                                c = a.ContactInfos[m];
+                                                d = b.ContactInfos[n];
+                                                if (c.EmailOrNumber.Equals(d.EmailOrNumber) && c.Number.Equals(d.Number
+                                                    ) && c.Type.Equals(d.Type) && m == a.ContactInfos.Count - 1)
+                                                {
+                                                    rb_cloud.Contact.RemoveAt(k);
+                                                    flag = true;
+                                                    k--;
+                                                }
+                                                else if (c.EmailOrNumber.Equals(d.EmailOrNumber) && c.Number.Equals(d.Number) && c.Type.Equals(d.Type))
+                                                { }
+                                                else
+                                                {
+                                                    k = a.ContactInfos.Count;
+                                                }
                                             }
                                         }
                                     }
@@ -219,7 +310,6 @@ namespace OnlineContact
                                 }
 
                             }
-                        res += "]}";
                     }
                     if (rb_local.Contact.Count != 0)
                     {
@@ -259,16 +349,16 @@ namespace OnlineContact
                     {
                         if (i == 0)
                         {
-                            res += "{\"ID\":" + (int)(id * 10000 + i) + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\"\",\"ContactInfos\":[";
+                            res += "{\"ID\":" + (int)(id * 10000 + i) + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\""+rb_local.Contact[i].Birthday+"\",\"ContactInfos\":[";
                         }
                         else
                         {
-                            res += ",{\"ID\":" + (int)(id * 10000 + i) + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\"\",\"ContactInfos\":[";
+                            res += ",{\"ID\":" + (int)(id * 10000 + i) + ",\"Name\":\"" + rb_local.Contact[i].Name + "\",\"Birthday\":\"" + rb_local.Contact[i].Birthday + "\",\"ContactInfos\":[";
                         }
                         if (rb_local.Contact[i].ContactInfos != null)
                             for (int j = 0; j < rb_local.Contact[i].ContactInfos.Count; j++)
                             {
-                                if (sql.Length < 75)
+                                if (j==0)
                                 {
                                     res += "{\"ID\":" + 0 + ",\"EmailOrNumber\":" + rb_local.Contact[i].ContactInfos[j].EmailOrNumber + ",\"Number\":\"" + rb_local.Contact[i].ContactInfos[j].Number + "\",\"Type\":\"" + rb_local.Contact[i].ContactInfos[j].Type + "\"}";
                                 }
