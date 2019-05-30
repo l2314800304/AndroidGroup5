@@ -1,7 +1,5 @@
 package com.androidgroup5.onlinecontact;
 
-
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,8 +14,8 @@ public class SkipActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_skip);
-        Button btn=findViewById(R.id.btn3);
+        setContentView(R.layout.skip_layout);
+        Button btn=findViewById(R.id.btn2);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -27,8 +25,16 @@ public class SkipActivity extends Activity {
 
             }
         });
+        Button bt=findViewById(R.id.btn4);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it2=new Intent();
+                it2.setClass(SkipActivity.this,Updatemm.class);
+                SkipActivity.this.startActivity(it2);
 
+            }
+        });
     }
 
 }
-

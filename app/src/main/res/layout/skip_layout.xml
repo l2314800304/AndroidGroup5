@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/register"
     android:orientation="vertical"
     tools:context=".SkipActivity">
     <RelativeLayout
@@ -36,14 +36,6 @@
         android:background="@drawable/tou4"
         >
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/tou5"
-        >
-    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -51,21 +43,46 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/tou6"
-        >
-    </RelativeLayout>
+       ></RelativeLayout>
 
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/tou5"
+        >
+    </Button>
     <Button
         android:id="@+id/btn3"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@drawable/tou7"
+        android:background="@drawable/tou11"
         >
     </Button>
     <Button
+        android:id="@+id/btn4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/dianwei1"
-        android:id="@+id/btn2"/>
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/tou10"
+        >
+    </Button>
+    <Button
+        android:id="@+id/btn5"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="退出"
+        android:textColor="@android:color/black"
+        android:background="@android:color/holo_red_light"
+    ></Button>
+
+
+
 </LinearLayout>
