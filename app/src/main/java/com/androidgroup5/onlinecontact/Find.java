@@ -92,6 +92,12 @@ public class Find extends Activity {
                 startActivity(new Intent().setClass(Find.this, Insert.class));
             }
         });
+        ((ImageButton)findViewById(R.id.btn_find_delete)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent().setClass(Find.this, Delete.class));
+            }
+        });
         ((Button)findViewById(R.id.btn_export)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,8 +119,7 @@ public class Find extends Activity {
             public void onCharIndexSelected(String currentIndex) {
                 if (currentIndex == null) {
                     tv_index.setVisibility(View.INVISIBLE);
-                } else {
-                    tv_index.setVisibility(View.VISIBLE);
+                } else {       tv_index.setVisibility(View.VISIBLE);
                     tv_index.setText(currentIndex);
                 }
             }
