@@ -7,15 +7,16 @@
     android:background="@drawable/register"
     android:orientation="vertical"
     tools:context=".SkipActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/tou1"
-            ></RelativeLayout>
+            android:background="@drawable/tou1"></RelativeLayout>
 
         <Button
             android:id="@+id/btn2"
@@ -23,37 +24,33 @@
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/tou5"
-            >
-        </Button>
+            android:background="@drawable/tou5"></Button>
+
         <Button
             android:id="@+id/btn3"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/tou11"
-            >
-        </Button>
+            android:background="@drawable/tou11"></Button>
+
         <Button
             android:id="@+id/btn4"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/tou10"
-            >
-        </Button>
+            android:background="@drawable/tou10"></Button>
+
         <Button
             android:id="@+id/btn5"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="退出"
-            android:textColor="@android:color/black"
             android:background="@android:color/holo_red_light"
-            ></Button>
+            android:text="退出"
+            android:textColor="@android:color/black"></Button>
 
     </LinearLayout>
 

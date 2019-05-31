@@ -6,25 +6,24 @@
     android:orientation="vertical"
     tools:context="com.androidgroup5.onlinecontact.Delete">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp">
 
-            <TextView
-                android:id="@+id/tv"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:text="选择删除的联系人" />
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:text="选择删除的联系人" />
 
-            <CheckBox
-                android:id="@+id/che_all"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="全选" />
-        </RelativeLayout>
+        <CheckBox
+            android:id="@+id/che_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="全选" />
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -37,8 +36,7 @@
             <ListView
                 android:id="@+id/lv_data"
                 android:layout_width="match_parent"
-                android:layout_height="580dp">
-            </ListView>
+                android:layout_height="580dp"></ListView>
         </LinearLayout>
     </ScrollView>
 
