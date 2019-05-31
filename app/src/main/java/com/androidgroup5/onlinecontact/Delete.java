@@ -1,5 +1,6 @@
 package com.androidgroup5.onlinecontact;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -47,60 +48,42 @@ public class Delete extends AppCompatActivity {
     private CheckBox che_all;
     //声明一个集合（数据源）
     private List<Item> data;
-    //private List<Integer> index;
     //定义自定义适配器
     private MyAdapter myAdapter;
+
     //给数据源添加数据
-    /*private Handler handler = new Handler() {
+    private void initdata() {
 
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 0:
-                    Toast.makeText(Delete.this, "删除成功！返回主页面...", Toast.LENGTH_LONG).show();
-                    break;
-                case 1:
-                    Toast.makeText(Delete.this, "删除失败，请检查网络连接！", Toast.LENGTH_LONG).show();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-    };*/
-    private void initdata(){
-
-        data=new ArrayList<>();
+        data = new ArrayList<>();
         for (int i = 0; i < u.getContact().size(); i++) {
             Random random = new Random(System.currentTimeMillis());
             int[] URLS = {R.drawable.header0, R.drawable.header1, R.drawable.header2, R.drawable.header3};
             int urlIndex = random.nextInt(URLS.length - 1);
             int url = URLS[urlIndex];
-            data.add(new Item(u.getContact().get(i).getName(),u.getContact().get(i).getContactInfos().get(0).getNumber(),false,url));
+            data.add(new Item(u.getContact().get(i).getName(), u.getContact().get(i).getContactInfos().get(0).getNumber(), false, url));
         }
     }
+
     //返回数据给MyAdapter使用
-    public  List<Item> getData(){
+    public List<Item> getData() {
         return this.data;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        u=((UserParameter) getApplication()).getLocal();
-        //index=new ArrayList<>();
-
+        u = ((UserParameter) getApplication()).getLocal();
         setContentView(R.layout.activity_delete);
         //获取listView
-        lv_data= (ListView) findViewById(R.id.lv_data);
+        lv_data = (ListView) findViewById(R.id.lv_data);
         //获取控件
-        btn_delete= (Button) findViewById(R.id.btn_delete);
-        che_all= (CheckBox) findViewById(R.id.che_all);
-        tv_show=(TextView)findViewById(R.id.tv);
+        btn_delete = (Button) findViewById(R.id.btn_delete);
+        che_all = (CheckBox) findViewById(R.id.che_all);
+        tv_show = (TextView) findViewById(R.id.tv);
         //初始化数据源
         initdata();
         //实例化自定义适配器，把listview传到自定义适配器中
-        myAdapter =new MyAdapter(this,lv_data);
+        myAdapter = new MyAdapter(this, lv_data);
         //绑定适配器
         lv_data.setAdapter(myAdapter);
         //初始化事件监听
@@ -117,11 +100,10 @@ public class Delete extends AppCompatActivity {
         che_all.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (data.size()!=0) {//判断列表中是否有数据
+                if (data.size() != 0) {//判断列表中是否有数据
                     if (isChecked) {
                         for (int i = 0; i < data.size(); i++) {
                             data.get(i).setChecked(true);
-
                         }
                         //通知适配器更新UI
                         myAdapter.notifyDataSetChanged();
@@ -132,7 +114,7 @@ public class Delete extends AppCompatActivity {
                         //通知适配器更新UI
                         myAdapter.notifyDataSetChanged();
                     }
-                }else {//若列表中没有数据则隐藏全选复选框
+                } else {//若列表中没有数据则隐藏全选复选框
                     che_all.setVisibility(View.GONE);
                 }
             }
@@ -151,7 +133,9 @@ public class Delete extends AppCompatActivity {
                         int[] URLS = {R.drawable.header0, R.drawable.header1, R.drawable.header2, R.drawable.header3};
                         int urlIndex = random.nextInt(URLS.length - 1);
                         int url = URLS[urlIndex];
-                        data.remove(new Item(u.getContact().get(i).getName(),u.getContact().get(i).getContactInfos().get(0).getNumber(),false,url));
+                        data.remove(new Item(u.getContact().get(i).getName(), u.getContact().get(i).getContactInfos().get(0).getNumber(), false, url));
+                        Toast.makeText(Delete.this, "删除成功！返回主页面...", Toast.LENGTH_LONG).show();
+                        backToInsert();
                         //index.add(i);
                     }
                 }
@@ -173,47 +157,10 @@ public class Delete extends AppCompatActivity {
                 }
             }
         });
-
     }
-    /*private void delete() {
-        String id="";
-        for(int i=0;i<index.size();i++){
-            if(i==0)id=""+i;
-            else  id=id+","+i;
-        }
-        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(20, TimeUnit.SECONDS).build();
-        Request request = new Request.Builder()
-                .url("http://114.116.171.181:80/Delete.ashx?Contact_ID="+ id)
-                .method("GET",null)
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Message message = new Message();
-                message.what = 1;
-                handler.sendMessage(message);
-                e.printStackTrace();
-            }
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if(response.isSuccessful()){//回调的方法执行在子线程。
-                    if (response.body().string().equals("OK")) {
-                        Message message = new Message();
-                        message.what = 0;
-                        handler.sendMessage(message);
-                    } else {
-                        Message message = new Message();
-                        message.what = 1;
-                        handler.sendMessage(message);
-                    }
-                }else{
-                    Message message = new Message();
-                    message.what = 1;
-                    handler.sendMessage(message);
-                }
-            }
-        });
-    }*/
+
+    private void backToInsert() {
+        startActivity(new Intent().setClass(Delete.this, Find.class));
+    }
 }
 
