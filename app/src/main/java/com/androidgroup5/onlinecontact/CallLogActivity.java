@@ -72,6 +72,7 @@ public class CallLogActivity extends Activity {
         setContentView(R.layout.activity_phonelist);
         initView();
         initContacts();
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(navigation.getMenu().getItem(1).getItemId());
@@ -87,6 +88,7 @@ public class CallLogActivity extends Activity {
         adapter = new callLogAdapter(this, dataList);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            //item点击事件
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mobile = dataList.get(position).get("number")
@@ -106,13 +108,17 @@ public class CallLogActivity extends Activity {
      */
     private List<Map<String, String>> getDataList() {
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{
+                        Manifest.permission.READ_CALL_LOG
+                }, 1016);
+            }
         }
 
         User u=((UserParameter)getApplication()).getLocal();
 
         List<Map<String, String>> list = new ArrayList<>();
-
 
         for (int i = 0; i<u.getRecord().size(); i++) {
             String[] columns = {
@@ -160,30 +166,31 @@ public class CallLogActivity extends Activity {
                 } else if ((Integer.parseInt(dayCurrent) - 1) == (Integer.parseInt(dayRecord))) {
                     //昨天
                     dayString = "昨天";
-                } else {
+                } else if ((Integer.parseInt(dayCurrent) - 2) == (Integer.parseInt(dayRecord))){
                     //前天
+                    dayString = "前天";
+                }else{
                     dayString = "更久之前";
                 }
-                long day_lead =getTimeDistance(new Date(dateLong),new Date());
-                if (day_lead < 2) {//只显示48小时以内通话记录，防止通话记录数据过多影响加载速度
-                    Map<String, String> map = new HashMap<>();
-                    //"未备注联系人"
-                    map.put("name", (name == null) ? "未备注联系人" : name);//姓名
-                    map.put("number", number);//手机号
-                    map.put("date", date);//通话日期
-                    // "分钟"
-                    map.put("duration", (duration / 60) + "分钟");//时长
-                    map.put("type", typeString);//类型
-                    map.put("time", time);//通话时间
-                    map.put("day", dayString);//
-                    // map.put("time_lead", TimeStampUtil.compareTime(date));
-                    list.add(map);
-                }else {
-                    return list;
-                }
+
+                //long day_lead =getTimeDistance(new Date(dateLong),new Date());
+                //if (day_lead < 3) {//只显示三天以内通话记录，防止通话记录数据过多影响加载速度
+                Map<String, String> map = new HashMap<>();
+                //"未备注联系人"
+                map.put("name", (name == null) ? "未备注联系人" : name);//姓名
+                map.put("number", number);//手机号
+                map.put("date", date);//通话日期
+                // "分钟"
+                map.put("duration", (duration / 60) + "分钟");//时长
+                map.put("type", typeString);//类型
+                map.put("time", time);//通话时间
+                map.put("day", dayString);//
+                // map.put("time_lead", TimeStampUtil.compareTime(date));
+                list.add(map);
 
             }
         }
+
         return list;
     }
     //验证手机号是否正确ֻ
