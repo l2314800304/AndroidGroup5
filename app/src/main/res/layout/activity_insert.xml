@@ -134,41 +134,18 @@
         android:paddingBottom="18dp"
         android:orientation="horizontal">
         <TextView
-            android:id="@+id/position"
+            android:id="@+id/contactCorpEmail"
             android:layout_width="203dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="#fff"
-            android:text="公司职位：" />
+            android:text="公司邮箱：" />
         <EditText
             android:id="@+id/Position"
             android:layout_width="206dp"
             android:layout_height="wrap_content"
             android:inputType="text"></EditText>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/otherinfo"
-        android:layout_width="203dp"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:textColor="#fff"
-        android:text="其它信息：" />
-
-    <EditText
-        android:id="@+id/otherInfo"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/tv_pass_register5"
-        android:background="@drawable/login_edit"
-        android:singleLine="false"
-        android:maxLines="5"
-        android:inputType="textMultiLine"
-        android:scrollHorizontally="false"
-        android:textSize="15sp"
-        android:hint="(50个字符以内)"
-        android:textColorHint="#aaa"
-        android:textColor="#fff"/>
 
     <LinearLayout
         android:id="@+id/seventh"

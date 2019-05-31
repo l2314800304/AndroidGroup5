@@ -1,20 +1,24 @@
 package com.androidgroup5.onlinecontact;
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.CallLog;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.androidgroup5.onlinecontact.EntityClass.User;
 import com.androidgroup5.onlinecontact.callLog.adapter.callLogAdapter;
 
 import java.text.SimpleDateFormat;
@@ -29,52 +33,53 @@ import java.util.regex.Pattern;
 
 import static android.icu.text.DateTimePatternGenerator.DAY;
 
-public class CallLogActivity extends AppCompatActivity {
+public class CallLogActivity extends Activity {
     private ListView listView;
     private List<Map<String, String>> dataList;
     private ContentResolver resolver;
-    private Uri callUri = CallLog.Calls.CONTENT_URI;
-    private String[] columns = {CallLog.Calls.CACHED_NAME// 通话记录的联系人
-            , CallLog.Calls.NUMBER// 通话记录的电话号码
-            , CallLog.Calls.DATE// 通话记录的日期
-            , CallLog.Calls.DURATION// 通话时长
-            , CallLog.Calls.TYPE};// 通话类型}
+
+
     private callLogAdapter adapter;
     private String mobile;//被授权人电话号码
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_contact:
+                    startActivity(new Intent().setClass(CallLogActivity.this,Find.class));
+                    return true;
+                case R.id.navigation_record:
+                    return true;
+                case R.id.navigation_sync:
+                    startActivity(new Intent().setClass(CallLogActivity.this,SyncAddressBook.class));
+                    return true;
+                case R.id.navigation_call:
+                    startActivity(new Intent().setClass(CallLogActivity.this,Phone.class));
+                    return true;
+                case R.id.navigation_mine:
+                    startActivity(new Intent().setClass(CallLogActivity.this,SkipActivity.class));
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phonelist);
         initView();
-        getPersimmionInfo();
+        initContacts();
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(navigation.getMenu().getItem(1).getItemId());
+
     }
 
     private void initView() {
         listView = findViewById(R.id.list_view);
-    }
-
-    //授权信息
-    private void getPersimmionInfo() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            //1. 检测是否添加权限   PERMISSION_GRANTED  表示已经授权并可以使用
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
-                //手机为Android6.0的版本,未授权则动态请求授权
-                //2. 申请请求授权权限
-                //1. Activity
-                // 2. 申请的权限名称
-                // 3. 申请权限的 请求码
-                ActivityCompat.requestPermissions(this, new String[]
-                        {Manifest.permission.READ_CALL_LOG//通话记录
-                        }, 1005);
-            } else {//手机为Android6.0的版本,权限已授权可以使用
-                // 执行下一步
-                initContacts();
-            }
-        } else {//手机为Android6.0以前的版本，可以使用
-            initContacts();
-        }
-
     }
 
     private void initContacts() {
@@ -100,33 +105,31 @@ public class CallLogActivity extends AppCompatActivity {
      * @return 读取到的数据
      */
     private List<Map<String, String>> getDataList() {
-        // 1.获得ContentResolver
-        resolver = getContentResolver();
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
         }
-        // 2.利用ContentResolver的query方法查询通话记录数据库
-        /**
-         * @param uri 需要查询的URI，（这个URI是ContentProvider提供的）
-         * @param projection 需要查询的字段
-         * @param selection sql语句where之后的语句
-         * @param selectionArgs ?占位符代表的数据
-         * @param sortOrder 排序方式
-         */
-        Cursor cursor = resolver.query(callUri, // 查询通话记录的URI
-                columns
-                , null, null, CallLog.Calls.DEFAULT_SORT_ORDER// 按照时间逆序排列，最近打的最先显示
-        );
-        // 3.通过Cursor获得数据
+
+        User u=((UserParameter)getApplication()).getLocal();
+
         List<Map<String, String>> list = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            String name = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME));
-            String number = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
-            long dateLong = cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE));
+
+
+        for (int i = 0; i<u.getRecord().size(); i++) {
+            String[] columns = {
+                    u.getRecord().get(i).getNumber(),// 通话记录的电话号码
+                    u.getRecord().get(i).getDate(),// 通话记录的日期
+                    u.getRecord().get(i).getDuration(),// 通话时长
+                    u.getRecord().get(i).getType() // 通话类型
+            };
+
+            String name = u.getContact().get(0).getName();
+            String number = columns[0];
+            long dateLong = Long.parseLong(columns[1]);
             String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(dateLong));
             String time = new SimpleDateFormat("HH:mm").format(new Date(dateLong));
 
-            int duration = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.DURATION));
-            int type = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.TYPE));
+            int duration = Integer.parseInt(columns[2]);
+            int type = Integer.parseInt(columns[3]);
 
             String dayCurrent = new SimpleDateFormat("dd").format(new Date());
             String dayRecord = new SimpleDateFormat("dd").format(new Date(dateLong));

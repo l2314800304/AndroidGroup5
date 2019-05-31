@@ -14,4 +14,15 @@ public class UserParameter extends Application {
     }
 
     User user;
+
+    public User getLocal() {
+        return local;
+    }
+
+    public void setLocal(User local) {
+        this.local = local;
+    }
+
+    User local;
+
 }

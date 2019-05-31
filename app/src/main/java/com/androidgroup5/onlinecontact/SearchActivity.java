@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -59,6 +60,14 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
@@ -71,7 +80,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         rv_main = (RecyclerView) findViewById(R.id.rv_main);
         final LinearLayoutManager manager = new LinearLayoutManager(this);
         rv_main.setLayoutManager(manager);
-        adapter = new SearchAdapter(new ArrayList<CNPinyinIndex<sContact>>());
+        adapter = new SearchAdapter(new ArrayList<CNPinyinIndex<sContact>>(),this);
         rv_main.setAdapter(adapter);
 
         final View decorView = this.getWindow().getDecorView();

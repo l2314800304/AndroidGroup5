@@ -1,12 +1,14 @@
 package com.androidgroup5.onlinecontact;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -20,12 +22,16 @@ import android.os.RemoteException;
 import android.os.TransactionTooLargeException;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -54,10 +60,34 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class SyncAddressBook extends AppCompatActivity {
+public class SyncAddressBook extends Activity {
     private String UserName = "";
     TextView state;
     User u = new User();
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_contact:
+                    startActivity(new Intent().setClass(SyncAddressBook.this,Find.class));
+                    return true;
+                case R.id.navigation_record:
+                    startActivity(new Intent().setClass(SyncAddressBook.this,CallLogActivity.class));
+                    return true;
+                case R.id.navigation_sync:
+                    return true;
+                case R.id.navigation_call:
+                    startActivity(new Intent().setClass(SyncAddressBook.this,Phone.class));
+                    return true;
+                case R.id.navigation_mine:
+                    startActivity(new Intent().setClass(SyncAddressBook.this,SkipActivity.class));
+                    return true;
+            }
+            return false;
+        }
+    };
     private Handler handler = new Handler() {
 
         @Override
@@ -89,7 +119,7 @@ public class SyncAddressBook extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync_address_book);
-        UserName = this.getIntent().getExtras().getString("UserName");
+        UserName = ((User)((UserParameter)getApplication()).getUser()).getUserName();
         state = (TextView) findViewById(R.id.txt_state);
         ((Button) findViewById(R.id.btn_sync)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +127,9 @@ public class SyncAddressBook extends AppCompatActivity {
                 Update();
             }
         });
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(navigation.getMenu().getItem(2).getItemId());
     }
 
     private void Update() {
@@ -105,8 +138,9 @@ public class SyncAddressBook extends AppCompatActivity {
         handler.sendMessage(message);
         HashMap<String, String> paramsMap = new HashMap<>();
         paramsMap.put("UserName", UserName);
-        paramsMap.put("Contact", (new Gson().toJson(GetContactFromLocal())));
-        paramsMap.put("Record", (new Gson().toJson(GetRecordFromLocal())));
+        User u1=((UserParameter) getApplication()).getLocal();
+        paramsMap.put("Contact", (new Gson().toJson(u1.getContact())));
+        paramsMap.put("Record", (new Gson().toJson(u1.getRecord())));
         FormBody.Builder builder = new FormBody.Builder();
         for (String key : paramsMap.keySet()) {
             //追加表单信息
@@ -137,6 +171,7 @@ public class SyncAddressBook extends AppCompatActivity {
                     String json = response.body().string();
                     Gson gson = new Gson();
                     u = gson.fromJson(json, User.class);
+                    ((UserParameter)getApplication()).setUser(u);
                     List<Contact> contact = u.getContact();
                     if(contact.size()>0)
                     syncTSContactsToContactsProvider(contact);
@@ -218,81 +253,12 @@ public class SyncAddressBook extends AppCompatActivity {
             }
         }
     }
-    private List<Contact> GetContactFromLocal() {
-        List<Contact> contacts = new ArrayList<Contact>();
-        Uri uri = ContactsContract.Contacts.CONTENT_URI;
-        ContentResolver contentResolver = SyncAddressBook.this.getContentResolver();
-        Cursor cursor = contentResolver.query(uri, null, null, null, null);
-        while (cursor.moveToNext()) {
-            Contact contact = new Contact();
-            List<ContactInfos> contactInfos = new ArrayList<ContactInfos>();
-            String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-            contact.setName(name);
-            String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-            Cursor phones = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                    null,
-                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id,
-                    null, null);
-            while (phones.moveToNext()) {
-                ContactInfos info = new ContactInfos();
-                String phoneNumber = phones.getString(phones.getColumnIndex(
-                        ContactsContract.CommonDataKinds.Phone.NUMBER));
-                //添加Phone的信息
-                String phoneType = phones.getString(phones.getColumnIndex(
-                        ContactsContract.CommonDataKinds.Phone.TYPE));
-                info.setEmailOrNumber(5);
-                info.setNumber(phoneNumber);
-                info.setType(phoneType);
-                contactInfos.add(info);
-            }
-            phones.close();
-            Cursor emails = contentResolver.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,
-                    null,
-                    ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id,
-                    null, null);
-            while (emails.moveToNext()) {
-                ContactInfos info = new ContactInfos();
-                String emailAddress = emails.getString(emails.getColumnIndex(
-                        ContactsContract.CommonDataKinds.Email.DATA));
-                String emailType = emails.getString(emails.getColumnIndex(
-                        ContactsContract.CommonDataKinds.Email.TYPE));
-                info.setEmailOrNumber(1);
-                info.setNumber(emailAddress);
-                info.setType(emailType);
-                contactInfos.add(info);
-            }
-            emails.close();
-            contact.setContactInfos(contactInfos);
-            contacts.add(contact);
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(true);
+            return true;
         }
-
-        cursor.close();
-        return contacts;
-    }
-
-    private List<Record> GetRecordFromLocal() {
-        List<Record> records = new ArrayList<Record>();
-        ContentResolver contentResolver = SyncAddressBook.this.getContentResolver();
-        Cursor recor = contentResolver.query(CallLog.Calls.CONTENT_URI,
-                null,
-                null,
-                null, null);
-        while (recor.moveToNext()) {
-            Record info = new Record();
-            int type = recor.getInt(recor.getColumnIndex(CallLog.Calls.TYPE));
-            String number = recor.getString(recor.getColumnIndex(
-                    CallLog.Calls.NUMBER));
-            String duration = recor.getString(recor.getColumnIndex(
-                    CallLog.Calls.DURATION));
-            String date = recor.getString(recor.getColumnIndex(
-                    CallLog.Calls.DATE));
-            info.setNumber(number);
-            info.setDuration(duration);
-            info.setDate(date);
-            info.setType(type + "");
-            records.add(info);
-        }
-        recor.close();
-        return records;
+        return super.onKeyDown(keyCode, event);
     }
 }

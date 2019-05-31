@@ -1,5 +1,6 @@
 package com.androidgroup5.onlinecontact.adapter;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -16,8 +17,9 @@ import com.androidgroup5.onlinecontact.stickyheader.StickyHeaderAdapter;
 public class ContactAdapter extends RecyclerView.Adapter<ContactHolder> implements StickyHeaderAdapter<HeaderHolder> {
 
     private final List<CNPinyin<sContact>> cnPinyinList;
-
-    public ContactAdapter(List<CNPinyin<sContact>> cnPinyinList) {
+    private Activity activity;
+    public ContactAdapter(List<CNPinyin<sContact>> cnPinyinList,Activity ac) {
+        activity=ac;
         this.cnPinyinList = cnPinyinList;
     }
 
@@ -29,7 +31,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactHolder> implemen
     @Override
     public ContactHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ContactHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.activity_main_item, parent, false));
+                .inflate(R.layout.activity_main_item, parent, false),activity);
     }
 
 

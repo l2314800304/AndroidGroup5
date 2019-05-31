@@ -1,5 +1,6 @@
 package com.androidgroup5.onlinecontact.adapter;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
@@ -17,8 +18,9 @@ import java.util.List;
 public class SearchAdapter extends RecyclerView.Adapter<ContactHolder> {
 
     private final List<CNPinyinIndex<sContact>> contactList;
-
-    public SearchAdapter(List<CNPinyinIndex<sContact>> contactList) {
+    private Activity activity;
+    public SearchAdapter(List<CNPinyinIndex<sContact>> contactList,Activity ac) {
+        activity=ac;
         this.contactList = contactList;
     }
 
@@ -30,7 +32,7 @@ public class SearchAdapter extends RecyclerView.Adapter<ContactHolder> {
     @Override
     public ContactHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ContactHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.activity_main_item, parent, false));
+                .inflate(R.layout.activity_main_item, parent, false),activity);
     }
 
     @Override

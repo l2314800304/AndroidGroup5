@@ -21,7 +21,7 @@ namespace OnlineContact
             Contact cont = JsonConvert.DeserializeObject<Contact>(contact);
             MySqlHelper helper = new MySqlHelper();
             helper.getMySqlCom("DELETE FROM Contact_Info where Contact_ID=" + Contact_ID);
-            if (helper.getMySqlCom("UPDATE Contact SET Name='" + cont.Name + "',Birthday='" + birthday + "'  where Contact_ID=" + Contact_ID) > 0)
+            if (helper.getMySqlCom("UPDATE Contact SET Name='" + cont.Name + "',Birthday='" + birthday + "'  where ID=" + Contact_ID) > 0)
             {
                 String sql = "insert into contact_info (EmailOrNumber,Number,Type,Contact_ID) values ";
                 if (cont.ContactInfos != null)

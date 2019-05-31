@@ -3,6 +3,10 @@ package com.androidgroup5.onlinecontact;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Contacts;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -28,16 +32,39 @@ public class Phone extends Activity {
     private Button bt_star;
     private Button bt_bottom;
     private Button bt_call;
-    private Button bt_all;
+    private Button bt_function;
 
     private TextView tempText;
     private String all = "";
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_contact:
+                    startActivity(new Intent().setClass(Phone.this,Find.class));
+                    return true;
+                case R.id.navigation_record:
+                    startActivity(new Intent().setClass(Phone.this,CallLogActivity.class));
+                    return true;
+                case R.id.navigation_sync:
+                    startActivity(new Intent().setClass(Phone.this,SyncAddressBook.class));
+                    return true;
+                case R.id.navigation_call:
+                    return true;
+                case R.id.navigation_mine:
+                    startActivity(new Intent().setClass(Phone.this,SkipActivity.class));
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone);
-
         tv_text1 = (TextView) findViewById(R.id.tv_text1);
         tv_text2 = (TextView) findViewById(R.id.tv_text2);
         bt_delete = (Button) findViewById(R.id.bt_delete);
@@ -54,9 +81,7 @@ public class Phone extends Activity {
         bt_star = (Button) findViewById(R.id.bt_star);
         bt_bottom = (Button) findViewById(R.id.bt_bottom);
         bt_call = (Button) findViewById(R.id.bt_call);
-        bt_all = (Button) findViewById(R.id.bt_all);
-
-
+        bt_function = (Button) findViewById(R.id.bt_function);
 
         bt_zero.setOnClickListener(new OnClickListener() {
 
@@ -65,6 +90,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -75,6 +101,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -85,6 +112,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -95,6 +123,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -105,6 +134,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -115,6 +145,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -125,6 +156,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -135,6 +167,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -145,6 +178,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -155,6 +189,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -165,6 +200,7 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
@@ -175,38 +211,45 @@ public class Phone extends Activity {
                 all += tempText.getText().toString();
                 tv_text1.setText(all);
                 tv_text2.setText(all);
+                bt_delete.setEnabled(true);
             }
         });
 
         bt_call.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-                tempText = (TextView) findViewById(R.id.bt_call);
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri
-                        .parse("tel:" + tempText.getText().toString().trim()));
-                startActivity(intent);
-            }
-        });
-
-        bt_all.setOnClickListener(new OnClickListener() {
-
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setData(Contacts.People.CONTENT_URI);
+                tempText = (TextView) findViewById(R.id.tv_text2);
+                Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:" + tempText.getText().toString().trim()));
                 startActivity(intent);
             }
         });
 
         bt_delete.setOnClickListener(new OnClickListener() {
-
             public void onClick(View v) {
-                all = all.substring(0, all.length() - 1);
-                tv_text1.setText(all);
-                tv_text2.setText(all);
+                tempText = (TextView) findViewById(R.id.tv_text2);
+                 if(tempText.getText().toString().length()>0)
+                  {
+                    all = all.substring(0, all.length() - 1);
+                     tv_text1.setText(all);
+                     tv_text2.setText(all);
+                  }
+                else
+                {
+                    bt_delete.setEnabled(false);
+                    //bt_delete.setEnabled(true);
+                }
+
             }
         });
+        bt_function.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                Phone.this.finish();
+
+            }
+        });
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(navigation.getMenu().getItem(3).getItemId());
 
     }
 }

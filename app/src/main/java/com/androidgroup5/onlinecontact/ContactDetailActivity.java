@@ -1,15 +1,20 @@
 package com.androidgroup5.onlinecontact;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.androidgroup5.onlinecontact.EntityClass.User;
 import com.androidgroup5.onlinecontact.R;
 import com.androidgroup5.onlinecontact.contextDetail.adapter.ContactDetailAdapter;
 
@@ -65,8 +71,9 @@ public class ContactDetailActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
+        //User u=((UserParameter)getApplication()).getLocal();
+        //u.getContact().get(0).getContactInfos().get(0).getEmailOrNumber();
         init();
-
     }
 
     @Override
@@ -90,9 +97,7 @@ public class ContactDetailActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -104,7 +109,6 @@ public class ContactDetailActivity extends Activity {
         displayListView(); //显示listView
         displayStarred(); //设置收藏/未收藏的图标
     }
-
     public void reInit() {
         readContactName(rawContactId);
         readContactBim(rawContactId);

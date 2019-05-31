@@ -4,11 +4,17 @@ public class Item{
     private String name;
     private String phone;
     private Boolean checked;
+    private int imgUrl;
 
-    public Item(String name,Boolean checked) {
+    public Item(String name,String phone,Boolean checked,int imgUrl) {
         this.name = name;
+        this.phone = phone;
         this.checked = checked;
+        this.imgUrl = imgUrl;
     }
+    public int getImage(){return imgUrl;}
+
+    public void setImgUrl(){this.imgUrl=imgUrl;}
 
     public String getName() {
         return name;

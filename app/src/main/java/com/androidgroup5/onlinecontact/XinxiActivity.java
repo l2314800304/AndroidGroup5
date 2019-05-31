@@ -11,6 +11,6 @@ public class XinxiActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_xinxi);
+        setContentView(R.layout.xinxi_layout);
     }
 }

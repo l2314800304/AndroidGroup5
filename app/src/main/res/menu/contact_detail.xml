@@ -1,10 +1,27 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.androidgroup5.onlinecontact.contextDetail.ContactDetailActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/navigation_contact"
+        android:icon="@drawable/showcontact_icon"
+        android:title="联系人" />
+
+    <item
+        android:id="@+id/navigation_record"
+        android:icon="@drawable/record_icon"
+        android:title="通话记录" />
+
+    <item
+        android:id="@+id/navigation_sync"
+        android:icon="@drawable/sync_icon"
+        android:title="同步" />
+    <item
+        android:id="@+id/navigation_call"
+        android:icon="@drawable/call_icon"
+        android:title="拨号" />
+    <item
+        android:id="@+id/navigation_mine"
+        android:icon="@drawable/mine_icon"
+        android:title="我的" />
+
 </menu>

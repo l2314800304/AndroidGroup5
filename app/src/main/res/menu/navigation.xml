@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_contact"
+        android:icon="@drawable/showcontact_icon"
+        android:title="联系人" />
+
+    <item
+        android:id="@+id/navigation_record"
+        android:icon="@drawable/record_icon"
+        android:title="通话记录" />
+
+    <item
+        android:id="@+id/navigation_sync"
+        android:icon="@drawable/sync_icon"
+        android:title="同步" />
+    <item
+        android:id="@+id/navigation_call"
+        android:icon="@drawable/call_icon"
+        android:title="拨号" />
+    <item
+        android:id="@+id/navigation_birthday"
+        android:icon="@drawable/birthday_icon"
+        android:title="生日" />
+    <item
+        android:id="@+id/navigation_mine"
+        android:icon="@drawable/mine_icon"
+        android:title="我的" />
+
+</menu>
