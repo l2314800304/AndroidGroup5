@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,13 +80,18 @@ public class Delete extends AppCompatActivity {
         //获取控件
         btn_delete = (Button) findViewById(R.id.btn_delete);
         che_all = (CheckBox) findViewById(R.id.che_all);
-        tv_show = (TextView) findViewById(R.id.tv);
         //初始化数据源
         initdata();
         //实例化自定义适配器，把listview传到自定义适配器中
         myAdapter = new MyAdapter(this, lv_data);
         //绑定适配器
         lv_data.setAdapter(myAdapter);
+        ((ImageButton)findViewById(R.id.cancel)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Delete.this.finish();
+            }
+        });
         //初始化事件监听
         initlistener();
     }

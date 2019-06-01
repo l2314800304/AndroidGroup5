@@ -163,7 +163,6 @@ public class Login extends AppCompatActivity {
                     u.setContact(GetContactFromLocal());
                     u.setRecord(GetRecordFromLocal());
                     p.setLocal(u);
-
                 }
             }.start();
             init();
