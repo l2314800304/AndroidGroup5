@@ -9,6 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white">
+        <Button
+            android:id="@+id/btn_sign_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:textSize="20sp"
+            android:text="< 返回"/>
         <!--顶部栏文字-->
         <TextView
             android:layout_width="wrap_content"
@@ -80,7 +87,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="20dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
         <Button
             android:id="@+id/btn_signIn"
             android:layout_width="match_parent"
@@ -89,5 +97,12 @@
             android:text="签到"
             android:textColor="@color/white"
             android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/txt_signCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="当前总计已签到0次"
+            android:gravity="center"/>
     </LinearLayout>
 </LinearLayout>

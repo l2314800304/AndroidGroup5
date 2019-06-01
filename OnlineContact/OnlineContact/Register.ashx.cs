@@ -22,14 +22,15 @@ namespace OnlineContact
                 Location = context.Request["Location"],
                 Remark = context.Request["Remark"];
             //构建数据库操作语句
-            String sql = "insert into user (UserName,Password,Sex,Location,Remark,Signcount) Values (@u,@p,@s,@l,@r,0);";
+            String sql = "insert into user (UserName,Password,Sex,Location,Remark,Signcount) Values (@u,@p,@s,@l,@r,@c);";
             //构建参数数组
             MySqlParameter[] pms={
                 new MySqlParameter("@u",UserName),
                 new MySqlParameter("@p", Password),
                 new MySqlParameter("@s", Sex),
                 new MySqlParameter("@l", Location),
-                new MySqlParameter("@r", Remark)
+                new MySqlParameter("@r", Remark),
+                new MySqlParameter("@c", 0)
             };
             //创建帮助类（自己写的）
             MySqlHelper helper = new MySqlHelper();

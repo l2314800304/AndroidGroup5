@@ -20,7 +20,7 @@ namespace OnlineContact
             MySqlHelper helper = new MySqlHelper();
             MySqlDataReader reader = helper.getMySqlReader(sql);
             reader.Read();
-            context.Response.Write("Sign:" + (reader.IsDBNull(6)?"":reader.GetString(6)) + ";SignCount:" + reader.GetInt32(7));
+            context.Response.Write("Sign:" + (reader.IsDBNull(6)?"":reader.GetString(6)) + ";SignCount:" + (reader.IsDBNull(6) ? "0":reader.GetInt32(7)+""));
             reader.Dispose();
             helper.mysqlcom.Dispose();
             helper.mysqlcon.Close();

@@ -76,6 +76,12 @@ public class SkipActivity extends Activity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(navigation.getMenu().getItem(4).getItemId());
+        ((Button)findViewById(R.id.btn_sign)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent().setClass(SkipActivity.this,SignDate.class));
+            }
+        });
     }
 
 }
