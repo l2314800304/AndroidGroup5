@@ -12,23 +12,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
+        <!--我的头像-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/tou1"></RelativeLayout>
-        <Button
-            android:id="@+id/btn_sign"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="签到"/>
+            android:background="@drawable/tou11"></RelativeLayout>
+        <!--我的性别-->
+
         <Button
             android:id="@+id/btn2"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/tou5"></Button>
+            android:background="@drawable/tou13"></Button>
+        <!--我的生日-->
 
         <Button
             android:id="@+id/btn3"
@@ -36,7 +34,8 @@
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/tou11"></Button>
+            android:background="@drawable/tou14"></Button>
+        <!--我的密码-->
 
         <Button
             android:id="@+id/btn4"
@@ -44,7 +43,31 @@
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/tou10"></Button>
+            android:background="@drawable/tou15"></Button>
+        <!--我的备注-->
+        <Button
+            android:id="@+id/btn6"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/tou16"></Button>
+    <!--我的信息-->
+        <Button
+            android:id="@+id/btn7"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/tou17"></Button>
+      <!--签到-->
+        <Button
+            android:id="@+id/btn_sign"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/tou19"/>
 
         <Button
             android:id="@+id/btn5"
@@ -55,6 +78,7 @@
             android:background="@android:color/holo_red_light"
             android:text="退出"
             android:textColor="@android:color/black"></Button>
+
 
     </LinearLayout>
 

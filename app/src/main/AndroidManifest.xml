@@ -48,7 +48,8 @@
         <activity android:name=".GuidePageActivity" />
         <activity android:name=".SkipActivity" />
         <activity android:name=".SignDate" />
-        <activity android:name=".Updatemm" />
+        <activity android:name=".Repassword" />
+        <activity android:name=".XinxiActivity" />
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/network_security_config" />

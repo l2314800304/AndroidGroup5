@@ -43,7 +43,7 @@ public class SkipActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.skip_layout);
-        Button btn=findViewById(R.id.btn2);
+        Button btn=findViewById(R.id.btn7);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,7 +53,7 @@ public class SkipActivity extends Activity {
 
             }
         });
-        Button btn3=findViewById(R.id.btn3);
+        Button btn3=findViewById(R.id.btn6);
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,13 +63,23 @@ public class SkipActivity extends Activity {
 
             }
         });
-        Button bt=findViewById(R.id.btn4);
+        Button bt=findViewById(R.id.btn3);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent it2=new Intent();
-                it2.setClass(SkipActivity.this,Updatemm.class);
+                it2.setClass(SkipActivity.this,Repassword.class);
                 SkipActivity.this.startActivity(it2);
+
+            }
+        });
+        Button btn5=findViewById(R.id.btn5);
+        btn5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it5=new Intent();
+                it5.setClass(SkipActivity.this,Login.class);
+                SkipActivity.this.startActivity(it5);
 
             }
         });
