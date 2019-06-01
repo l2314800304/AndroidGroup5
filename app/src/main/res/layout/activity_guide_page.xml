@@ -35,7 +35,7 @@
         android:layout_height="50dp"
         android:text="开启私人订制"
         android:textSize="20sp"
-        android:background="@drawable/btn_touming_kuang"
+        android:background="#F0F8FF"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="80dp"

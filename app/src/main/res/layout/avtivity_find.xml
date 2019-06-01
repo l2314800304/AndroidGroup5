@@ -16,18 +16,35 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:minHeight="48dp"
+            android:gravity="fill_horizontal"
             app:contentInsetRight="0dp"
             app:contentInsetStart="0dp"
-            android:gravity="right"
             app:titleMarginStart="0dp" >
-
-            <ImageButton
-                android:id="@+id/btn_find_insert"
-                android:layout_width="30dp"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
+                <ImageButton
+                    android:id="@+id/btn_find_insert"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/insert"
+                    android:background="@color/whites"
+                    android:scaleType="fitXY"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:src="@drawable/insert"
-                android:background="@color/whites"
-                android:scaleType="fitXY"/>
+                android:gravity="right">
+                <ImageButton
+                    android:id="@+id/btn_find_delete"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/whites"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/find_delete" />
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,15 +76,15 @@
                 android:layout_marginRight="1dp"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
-                app:charTextColor="#ff00ff"
-                app:indexTextColor="#ff00ff"
+                app:charTextColor="#c9c8c9"
+                app:indexTextColor="#c9c8c9"
                 app:indexTextSize="13sp" />
 
             <TextView android:id="@+id/tv_index"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_centerInParent="true"
-                android:textColor="#66FFFF"
+                android:textColor="#cbcece"
                 android:textSize="25sp"
                 android:visibility="invisible"
                 android:text="A"

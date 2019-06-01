@@ -114,7 +114,7 @@ public class Remark extends AppCompatActivity {
     }
 
     private void backToInsert(){
-       startActivity(new Intent().setClass(Remark.this, Insert.class));
+       startActivity(new Intent().setClass(Remark.this, SkipActivity.class));
      }
 
     private boolean checkData() {

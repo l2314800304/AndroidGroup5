@@ -56,7 +56,7 @@ public class callLogAdapter extends BaseAdapter {
             holder = (Holder) convertView.getTag();
         }
         /**
-         * 通话类型 此处可以根据类型进行逻辑处理，本demo忽略处理
+         * 通话类型 此处可以根据类型进行逻辑处理，这里忽略处理
          */
         if (TextUtils.equals((list.get(position).get("type") + ""), "打入")) { //"打入"
             holder.tvDuration.setText(list.get(position).get("duration") + "");// 通话时长

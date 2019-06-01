@@ -24,6 +24,7 @@ android {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
+    buildToolsVersion '28.0.3'
 }
 
 dependencies {
@@ -48,4 +49,7 @@ dependencies {
     implementation files('libs/BaiduLBS_Android.jar')
     implementation files('libs/httpmime-4.1.2.jar')
     implementation files('libs/IndoorscapeAlbumPlugin.jar')
+    // https://mvnrepository.com/artifact/com.google.android/flexbox
+    implementation group: 'com.google.android', name: 'flexbox', version: '1.0.0'
+
 }

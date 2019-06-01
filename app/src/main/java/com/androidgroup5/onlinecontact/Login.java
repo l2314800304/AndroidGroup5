@@ -143,20 +143,6 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        checkDangerousPermissions();
-        new Thread() {
-            @Override
-            public void run() {
-                ;
-                UserParameter p = (UserParameter) getApplication();
-                User u = new User();
-                u.setContact(GetContactFromLocal());
-                u.setRecord(GetRecordFromLocal());
-                p.setLocal(u);
-            }
-        }.start();
-        init();
         SharedPreferences sharedPreferences = getSharedPreferences("FirstRun", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if (sharedPreferences.getBoolean("guideTF", true)) {
@@ -165,7 +151,23 @@ public class Login extends AppCompatActivity {
             finish();
             editor.putBoolean("guideTF", false);
             editor.commit();
+        }else{
+            setContentView(R.layout.activity_login);
+            checkDangerousPermissions();
+            new Thread() {
+                @Override
+                public void run() {
+                    ;
+                    UserParameter p = (UserParameter) getApplication();
+                    User u = new User();
+                    u.setContact(GetContactFromLocal());
+                    u.setRecord(GetRecordFromLocal());
+                    p.setLocal(u);
+                }
+            }.start();
+            init();
         }
+
     }
 
     private List<Contact> GetContactFromLocal() {

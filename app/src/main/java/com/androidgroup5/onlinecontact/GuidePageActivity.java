@@ -2,7 +2,11 @@ package com.androidgroup5.onlinecontact;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -26,6 +30,29 @@ public class GuidePageActivity extends AppCompatActivity implements View.OnClick
     private GuideImageLayout guideImage;
     private Button startBtn;
 
+    public boolean checkDangerousPermissions() {
+        String[] permissions={
+                "android.permission.INTERNET",
+                "android.permission.READ_CONTACTS",
+                "android.permission.WRITE_CONTACTS",
+                "android.permission.WRITE_CALL_LOG",
+                "android.permission.READ_CALL_LOG",
+                "android.permission.READ_PHONE_STATE",
+                "android.permission.CALL_PHONE",
+                "android.permission.WRITE_EXTERNAL_STORAGE",
+                "android.permission.READ_EXTERNAL_STORAGE"};
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true;
+        }
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED || ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                ActivityCompat.requestPermissions(this, permissions, 1008);
+                return true;
+            }
+        }
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -34,6 +61,7 @@ public class GuidePageActivity extends AppCompatActivity implements View.OnClick
         initData();//初始化数据
         initView();//初始化控件
         initPageListener(); //ciewPage的滑动监听事件
+        checkDangerousPermissions();
 
     }
 
