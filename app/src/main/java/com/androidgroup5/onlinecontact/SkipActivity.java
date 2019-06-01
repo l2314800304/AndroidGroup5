@@ -82,6 +82,12 @@ public class SkipActivity extends Activity {
                 startActivity(new Intent().setClass(SkipActivity.this,SignDate.class));
             }
         });
+        ((Button)findViewById(R.id.btn_birthday)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent().setClass(SkipActivity.this,Birthday.class));
+            }
+        });
     }
 
 }
