@@ -33,7 +33,7 @@
         android:id="@+id/start_project"
         android:layout_width="170dp"
         android:layout_height="50dp"
-        android:text="开启私人订制"
+        android:text="点击使用"
         android:textSize="20sp"
         android:background="#F0F8FF"
         android:layout_centerHorizontal="true"

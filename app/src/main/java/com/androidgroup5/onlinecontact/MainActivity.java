@@ -69,6 +69,20 @@ public class MainActivity extends AppCompatActivity {
 
     };
 
+
+
+
+
+    public String[] GetSignDate(String response){
+        return response.split(";")[0].split(":")[1].split(",");
+    }
+    public int GetSignCount(String response){
+        return new Integer(response.split(";")[1].split(":")[1]);
+    }
+
+
+
+
     public void GetAllInfo(String UserName) {
         HashMap<String, String> paramsMap = new HashMap<>();
         paramsMap.put("UserName", UserName);
@@ -305,8 +319,10 @@ public class MainActivity extends AppCompatActivity {
                 case 52:
                     break;
                 case 61:
+                    startActivity(new Intent().setClass(MainActivity.this, SignDate.class));
                     break;
                 case 62:
+                    startActivity(new Intent().setClass(MainActivity.this, ActivitySlip.class));
                     break;
                 case 71:
                     startActivity(new Intent().setClass(MainActivity.this, Phone.class));

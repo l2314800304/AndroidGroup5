@@ -131,6 +131,15 @@ public class SignDate extends AppCompatActivity {
             });
         }
 
+    public void addRange(String[] date) {
+        ArrayList<sqlit> persons = new ArrayList<sqlit>();
+        sqlit person1;
+        for(int i=0;i<date.length;i++){
+            person1 = new sqlit(date[i], "true");
+            persons.add(person1);
+        }
+        dbManager.add(persons);
+    }
         //添加签到日期
         public void add(String date) {
             ArrayList<sqlit> persons = new ArrayList<sqlit>();
