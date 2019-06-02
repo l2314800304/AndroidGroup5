@@ -109,14 +109,19 @@ public class ContactDetailActivity extends Activity {
     }
     public void reInit() {
         User u=((UserParameter)getApplication()).getLocal();
-        Contact contactIndex = u.getContact().get(0);//Index
+        //u.getContact().get(0).getContactInfos().get(0).getEmailOrNumber();
+        Intent iIntent = getIntent();
+        int thisIndex = Integer.parseInt(iIntent.getStringExtra("index"));
+        Contact contactIndex = u.getContact().get(thisIndex);//Index
+
         contactId = contactIndex.getID();//ID
         contactName = contactIndex.getName();//姓名
         contactNumber = contactIndex.getContactInfos().get(0).getNumber();//电话
+
         //Intent intent = getIntent();
         //rawContactId = (int) intent.getLongExtra("rawContactId", 5364);
 
-        System.out.println("contactId " + contactId);
+        System.out.println("contactId " + contactId + ";contactNumber" + contactNumber);
 
         displayListView(); //显示listView
         displayStarred(); //设置收藏/未收藏的图标

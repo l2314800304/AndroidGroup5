@@ -102,12 +102,7 @@ public class SignDate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signdate);
         // 初始化DBManager
-        new Thread(){
-            @Override
-            public void run() {
-                GetSign();
-            }
-        };
+        GetSign();
         ((Button)findViewById(R.id.btn_sign_back)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

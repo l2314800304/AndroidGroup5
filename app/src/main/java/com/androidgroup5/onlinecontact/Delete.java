@@ -1,9 +1,14 @@
 package com.androidgroup5.onlinecontact;
 
+import android.content.ContentProviderOperation;
+import android.content.ContentUris;
 import android.content.Intent;
+import android.content.OperationApplicationException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.RemoteException;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.androidgroup5.onlinecontact.EntityClass.User;
 
 import java.io.IOException;
@@ -29,30 +35,15 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * listView中嵌入复选框实现单选、全选删除列表条目
- * 注意事项：
- *1.子布局中的checkBox以下两个属性（会导致onItemClickListener（即单个条目的点击事件）失效）：
- * android:clickable="false"
- * android:focusable="false"
- *2.在删除过程中，首先应该把勾选的删除内容添加到一个新的删除集合中，不能直接在数据源中进行删除，否则会报异常
- *3.在删除之后，并把删除集合中的内容清空
- */
 public class Delete extends AppCompatActivity {
     User u;
-    //定义TextView
     private TextView tv_show;
-    //定义listview
     private ListView lv_data;
-    //定义控件
     private Button btn_delete;
     private CheckBox che_all;
-    //声明一个集合（数据源）
     private List<Item> data;
-    //定义自定义适配器
     private MyAdapter myAdapter;
 
-    //给数据源添加数据
     private void initdata() {
 
         data = new ArrayList<>();
@@ -65,7 +56,6 @@ public class Delete extends AppCompatActivity {
         }
     }
 
-    //返回数据给MyAdapter使用
     public List<Item> getData() {
         return this.data;
     }
@@ -86,7 +76,7 @@ public class Delete extends AppCompatActivity {
         myAdapter = new MyAdapter(this, lv_data);
         //绑定适配器
         lv_data.setAdapter(myAdapter);
-        ((ImageButton)findViewById(R.id.cancel)).setOnClickListener(new View.OnClickListener() {
+        ((ImageButton) findViewById(R.id.cancel)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Delete.this.finish();
@@ -132,30 +122,27 @@ public class Delete extends AppCompatActivity {
                 //创建一个要删除内容的集合，不能直接在数据源data集合中直接进行操作，否则会报异常
                 List<Item> deleSelect = new ArrayList<Item>();
                 //把选中的条目要删除的条目放在deleSelect这个集合中
+                User u = ((UserParameter) getApplication()).getLocal();
+                List<String> ID=new ArrayList<>();
                 for (int i = 0; i < data.size(); i++) {
                     if (data.get(i).getChecked()) {
                         deleSelect.add(data.get(i));
-                        Random random = new Random(System.currentTimeMillis());
+                        ID.add(u.getContact().get(i).getID()+"");
                         int[] URLS = {R.drawable.header0, R.drawable.header1, R.drawable.header2, R.drawable.header3};
-                        int urlIndex = random.nextInt(URLS.length - 1);
-                        int url = URLS[urlIndex];
-                        data.remove(new Item(u.getContact().get(i).getName(), u.getContact().get(i).getContactInfos().get(0).getNumber(), false, url));
-                        Toast.makeText(Delete.this, "删除成功！返回主页面...", Toast.LENGTH_LONG).show();
-                        backToInsert();
-                        //index.add(i);
+                        u.getContact().remove(i);
+                        data.remove(i);
+                        i--;
                     }
                 }
+                ((UserParameter) getApplication()).setLocal(u);
                 //判断用户是否选中要删除的数据及是否有数据
-                if (deleSelect.size() != 0 && data.size() != 0) {
-                    //从数据源data中删除数据
-                    data.removeAll(deleSelect);
-                    //把deleSelect集合中的数据清空
-                    deleSelect.clear();
+                if (ID.size() != 0) {
                     //把全选复选框设置为false
                     che_all.setChecked(false);
                     //通知适配器更新UI
                     myAdapter.notifyDataSetChanged();
-                    //delete();
+                    deleteDB(ID);
+                    backToInsert();
                 } else if (data.size() == 0) {
                     Toast.makeText(Delete.this, "没有要删除的数据", Toast.LENGTH_SHORT).show();
                 } else if (deleSelect.size() == 0) {
@@ -164,7 +151,39 @@ public class Delete extends AppCompatActivity {
             }
         });
     }
-
+    private void deleteDB(List<String> ID){
+        ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+        // 先删除子表Contacts中的数据
+        for(int i=0;i<ID.size();i++){
+            ops.add(ContentProviderOperation
+                    .newDelete(ContactsContract.Contacts.CONTENT_URI)
+                    .withSelection(
+                            ContactsContract.Contacts._ID + "=?",
+                            new String[] { ID.get(i) })
+                    .build());
+            // 然后删除子表Data中的数据
+            ops.add(ContentProviderOperation
+                    .newDelete(ContactsContract.Data.CONTENT_URI)
+                    .withSelection(
+                            ContactsContract.Data.RAW_CONTACT_ID + "=?",
+                            new String[] { ID.get(i) })
+                    .build());
+            // 最后删除父表RawContacts中的数据
+            ops.add(ContentProviderOperation
+                    .newDelete(ContactsContract.RawContacts.CONTENT_URI)
+                    .withSelection(
+                            ContactsContract.RawContacts.CONTACT_ID
+                                    + "=?",
+                            new String[] { ID.get(i) })
+                    .build());
+        }
+        try {
+            getContentResolver().applyBatch(
+                    ContactsContract.AUTHORITY, ops);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void backToInsert() {
         startActivity(new Intent().setClass(Delete.this, Find.class));
     }

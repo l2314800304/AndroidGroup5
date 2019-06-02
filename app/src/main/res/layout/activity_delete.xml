@@ -2,19 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.androidgroup5.onlinecontact.Delete">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="40dp"
+        android:background="#fff">
 
         <ImageButton
             android:id="@+id/cancel"
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
+            android:layout_margin="5dp"
             android:background="@color/whites"
             android:scaleType="fitXY"
             android:src="@drawable/btn_back" />
@@ -26,35 +27,19 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:text="全选"
-            android:textSize="25dp"/>
+            android:textSize="20dp"/>
     </RelativeLayout>
-
-    <ScrollView
+    <ListView
+        android:id="@+id/lv_data"
         android:layout_width="match_parent"
-        android:layout_height="580dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ListView
-                android:id="@+id/lv_data"
-                android:layout_width="match_parent"
-                android:layout_height="580dp"></ListView>
-        </LinearLayout>
-    </ScrollView>
-
-    <RelativeLayout
+        android:layout_height="0dp"
+        android:layout_weight="1"></ListView>
+    <Button
+        android:id="@+id/btn_delete"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:id="@+id/btn_delete"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="删除" />
-
-    </RelativeLayout>
-
-
+        android:layout_height="40dp"
+        android:background="@color/red"
+        android:layout_margin="10dp"
+        android:textStyle="bold"
+        android:text="删除" />
 </LinearLayout>

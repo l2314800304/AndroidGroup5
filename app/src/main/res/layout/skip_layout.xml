@@ -20,6 +20,11 @@
         <!--我的性别-->
 
         <Button
+            android:id="@+id/btn_birthday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="生日提醒"/>
+        <Button
             android:id="@+id/btn2"
             android:layout_width="match_parent"
             android:layout_height="45dp"
