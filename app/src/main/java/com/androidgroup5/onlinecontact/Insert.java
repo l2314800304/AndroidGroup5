@@ -1,10 +1,12 @@
 package com.androidgroup5.onlinecontact;
 
 import android.content.ContentProviderOperation;
+import android.content.DialogInterface;
 import android.content.OperationApplicationException;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -67,6 +69,8 @@ public class Insert extends AppCompatActivity {
                 contactTelPhone.setText("");
                 contactCorpPhone.setText("");
                 contactCorpEmail.setText("");
+                showDialog("消息", "清除成功！");
+
             }
         });
 
@@ -76,16 +80,21 @@ public class Insert extends AppCompatActivity {
                 for(ContactInfos ci : list) {
                     insert(ci.getEmailOrNumber(), ci.getNumber(), ci.getType());
                 }
+                showDialog("消息","添加成功！");
             }
         });
     }
 
     private void insert(int emailOrNumber, String number, String type) {
         ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
+
         ContentProviderOperation op1 = ContentProviderOperation
-                .newInsert(ContactsContract.RawContacts.CONTENT_URI)
-                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
-                .build();// 得到了一个添加内容的对象
+                .newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(
+                        ContactsContract.Data.MIMETYPE,
+                        ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.Data.DATA1, name).build();// 得到了一个添加内容的对象
         operations.add(op1);
 
         ContentProviderOperation op2 = ContentProviderOperation
@@ -93,31 +102,11 @@ public class Insert extends AppCompatActivity {
                 .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
                 .withValue(
                         ContactsContract.Data.MIMETYPE,
-                        ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
-                .withValue(ContactsContract.Data.DATA1, "小明").build();// 得到了一个添加内容的对象
-        operations.add(op2);
-
-        ContentProviderOperation op3 = ContentProviderOperation
-                .newInsert(ContactsContract.Data.CONTENT_URI)
-                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-                .withValue(
-                        ContactsContract.Data.MIMETYPE,
                         ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
-                .withValue(ContactsContract.Data.DATA1, "1233232542")
-                .withValue(ContactsContract.Data.DATA2, "2")// data2=2即type=2，表示移动电话
+                .withValue(ContactsContract.Data.DATA1, number)
+                .withValue(ContactsContract.Data.DATA2, type)// data2=2即type=2，表示移动电话
                 .build();// 得到了一个添加内容的对象
-        operations.add(op3);
-
-        ContentProviderOperation op4 = ContentProviderOperation
-                .newInsert(ContactsContract.Data.CONTENT_URI)
-                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-                .withValue(
-                        ContactsContract.Data.MIMETYPE,
-                        ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
-                .withValue(ContactsContract.Data.DATA1, "test@email.com")
-                .withValue(ContactsContract.Data.DATA2, "2")// data2=2即type=2，表示工作邮箱
-                .build();// 得到了一个添加内容的对象
-        operations.add(op4);
+        operations.add(op2);
 
         try {
             getContext().getContentResolver().applyBatch("com.android.contacts",
@@ -142,24 +131,50 @@ public class Insert extends AppCompatActivity {
 
         if(!telPhone.isEmpty()) {
             ContactInfos ci = new ContactInfos();
-            ci.setEmailOrNumber(1);
-            ci.setType("私人座机");
+            ci.setEmailOrNumber(5);
+            ci.setType("2");
             ci.setNumber(telPhone);
+            list.add(ci);
+        }
+
+        if(!corpPhone.isEmpty()) {
+            ContactInfos ci = new ContactInfos();
+            ci.setEmailOrNumber(5);
+            ci.setType("3");
+            ci.setNumber(corpPhone);
+            list.add(ci);
+        }
+
+        if(!email.isEmpty()) {
+            ContactInfos ci = new ContactInfos();
+            ci.setEmailOrNumber(7);
+            ci.setType("1");
+            ci.setNumber(email);
             list.add(ci);
         }
 
         if(!corpEmail.isEmpty()) {
             ContactInfos ci = new ContactInfos();
-            ci.setEmailOrNumber(0);
-            ci.setType("公司邮箱");
+            ci.setEmailOrNumber(7);
+            ci.setType("2");
             ci.setNumber(corpEmail);
-        }
-
-        if(!corpPhone.isEmpty()) {
-            ContactInfos ci = new ContactInfos();
-            ci.setEmailOrNumber(1);
-            ci.setType("公司电话");
-            ci.setNumber(corpPhone);
+            list.add(ci);
         }
     }
+
+    private void showDialog(String title, String message){
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        AlertDialog dialog=builder.create();
+        dialog.show();
+    }
+
 }
