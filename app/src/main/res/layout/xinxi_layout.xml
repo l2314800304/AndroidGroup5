@@ -1,17 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/register"
-    android:orientation="vertical"
-    tools:context=".XinxiActivity">
-    <RelativeLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/xinxi"
-        ></RelativeLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        tools:context=".XinxiActivity">
 
-</LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/num2"
+            android:layout_marginRight="10dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/item_img3"
+                android:background="@drawable/about"
+                />
+            <TextView
+                android:id="@+id/item_text3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@id/item_img3"
+                android:gravity="center_vertical"
+                android:text="宋甜乐"
+                android:textColor="#050000"
+                android:textSize="17sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="@+id/num2"
+            android:id="@+id/num3"
+            android:layout_marginRight="10dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/item_img2"
+                android:background="@drawable/person"
+                />
+            <TextView
+                android:id="@+id/item_text2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@id/item_img2"
+                android:gravity="center_vertical"
+                android:text="男"
+                android:textColor="#050000"
+                android:textSize="17sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/num1"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="@+id/num5"
+            android:layout_marginRight="10dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/item_img4"
+                android:background="@drawable/lishi"
+                />
+            <TextView
+                android:id="@+id/dateDisplay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@id/item_img4"
+                android:textColor="#050000"
+                android:text="我的默认出生日期显示"
+                android:textSize="17sp" />
+
+            <Button
+                android:id="@+id/dateChoose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@android:color/holo_blue_light"
+                android:textColor="#050000"
+                android:text="选择日期" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+
+            >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/item_img6"
+                android:background="@drawable/person"
+                />
+            <TextView
+                android:id="@+id/item_text6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@id/item_img6"
+                android:gravity="center_vertical"
+                android:text="黄山学院南区"
+                android:textColor="#050000"
+                android:textSize="17sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/num5"
+            >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/item_img7"
+                android:background="@drawable/shoucang"
+                />
+            <TextView
+                android:id="@+id/item_text7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@id/item_img7"
+                android:gravity="center_vertical"
+                android:text="18705596283"
+                android:textColor="#050000"
+                android:textSize="17sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+
+            >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/item_img8"
+                android:background="@drawable/update"
+                />
+            <TextView
+                android:id="@+id/item_text8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@id/item_img8"
+                android:gravity="center_vertical"
+                android:text="我的签名：好好学习天天向上"
+                android:textColor="#050000"
+                android:textSize="17sp" />
+        </RelativeLayout>
+        <Button
+            android:id="@+id/btntuichu"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/holo_red_light"
+            android:text="退出"
+            android:textColor="@android:color/black"></Button>
+    </LinearLayout>

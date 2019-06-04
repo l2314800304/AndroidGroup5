@@ -73,6 +73,14 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/tou19"/>
+        <!--我的定位-->
+        <Button
+            android:id="@+id/btndingwei"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/tou18"/>
 
         <Button
             android:id="@+id/btn5"
