@@ -305,8 +305,10 @@ public class MainActivity extends AppCompatActivity {
                 case 52:
                     break;
                 case 61:
+                    startActivity(new Intent().setClass(MainActivity.this, SignDate.class));
                     break;
                 case 62:
+                    startActivity(new Intent().setClass(MainActivity.this, ActivitySlip.class));
                     break;
                 case 71:
                     startActivity(new Intent().setClass(MainActivity.this, Phone.class));

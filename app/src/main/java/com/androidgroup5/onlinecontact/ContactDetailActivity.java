@@ -45,7 +45,7 @@ public class ContactDetailActivity extends Activity {
     protected TextView tv1;
     protected String contactName;
     protected String contactNumber;
-    protected int contactId;
+    protected int contactId,index=0;
 
     protected Button starButton;
     protected TextView starTextView;
@@ -80,12 +80,34 @@ public class ContactDetailActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         return super.onOptionsItemSelected(item);
     }
 
     public void init() {
+        User u=((UserParameter)getApplication()).getLocal();
+        //u.getContact().get(0).getContactInfos().get(0).getEmailOrNumber();
+        Intent iIntent = getIntent();
+        int thisIndex = iIntent.getExtras().getInt("index");
+        Contact contactIndex = u.getContact().get(thisIndex);//Index
+        index=thisIndex;
+        contactId = contactIndex.getID();//ID
+        contactName = contactIndex.getName();//姓名
+        contactNumber = contactIndex.getContactInfos().get(0).getNumber();//电话
+
+        //Intent intent = getIntent();
+        //rawContactId = (int) intent.getLongExtra("rawContactId", 5364);
+
+        System.out.println("contactId " + contactId + ";contactNumber" + contactNumber);
+
+        displayListView(); //显示listView
+        displayStarred(); //设置收藏/未收藏的图标
+    }
+    public void reInit() {
         User u=((UserParameter)getApplication()).getLocal();
         //u.getContact().get(0).getContactInfos().get(0).getEmailOrNumber();
         Intent iIntent = getIntent();
@@ -104,20 +126,6 @@ public class ContactDetailActivity extends Activity {
         displayListView(); //显示listView
         displayStarred(); //设置收藏/未收藏的图标
     }
-    public void reInit() {
-        User u=((UserParameter)getApplication()).getLocal();
-        Contact contactIndex = u.getContact().get(0);//Index
-        contactId = contactIndex.getID();//ID
-        contactName = contactIndex.getName();//姓名
-        contactNumber = contactIndex.getContactInfos().get(0).getNumber();//电话
-        //Intent intent = getIntent();
-        //rawContactId = (int) intent.getLongExtra("rawContactId", 5364);
-
-        System.out.println("contactId " + contactId);
-
-        displayListView(); //显示listView
-        displayStarred(); //设置收藏/未收藏的图标
-    }
 
     public void clearData() {
         contactDisplay.clear();
@@ -130,7 +138,10 @@ public class ContactDetailActivity extends Activity {
         String phoneNumber = contactNumber;
         phoneNumMap.put("phone_png", R.drawable.ic_local_phone_black);
         phoneNumMap.put("phone_num", phoneNumber);
+        //phoneNumMap.put("phone_type_id", phoneNumberTypeId);
+        //phoneNumMap.put("phone_type", phoneNumberType);
         phoneNumMap.put("phone_location", "北京");
+        //phoneNumMap.put("phone_label", phoneNumberLabel);
         phoneNumMap.put("message_png", R.drawable.ic_message_black);
         contactDisplay.add(phoneNumMap);
 
@@ -172,10 +183,7 @@ public class ContactDetailActivity extends Activity {
     //编辑联系人详细信息
     public void editContactDetail(View view) {
         Intent intent = new Intent(this, EditContactDetailActivity.class);
-        intent.putExtra("ContactId", contactId);
-        //intent.setData(photoUri);
-        intent.putExtra("ContactDisplay", (Serializable) contactDisplay);
-        intent.putExtra("contactName", contactName);
+        intent.putExtra("index", index);
         startActivity(intent);
     }
 
@@ -197,7 +205,7 @@ public class ContactDetailActivity extends Activity {
             }
             starTextView.setText("收藏");
             count = 0;//cr.update(rawContactUri, values, null, null);
-            // String Where = ContactsContract.Data.RAW_CONTACT_ID + " = ? AND   " + ContactsContract.Data.MIMETYPE + " = ?";
+            //String Where = ContactsContract.Data.RAW_CONTACT_ID + " = ? AND   " + ContactsContract.Data.MIMETYPE + " = ?";
             // cr.update(rawContactUri, values, null, null);
             isStarred = false;
         } else {
@@ -206,8 +214,7 @@ public class ContactDetailActivity extends Activity {
                 starButton.setBackground(this.getResources().getDrawable(R.drawable.favorite_icon_normal_dark));
             }
             starTextView.setText("取消收藏");
-            count = 0;
-            //cr.update(rawContactUri, values, null, null);
+            count = 0;//cr.update(rawContactUri, values, null, null);
             //String Where = ContactsContract.Data.RAW_CONTACT_ID + " = ? AND   " + ContactsContract.Data.MIMETYPE + " = ?";
             //cr.update(rawContactUri, values, null, null);
             isStarred = true;

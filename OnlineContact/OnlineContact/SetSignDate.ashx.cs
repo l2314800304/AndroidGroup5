@@ -21,7 +21,7 @@ namespace OnlineContact
             MySqlDataReader reader = helper.getMySqlReader(sql);
             reader.Read();
             String Sign = ((reader.IsDBNull(0)?"":reader.GetString(0)).Equals("")?"": (reader.GetString(0)+",")+ DateTime.Today.Year+"-"+ DateTime.Today.Month+"-"+DateTime.Today.Day);
-            int SignCount =reader.GetInt32(1)+1;
+            int SignCount = reader.IsDBNull(1)?1:reader.GetInt32(1)+1;
             reader.Dispose();
             helper.mysqlcom.Dispose();
             helper.mysqlcon.Close();

@@ -1,28 +1,22 @@
 package com.androidgroup5.onlinecontact;
 
-import android.content.Intent;
+import android.content.ContentProviderOperation;
+import android.content.DialogInterface;
+import android.content.OperationApplicationException;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.os.RemoteException;
+import android.provider.ContactsContract;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.androidgroup5.onlinecontact.EntityClass.ContactInfos;
-
-import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import static com.baidu.mapapi.BMapManager.getContext;
+
 
 public class Insert extends AppCompatActivity {
     private TextView contactName;
@@ -45,30 +39,6 @@ public class Insert extends AppCompatActivity {
     private String corpEmail = contactCorpEmail.getText().toString().trim();
 
     private List<ContactInfos> list = new ArrayList();
-
-    private Handler handler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 0:
-                    Toast.makeText(Insert.this, "插入成功，返回主界面...", Toast.LENGTH_LONG).show();
-                    backToMainActivity();
-                    break;
-                case 1:
-                    Toast.makeText(Insert.this, "插入失败，请检查网络连接！", Toast.LENGTH_LONG).show();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-    };
-
-    private void backToMainActivity() {
-        startActivity(new Intent().setClass(Insert.this, MainActivity.class));
-    }
 
     private void init() {
         contactName = (TextView)findViewById(R.id.contactName);
@@ -99,6 +69,8 @@ public class Insert extends AppCompatActivity {
                 contactTelPhone.setText("");
                 contactCorpPhone.setText("");
                 contactCorpEmail.setText("");
+                showDialog("消息", "清除成功！");
+
             }
         });
 
@@ -108,84 +80,101 @@ public class Insert extends AppCompatActivity {
                 for(ContactInfos ci : list) {
                     insert(ci.getEmailOrNumber(), ci.getNumber(), ci.getType());
                 }
+                showDialog("消息","添加成功！");
             }
         });
     }
 
     private void insert(int emailOrNumber, String number, String type) {
-        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(20, TimeUnit.SECONDS).build();
-        Request request = new Request.Builder()
-                .url("http://114.116.171.181:80/Register.ashx?EmailOrNumber=" + URLEncoder.encode(new Integer(emailOrNumber).toString()) + "&Number=" + number + "&Type=" + URLEncoder.encode(type))
-                .method("GET",null)
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Message message = new Message();
-                message.what = 1;
-                handler.sendMessage(message);
-                e.printStackTrace();
-            }
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if(response.isSuccessful()){//回调的方法执行在子线程。
-                    if (response.body().string().equals("OK")) {
-                        Message message = new Message();
-                        message.what = 0;
-                        handler.sendMessage(message);
-                    } else {
-                        Message message = new Message();
-                        message.what = 1;
-                        handler.sendMessage(message);
-                    }
-                }else{
-                    Message message = new Message();
-                    message.what = 1;
-                    handler.sendMessage(message);
-                }
-            }
-        });
+        ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
+
+        ContentProviderOperation op1 = ContentProviderOperation
+                .newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(
+                        ContactsContract.Data.MIMETYPE,
+                        ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.Data.DATA1, name).build();// 得到了一个添加内容的对象
+        operations.add(op1);
+
+        ContentProviderOperation op2 = ContentProviderOperation
+                .newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(
+                        ContactsContract.Data.MIMETYPE,
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.Data.DATA1, number)
+                .withValue(ContactsContract.Data.DATA2, type)// data2=2即type=2，表示移动电话
+                .build();// 得到了一个添加内容的对象
+        operations.add(op2);
+
+        try {
+            getContext().getContentResolver().applyBatch("com.android.contacts",
+                    operations);// 执行批量操作
+        } catch (OperationApplicationException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     //初始化ContactInfos的ArrayList
     private void judge() {
-        if(!email.isEmpty()) {
-            ContactInfos  ci = new ContactInfos();
-            ci.setEmailOrNumber(0);
-            ci.setType("私人邮箱");
-            ci.setNumber(email);
-            list.add(ci);
-        }
 
         if(!mobilePhone.isEmpty()) {
             ContactInfos ci = new ContactInfos();
-            ci.setEmailOrNumber(1);
-            ci.setType("移动电话");
+            ci.setEmailOrNumber(5);
+            ci.setType("1");
             ci.setNumber(mobilePhone);
             list.add(ci);
         }
 
         if(!telPhone.isEmpty()) {
             ContactInfos ci = new ContactInfos();
-            ci.setEmailOrNumber(1);
-            ci.setType("私人座机");
+            ci.setEmailOrNumber(5);
+            ci.setType("2");
             ci.setNumber(telPhone);
+            list.add(ci);
+        }
+
+        if(!corpPhone.isEmpty()) {
+            ContactInfos ci = new ContactInfos();
+            ci.setEmailOrNumber(5);
+            ci.setType("3");
+            ci.setNumber(corpPhone);
+            list.add(ci);
+        }
+
+        if(!email.isEmpty()) {
+            ContactInfos ci = new ContactInfos();
+            ci.setEmailOrNumber(7);
+            ci.setType("1");
+            ci.setNumber(email);
             list.add(ci);
         }
 
         if(!corpEmail.isEmpty()) {
             ContactInfos ci = new ContactInfos();
-            ci.setEmailOrNumber(0);
-            ci.setType("公司邮箱");
+            ci.setEmailOrNumber(7);
+            ci.setType("2");
             ci.setNumber(corpEmail);
-        }
-
-        if(!corpPhone.isEmpty()) {
-            ContactInfos ci = new ContactInfos();
-            ci.setEmailOrNumber(1);
-            ci.setType("公司电话");
-            ci.setNumber(corpPhone);
+            list.add(ci);
         }
     }
+
+    private void showDialog(String title, String message){
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        AlertDialog dialog=builder.create();
+        dialog.show();
+    }
+
 }

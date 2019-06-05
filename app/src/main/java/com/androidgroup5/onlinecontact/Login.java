@@ -57,7 +57,6 @@ public class Login extends AppCompatActivity {
 
     private Button loginBtn;
 
-    private int userId;
     private User user;
     private ArrayList<String> names = new ArrayList<>();
     private Handler handler = new Handler() {
@@ -74,6 +73,8 @@ public class Login extends AppCompatActivity {
                         Intent intent = new Intent();
                         intent.setClass(Login.this, Find.class);
                         startActivity(intent);
+                    }else{
+                        Toast.makeText(Login.this,"登录失败...",Toast.LENGTH_LONG).show();
                     }
                     break;
             }

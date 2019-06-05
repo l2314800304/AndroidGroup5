@@ -10,7 +10,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidgroup5.onlinecontact.ContactDetailActivity;
+import com.androidgroup5.onlinecontact.EntityClass.Contact;
 import com.androidgroup5.onlinecontact.R;
+import com.androidgroup5.onlinecontact.UserParameter;
+
+import java.util.List;
 
 
 public class ContactHolder extends RecyclerView.ViewHolder {
@@ -28,7 +32,12 @@ public class ContactHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.startActivity(new Intent().setClass(activity.getApplicationContext(),ContactDetailActivity.class).putExtra("index",getLayoutPosition()));
+                List<Contact> contactList=((UserParameter)activity.getApplication()).getLocal().getContact();
+                int index=0,tmp=getLayoutPosition();
+                for(int i=0;i<contactList.size();i++)
+                    if(contactList.get(i).getName().equals(tv_name.getText().toString().split(" ")[0]))
+                        index=i;
+                activity.startActivity(new Intent().setClass(activity.getApplicationContext(),ContactDetailActivity.class).putExtra("index",index));
             }
         });
     }
