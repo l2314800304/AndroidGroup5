@@ -24,10 +24,8 @@ public class XinxiActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.xinxi_layout);
-
         btn = (Button) findViewById(R.id.dateChoose);
         dateDisplay = (TextView) findViewById(R.id.dateDisplay);
-
         btn.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -42,7 +40,6 @@ public class XinxiActivity extends Activity {
                 Intent it8=new Intent();
                 it8.setClass(XinxiActivity.this,SkipActivity.class);
                 XinxiActivity.this.startActivity(it8);
-
             }
         });
         final Calendar ca = Calendar.getInstance();

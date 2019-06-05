@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
 
@@ -50,7 +48,7 @@ public class Repassword extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.Repassword);
+        setContentView(R.layout.password);
         init();
         btn_cancel.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
