@@ -13,8 +13,7 @@ public class Myorention extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SDKInitializer.initialize(getApplicationContext());
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.myorention);
         mMapView = (MapView) findViewById(R.id.id_bmapView);//获取地图组件
         Button btn9=findViewById(R.id.dwtc);
         btn9.setOnClickListener(new View.OnClickListener() {

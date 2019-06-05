@@ -45,7 +45,7 @@ public class ContactDetailActivity extends Activity {
     protected TextView tv1;
     protected String contactName;
     protected String contactNumber;
-    protected int contactId;
+    protected int contactId,index=0;
 
     protected Button starButton;
     protected TextView starTextView;
@@ -92,9 +92,9 @@ public class ContactDetailActivity extends Activity {
         User u=((UserParameter)getApplication()).getLocal();
         //u.getContact().get(0).getContactInfos().get(0).getEmailOrNumber();
         Intent iIntent = getIntent();
-        int thisIndex = Integer.parseInt(iIntent.getStringExtra("index"));
+        int thisIndex = iIntent.getExtras().getInt("index");
         Contact contactIndex = u.getContact().get(thisIndex);//Index
-
+        index=thisIndex;
         contactId = contactIndex.getID();//ID
         contactName = contactIndex.getName();//姓名
         contactNumber = contactIndex.getContactInfos().get(0).getNumber();//电话
@@ -183,12 +183,7 @@ public class ContactDetailActivity extends Activity {
     //编辑联系人详细信息
     public void editContactDetail(View view) {
         Intent intent = new Intent(this, EditContactDetailActivity.class);
-        intent.putExtra("ContactId", contactId);
-        //intent.putExtra("RawContactId", rawContactId);
-        //intent.putExtra("hasImage", hasImage);
-        //intent.setData(photoUri);
-        intent.putExtra("ContactDisplay", (Serializable) contactDisplay);
-        intent.putExtra("contactName", contactName);
+        intent.putExtra("index", index);
         startActivity(intent);
     }
 

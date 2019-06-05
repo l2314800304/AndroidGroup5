@@ -15,10 +15,10 @@
             android:layout_marginRight="10dp">
 
             <ImageView
+                android:id="@+id/item_img3"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
-                android:id="@+id/item_img3"
                 android:background="@drawable/about"
                 />
             <TextView
@@ -27,25 +27,24 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="50dp"
-                android:layout_toRightOf="@id/item_img3"
+                android:layout_toRightOf="@+id/item_img3"
                 android:gravity="center_vertical"
                 android:text="宋甜乐"
                 android:textColor="#050000"
                 android:textSize="17sp" />
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/num3"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="@+id/num2"
-            android:id="@+id/num3"
             android:layout_marginRight="10dp">
 
             <ImageView
+                android:id="@+id/item_img2"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
-                android:id="@+id/item_img2"
                 android:background="@drawable/person"
                 />
             <TextView
@@ -66,14 +65,13 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="@+id/num5"
             android:layout_marginRight="10dp">
 
             <ImageView
+                android:id="@+id/item_img4"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
-                android:id="@+id/item_img4"
                 android:background="@drawable/lishi"
                 />
             <TextView
@@ -106,10 +104,10 @@
             >
 
             <ImageView
+                android:id="@+id/item_img6"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
-                android:id="@+id/item_img6"
                 android:background="@drawable/person"
                 />
             <TextView
@@ -133,10 +131,10 @@
             >
 
             <ImageView
+                android:id="@+id/item_img7"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
-                android:id="@+id/item_img7"
                 android:background="@drawable/shoucang"
                 />
             <TextView
@@ -156,14 +154,13 @@
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-
             >
 
             <ImageView
+                android:id="@+id/item_img8"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
-                android:id="@+id/item_img8"
                 android:background="@drawable/update"
                 />
             <TextView
