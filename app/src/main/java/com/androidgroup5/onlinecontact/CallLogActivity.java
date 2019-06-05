@@ -125,10 +125,11 @@ public class CallLogActivity extends Activity {
                     u.getRecord().get(i).getNumber(),// 通话记录的电话号码
                     u.getRecord().get(i).getDate(),// 通话记录的日期
                     u.getRecord().get(i).getDuration(),// 通话时长
-                    u.getRecord().get(i).getType() // 通话类型
+                    u.getRecord().get(i).getType(), // 通话类型
+                    u.getContact().get(i).getName() // 通话人姓名
             };
 
-            String name = u.getContact().get(0).getName();
+            String name = columns[4];
             String number = columns[0];
             long dateLong = Long.parseLong(columns[1]);
             String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(dateLong));
