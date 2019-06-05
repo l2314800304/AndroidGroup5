@@ -14,29 +14,57 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <EditText
-            android:id="@+id/et_contact_name"
+        <TextView
+            android:id="@+id/tv_contactedit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textColor="#fff"
             android:textSize="25sp"
             android:focusable="true"
-            android:focusableInTouchMode="true" />
+            android:focusableInTouchMode="true"
+            android:text="修改联系人信息"/>
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dip"
-        android:padding="15dip" >
+        android:padding="15dip">
+
+        <TextView
+            android:id="@+id/tv_contact_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="5dp"
+            android:text="姓名:"
+            android:textColor="#fff"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_contact_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_contact_name"
+            android:background="@drawable/login_edit"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:paddingLeft="9dp"
+            android:paddingTop="7dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="7dp"
+            android:singleLine="true"
+            android:textColor="#fff"
+            android:textColorHint="#aaa"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/tv_contact_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="5dp"
+            android:layout_below="@id/et_contact_name"
+            android:layout_marginTop="8dp"
             android:text="号码:"
             android:textColor="#fff"
             android:textSize="14sp" />
@@ -47,118 +75,46 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_contact_number"
             android:background="@drawable/login_edit"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:textColorHint="#aaa"
-            android:textColor="#fff"
-            android:paddingBottom="7dp"
             android:paddingLeft="9dp"
-            android:paddingRight="8dp"
             android:paddingTop="7dp"
-            android:singleLine="true"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/tv_contact_birthday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/et_contact_number"
-            android:layout_marginTop="8dp"
-            android:text="生日:"
-            android:textColor="#fff"
-            android:textSize="14sp" />
-
-        <EditText
-            android:id="@+id/et_contact_birthday"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_contact_birthday"
-            android:background="@drawable/login_edit"
-            android:textColorHint="#aaa"
-            android:textColor="#fff"
+            android:paddingRight="8dp"
             android:paddingBottom="7dp"
-            android:paddingLeft="9dp"
-            android:paddingRight="8dp"
-            android:paddingTop="7dp"
             android:singleLine="true"
-            android:textSize="15sp" />
-        <TextView
-            android:id="@+id/tv_contact_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/et_contact_birthday"
-            android:layout_marginTop="8dp"
-            android:text="电子邮箱:"
             android:textColor="#fff"
-            android:textSize="14sp" />
-        <EditText
-            android:id="@+id/et_contact_email"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_contact_email"
-            android:background="@drawable/login_edit"
             android:textColorHint="#aaa"
-            android:textColor="#fff"
-            android:paddingBottom="7dp"
-            android:paddingLeft="9dp"
-            android:paddingRight="8dp"
-            android:paddingTop="7dp"
-            android:singleLine="true"
-            android:textSize="15sp" />
-        <TextView
-            android:id="@+id/tv_contact_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/et_contact_email"
-            android:layout_marginTop="8dp"
-            android:text="号码类型:"
-            android:textColor="#fff"
-            android:textSize="14sp" />
-        <EditText
-            android:id="@+id/et_contact_type"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_contact_type"
-            android:background="@drawable/login_edit"
-            android:textColorHint="#aaa"
-            android:textColor="#fff"
-            android:paddingBottom="7dp"
-            android:paddingLeft="9dp"
-            android:paddingRight="8dp"
-            android:paddingTop="7dp"
-            android:singleLine="true"
             android:textSize="15sp" />
 
         <Button
-            android:id="@+id/btn_backToDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_below="@id/et_contact_type"
-            android:layout_alignRight="@id/et_contact_type"
+            android:id="@+id/btn_update"
+            android:layout_width="306dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/et_contact_number"
+            android:layout_alignRight="@id/et_contact_number"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="120dp"
+            android:layout_marginTop="53dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/login_btn_ok"
+            android:drawablePadding="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="保存"
+            android:textSize="21dp" />
+
+        <Button
+            android:id="@+id/btn_btn_backToDetail"
+            android:layout_width="306dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/btn_update"
+            android:layout_alignRight="@id/et_contact_number"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="29dp"
+            android:layout_marginRight="13dp"
             android:background="@drawable/login_btn_ok"
             android:drawablePadding="5dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="返回"
-            android:textSize="15dp" />
-
-        <Button
-            android:id="@+id/btn_update"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_alignRight="@id/et_contact_type"
-            android:layout_below="@id/et_contact_type"
-            android:background="@drawable/login_btn_ok"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:drawablePadding="5dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:text="保存"
-            android:textSize="15dp" />
+            android:textSize="21dp" />
     </RelativeLayout>
 
 </LinearLayout>

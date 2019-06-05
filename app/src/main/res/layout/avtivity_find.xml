@@ -42,8 +42,7 @@
                     android:layout_width="30dp"
                     android:layout_height="match_parent"
                     android:background="@color/whites"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/find_delete" />
+                    android:scaleType="fitXY" />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout

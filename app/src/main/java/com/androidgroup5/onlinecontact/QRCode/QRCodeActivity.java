@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Button;
 import android.content.Intent;
 
 import com.androidgroup5.onlinecontact.EntityClass.User;
@@ -25,11 +27,18 @@ public class QRCodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode);
-        int index = this.getIntent().getExtras().getInt("contact_index");
+        int index = this.getIntent().getExtras().getInt("index");
         User u=((UserParameter)getApplication()).getLocal();
         ContactName=u.getContact().get(index).getName();
         ContactNumber=u.getContact().get(index).getContactInfos().get(0).getNumber();
         //内容
+        final Button btn_backToDetail = (Button) findViewById(R.id.btn_backToDetail);
+        btn_backToDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backToDetail();
+            }
+        });
         final TextView tv_contactname = (TextView) findViewById(R.id.tv_contactname);
         tv_contactname.setText(ContactName);
         //显示二维码图片
@@ -66,5 +75,18 @@ public class QRCodeActivity extends AppCompatActivity {
             }
         }
         return context.getFilesDir().getAbsolutePath();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void backToDetail() {
+        moveTaskToBack(true);
     }
 }

@@ -29,4 +29,18 @@
         android:textSize="14sp"
         android:textColor="@color/whites"/>
 
+    <Button
+        android:id="@+id/btn_backToDetail"
+        android:layout_width="306dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="53dp"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/login_btn_ok"
+        android:drawablePadding="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="返回"
+        android:textSize="21dp" />
+
 </LinearLayout>

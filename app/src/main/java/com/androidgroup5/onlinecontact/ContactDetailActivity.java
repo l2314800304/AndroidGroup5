@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.androidgroup5.onlinecontact.EntityClass.Contact;
 import com.androidgroup5.onlinecontact.EntityClass.User;
+import com.androidgroup5.onlinecontact.QRCode.QRCodeActivity;
 import com.androidgroup5.onlinecontact.R;
 import com.androidgroup5.onlinecontact.contextDetail.adapter.ContactDetailAdapter;
 
@@ -187,9 +188,11 @@ public class ContactDetailActivity extends Activity {
         startActivity(intent);
     }
 
-    //发送联系人详细信息 这里可以换成RQCode
+    //发送联系人详细信息 这里可以换成QRCode
     public void sendContactDetail(View view) {
-
+        Intent intent = new Intent(this, QRCodeActivity.class);
+        intent.putExtra("index", index);
+        startActivity(intent);
     }
 
     //收藏联系人
