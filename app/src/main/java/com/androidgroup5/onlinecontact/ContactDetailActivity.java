@@ -162,8 +162,7 @@ public class ContactDetailActivity extends Activity {
         tv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Uri uri = Uri.parse("tel:" + phoneNumber);
-                Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+                Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:" + phoneNumber));
                 startActivity(intent);
 
             }
@@ -173,8 +172,7 @@ public class ContactDetailActivity extends Activity {
             //item点击事件
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Uri uri = Uri.parse("tel:" + phoneNumber);
-                Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+                Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:" + phoneNumber));
                 startActivity(intent);
             }
         });
@@ -200,9 +198,7 @@ public class ContactDetailActivity extends Activity {
 
     //返回主页面按钮
     public void backToMain(View view) {
-        this.finish();
-        // Intent intent = new Intent(this, LineActivity.class);
-        // startActivity(intent);
+        startActivity(new Intent().setClass(ContactDetailActivity.this, Find.class));
     }
 
     //编辑联系人详细信息

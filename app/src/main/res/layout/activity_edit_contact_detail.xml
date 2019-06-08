@@ -101,7 +101,7 @@
             android:textSize="21dp" />
 
         <Button
-            android:id="@+id/btn_btn_backToDetail"
+            android:id="@+id/btn_backToDetail"
             android:layout_width="306dp"
             android:layout_height="60dp"
             android:layout_below="@id/btn_update"

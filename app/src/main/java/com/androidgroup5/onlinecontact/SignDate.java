@@ -211,6 +211,7 @@ public class SignDate extends AppCompatActivity {
             persons.add(person1);
         }
         dbManager.add(persons);
+        query();
     }
 
     //添加签到日期

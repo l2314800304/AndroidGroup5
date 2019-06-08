@@ -26,10 +26,10 @@
       <publishTime>05/30/2019 13:34:33</publishTime>
     </File>
     <File Include="bin/OnlineContact.dll">
-      <publishTime>06/01/2019 10:54:11</publishTime>
+      <publishTime>06/05/2019 12:23:03</publishTime>
     </File>
     <File Include="bin/OnlineContact.pdb">
-      <publishTime>06/01/2019 10:54:11</publishTime>
+      <publishTime>06/05/2019 12:23:03</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>05/30/2019 13:34:34</publishTime>
@@ -195,6 +195,9 @@
     </File>
     <File Include="Register.ashx">
       <publishTime>05/30/2019 13:34:33</publishTime>
+    </File>
+    <File Include="SetBirthday.ashx">
+      <publishTime>06/05/2019 12:19:02</publishTime>
     </File>
     <File Include="SetContactByUserName.ashx">
       <publishTime>05/30/2019 13:34:33</publishTime>

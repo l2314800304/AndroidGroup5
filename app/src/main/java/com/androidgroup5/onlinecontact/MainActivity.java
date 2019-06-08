@@ -317,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this, Birthday.class));
                     break;
                 case 81:
-                    startActivity(new Intent().setClass(MainActivity.this, QRCodeActivity.class).putExtra("contact_index", "0"));
+                    startActivity(new Intent().setClass(MainActivity.this, QRCodeActivity.class).putExtra("contact_index", "1"));
                     break;
                 case 82:
                     startActivity(new Intent().setClass(MainActivity.this, EditContactDetailActivity.class).putExtra("index", "0"));
