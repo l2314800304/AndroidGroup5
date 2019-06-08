@@ -2,7 +2,7 @@
     <string name="app_name">OC通讯录</string>
     <string name="name">name</string>
     <string name="star">star</string>
-    <string name="send">send</string>
+    <string name="send">QRCode</string>
     <string name="edit">edit</string>
     <string name="title_activity_contact_detail">ContactDetailActivity</string>
     <string name="action_settings">Settings</string>
@@ -17,9 +17,5 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-
-
-
-
 
 </resources>

@@ -160,69 +160,35 @@ public class CallLogActivity extends Activity {
             }
 
 
-            if (isMobileNO(number)) {
-                String dayString = "";
+            String dayString = "";
 
-                if ((Integer.parseInt(dayCurrent)) == (Integer.parseInt(dayRecord))) {
-                    //今天
-                    dayString = "今天";
-                } else if ((Integer.parseInt(dayCurrent) - 1) == (Integer.parseInt(dayRecord))) {
-                    //昨天
-                    dayString = "昨天";
-                }else{
-                    dayString = "更久之前";
-                }
-
-                Map<String, String> map = new HashMap<>();
-                //"未备注联系人"
-                map.put("name", (name == null) ? "未备注联系人" : name);//姓名
-                map.put("number", number);//手机号
-                map.put("date", date);//通话日期
-                // "分钟"
-                map.put("duration", (duration / 60) + "分钟");//时长
-                map.put("type", typeString);//类型
-                map.put("time", time);//通话时间
-                map.put("day", dayString);//
-                // map.put("time_lead", TimeStampUtil.compareTime(date));
-                list.add(map);
-
-            }else {
-                String dayString = "";
-
-                if ((Integer.parseInt(dayCurrent)) == (Integer.parseInt(dayRecord))) {
-                    //今天
-                    dayString = "今天";
-                } else if ((Integer.parseInt(dayCurrent) - 1) == (Integer.parseInt(dayRecord))) {
-                    //昨天
-                    dayString = "昨天";
-                }else{
-                    dayString = "更久之前";
-                }
-
-                Map<String, String> map = new HashMap<>();
-                //"未备注联系人"
-                map.put("name", (name == null) ? "未备注联系人" : name);//姓名
-                map.put("number", number);//手机号
-                map.put("date", date);//通话日期
-                // "分钟"
-                map.put("duration", (duration / 60) + "分钟");//时长
-                map.put("type", typeString);//类型
-                map.put("time", time);//通话时间
-                map.put("day", dayString);//
-                // map.put("time_lead", TimeStampUtil.compareTime(date));
-                list.add(map);
+            if ((Integer.parseInt(dayCurrent)) == (Integer.parseInt(dayRecord))) {
+                //今天
+                dayString = "今天";
+            } else if ((Integer.parseInt(dayCurrent) - 1) == (Integer.parseInt(dayRecord))) {
+                //昨天
+                dayString = "昨天";
+            }else{
+                dayString = "更久之前";
             }
+
+            Map<String, String> map = new HashMap<>();
+            //"未备注联系人"
+            map.put("name", (name == null) ? "未备注联系人" : name);//姓名
+            map.put("number", number);//手机号
+            map.put("date", date);//通话日期
+            // "分钟"
+            map.put("duration", ((duration + 60) / 60) + "分钟");//时长
+            map.put("type", typeString);//类型
+            map.put("time", time);//通话时间
+            map.put("day", dayString);//
+            // map.put("time_lead", TimeStampUtil.compareTime(date));
+            list.add(map);
+
+
         }
 
         return list;
     }
-    //验证手机号是否正确ֻ
-    public static boolean isMobileNO(String s) {
-        Pattern p = Pattern.compile("^(13[0-9]|14[57]|15[0-35-9]|17[6-8]|18[0-9])[0-9]{8}$");
-        Matcher m = p.matcher(s);
-        return m.matches();
-    }
-
-
 
 }

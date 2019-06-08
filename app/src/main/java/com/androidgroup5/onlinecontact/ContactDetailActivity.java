@@ -15,10 +15,12 @@ import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidgroup5.onlinecontact.EntityClass.Contact;
 import com.androidgroup5.onlinecontact.EntityClass.User;
@@ -136,7 +138,8 @@ public class ContactDetailActivity extends Activity {
     //设置lisView布局
     public void displayListView() {
         Map<String, Object> phoneNumMap = new HashMap<>();
-        String phoneNumber = contactNumber;
+        final String phoneNumber = contactNumber;
+
         phoneNumMap.put("phone_png", R.drawable.ic_local_phone_black);
         phoneNumMap.put("phone_num", phoneNumber);
         //phoneNumMap.put("phone_type_id", phoneNumberTypeId);
@@ -146,7 +149,6 @@ public class ContactDetailActivity extends Activity {
         phoneNumMap.put("message_png", R.drawable.ic_message_black);
         contactDisplay.add(phoneNumMap);
 
-
         tv1 = (TextView) findViewById(R.id.contactName);
         tv1.setText(contactName);
         lt2 = (ListView) findViewById(R.id.list_contact_phone_display);
@@ -155,6 +157,28 @@ public class ContactDetailActivity extends Activity {
         }
         ContactDetailAdapter adapter = new ContactDetailAdapter(contactDisplay, this);
         lt2.setAdapter(adapter);
+
+        //调到拨号界面
+        tv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Uri uri = Uri.parse("tel:" + phoneNumber);
+                Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+                startActivity(intent);
+
+            }
+        });
+
+        lt2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            //item点击事件
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Uri uri = Uri.parse("tel:" + phoneNumber);
+                Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+                startActivity(intent);
+            }
+        });
+
     }
 
     //设置收藏/未收藏的图标
@@ -188,7 +212,7 @@ public class ContactDetailActivity extends Activity {
         startActivity(intent);
     }
 
-    //发送联系人详细信息 这里可以换成QRCode
+    //QRCode
     public void sendContactDetail(View view) {
         Intent intent = new Intent(this, QRCodeActivity.class);
         intent.putExtra("index", index);

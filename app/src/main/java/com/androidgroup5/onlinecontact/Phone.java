@@ -1,5 +1,6 @@
 package com.androidgroup5.onlinecontact;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Contacts;
@@ -217,6 +218,7 @@ public class Phone extends Activity {
 
         bt_call.setOnClickListener(new OnClickListener() {
 
+            @SuppressLint("MissingPermission")
             public void onClick(View v) {
                 tempText = (TextView) findViewById(R.id.tv_text2);
                 Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:" + tempText.getText().toString().trim()));
