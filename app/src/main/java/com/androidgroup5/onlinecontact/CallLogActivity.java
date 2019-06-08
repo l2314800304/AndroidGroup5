@@ -159,23 +159,20 @@ public class CallLogActivity extends Activity {
                     break;
             }
 
+
             if (isMobileNO(number)) {
                 String dayString = "";
+
                 if ((Integer.parseInt(dayCurrent)) == (Integer.parseInt(dayRecord))) {
                     //今天
                     dayString = "今天";
                 } else if ((Integer.parseInt(dayCurrent) - 1) == (Integer.parseInt(dayRecord))) {
                     //昨天
                     dayString = "昨天";
-                } else if ((Integer.parseInt(dayCurrent) - 2) == (Integer.parseInt(dayRecord))){
-                    //前天
-                    dayString = "前天";
                 }else{
                     dayString = "更久之前";
                 }
 
-                //long day_lead =getTimeDistance(new Date(dateLong),new Date());
-                //if (day_lead < 3) {//只显示三天以内通话记录，防止通话记录数据过多影响加载速度
                 Map<String, String> map = new HashMap<>();
                 //"未备注联系人"
                 map.put("name", (name == null) ? "未备注联系人" : name);//姓名
@@ -189,6 +186,31 @@ public class CallLogActivity extends Activity {
                 // map.put("time_lead", TimeStampUtil.compareTime(date));
                 list.add(map);
 
+            }else {
+                String dayString = "";
+
+                if ((Integer.parseInt(dayCurrent)) == (Integer.parseInt(dayRecord))) {
+                    //今天
+                    dayString = "今天";
+                } else if ((Integer.parseInt(dayCurrent) - 1) == (Integer.parseInt(dayRecord))) {
+                    //昨天
+                    dayString = "昨天";
+                }else{
+                    dayString = "更久之前";
+                }
+
+                Map<String, String> map = new HashMap<>();
+                //"未备注联系人"
+                map.put("name", (name == null) ? "未备注联系人" : name);//姓名
+                map.put("number", number);//手机号
+                map.put("date", date);//通话日期
+                // "分钟"
+                map.put("duration", (duration / 60) + "分钟");//时长
+                map.put("type", typeString);//类型
+                map.put("time", time);//通话时间
+                map.put("day", dayString);//
+                // map.put("time_lead", TimeStampUtil.compareTime(date));
+                list.add(map);
             }
         }
 
@@ -200,32 +222,7 @@ public class CallLogActivity extends Activity {
         Matcher m = p.matcher(s);
         return m.matches();
     }
-    /**
-     * 获得两个日期间距多少天
-     *
-     * @param beginDate
-     * @param endDate
-     * @return
-     */
-    public static long getTimeDistance(Date beginDate, Date endDate) {
-        Calendar fromCalendar = Calendar.getInstance();
-        fromCalendar.setTime(beginDate);
-        fromCalendar.set(Calendar.HOUR_OF_DAY, fromCalendar.getMinimum(Calendar.HOUR_OF_DAY));
-        fromCalendar.set(Calendar.MINUTE, fromCalendar.getMinimum(Calendar.MINUTE));
-        fromCalendar.set(Calendar.SECOND, fromCalendar.getMinimum(Calendar.SECOND));
-        fromCalendar.set(Calendar.MILLISECOND, fromCalendar.getMinimum(Calendar.MILLISECOND));
 
-        Calendar toCalendar = Calendar.getInstance();
-        toCalendar.setTime(endDate);
-        toCalendar.set(Calendar.HOUR_OF_DAY, fromCalendar.getMinimum(Calendar.HOUR_OF_DAY));
-        toCalendar.set(Calendar.MINUTE, fromCalendar.getMinimum(Calendar.MINUTE));
-        toCalendar.set(Calendar.SECOND, fromCalendar.getMinimum(Calendar.SECOND));
-        toCalendar.set(Calendar.MILLISECOND, fromCalendar.getMinimum(Calendar.MILLISECOND));
 
-        long dayDistance = (toCalendar.getTime().getTime() - fromCalendar.getTime().getTime()) / DAY;
-        dayDistance = Math.abs(dayDistance);
-
-        return dayDistance;
-    }
 
 }
