@@ -75,7 +75,7 @@ public class callLogAdapter extends BaseAdapter {
         } else {
             holder.tvName.setText(list.get(position).get("name") + "(" + list.get(position).get("number") + ")");// 通话记录的联系人
         }
-        holder.tvTimeLead.setText(list.get(position).get("day") + "  " + list.get(position).get("time"));// 通话距离
+        holder.tvTimeLead.setText(list.get(position).get("date") + "  " + list.get(position).get("duration"));// 通话距离
         return convertView;
     }
 
