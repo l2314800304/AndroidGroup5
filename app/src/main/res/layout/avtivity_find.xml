@@ -41,7 +41,7 @@
                     android:id="@+id/btn_find_delete"
                     android:layout_width="30dp"
                     android:layout_height="match_parent"
-                    android:background="@color/whites"
+                    android:background="@drawable/find_delete"
                     android:scaleType="fitXY" />
             </LinearLayout>
         </LinearLayout>

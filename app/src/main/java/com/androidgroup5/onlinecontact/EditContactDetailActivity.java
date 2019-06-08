@@ -31,11 +31,12 @@ public class EditContactDetailActivity extends AppCompatActivity {
     Button btn_backToDetail, btn_update;
     EditText et_contact_number, et_contact_email, et_contact_type;
     User user = null;
+    int index;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_contact_detail);
-        int index = this.getIntent().getExtras().getInt("index");
+        index= this.getIntent().getExtras().getInt("index");
         user = ((UserParameter) getApplication()).getLocal();
         Contact con = user.getContact().get(index);
         String contact_name = con.getName(),
@@ -70,6 +71,9 @@ public class EditContactDetailActivity extends AppCompatActivity {
                             contact_name = et_contact_name.getText().toString(),
                             contact_number = et_contact_number.getText().toString();
                     UpadteContact(id, contact_name, contact_number,index);
+                    user.getContact().get(index).setName(contact_name);
+                    user.getContact().get(index).getContactInfos().get(0).setNumber(contact_number);
+                    startActivity(new Intent().setClass(EditContactDetailActivity.this,ContactDetailActivity.class).putExtra("index",index));
                 } else {
                     Toast.makeText(EditContactDetailActivity.this, "修改失败，请检查所填写的信息！", Toast.LENGTH_LONG).show();
                 }
