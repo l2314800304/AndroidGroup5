@@ -26,160 +26,55 @@
                 android:background="@drawable/head"
                 android:layout_centerInParent="true"/>
         </RelativeLayout>
-        <!--生日提醒-->
-        <RelativeLayout
+        <!--我的性别-->
+
+        <Button
+            android:id="@+id/btn_birthday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="生日提醒"/>
+
+        <!--我的密码-->
+
+        <Button
+            android:id="@+id/btn4"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            >
-
-            <ImageView
-                android:id="@+id/btn_birthday"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/shoucang"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="50dp"
-                android:layout_toRightOf="@+id/btn_birthday"
-                android:gravity="center_vertical"
-                android:text="18705596283"
-                android:textColor="#050000"
-                android:textSize="17sp" />
-        </RelativeLayout>
-
-
-        <!--我的密码-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
-
-            <ImageView
-                android:id="@+id/btn4"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/about"
-                />
-            <TextView
-                android:id="@+id/item_text3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="50dp"
-                android:layout_toRightOf="@+id/btn4"
-                android:gravity="center_vertical"
-                android:text="修改密码"
-                android:textColor="#050000"
-                android:textSize="17sp" />
-        </RelativeLayout>
+            android:background="@drawable/tou15"></Button>
         <!--我的备注-->
-        <RelativeLayout
+        <Button
+            android:id="@+id/btn6"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
-
-            <ImageView
-                android:id="@+id/btn6"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/person"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="50dp"
-                android:layout_toRightOf="@+id/btn6"
-                android:gravity="center_vertical"
-                android:text="我的备注"
-                android:textColor="#050000"
-                android:textSize="17sp" />
-        </RelativeLayout>
+            android:layout_marginRight="10dp"
+            android:background="@drawable/tou16"></Button>
     <!--我的信息-->
-        <RelativeLayout
+        <Button
+            android:id="@+id/btn7"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
-
-            <ImageView
-                android:id="@+id/btn7"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/lishi"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="50dp"
-                android:layout_toRightOf="@+id/btn7"
-                android:gravity="center_vertical"
-                android:text="我的信息"
-                android:textColor="#050000"
-                android:textSize="17sp" />
-        </RelativeLayout>
+            android:layout_marginRight="10dp"
+            android:background="@drawable/tou17"></Button>
       <!--签到-->
-        <RelativeLayout
+        <Button
+            android:id="@+id/btn_sign"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
-
-            <ImageView
-                android:id="@+id/btn_sign"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/person"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="50dp"
-                android:layout_toRightOf="@+id/btn_sign"
-                android:gravity="center_vertical"
-                android:text="我的信息"
-                android:textColor="#050000"
-                android:textSize="17sp" />
-        </RelativeLayout>
+            android:layout_marginRight="10dp"
+            android:background="@drawable/tou19"/>
         <!--我的定位-->
-        <RelativeLayout
+        <Button
+            android:id="@+id/btndingwei"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
-
-            <ImageView
-                android:id="@+id/btndingwei"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/update"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="50dp"
-                android:layout_toRightOf="@+id/btndingwei"
-                android:gravity="center_vertical"
-                android:text="我的定位"
-                android:textColor="#050000"
-                android:textSize="17sp" />
-        </RelativeLayout>
+            android:layout_marginRight="10dp"
+            android:background="@drawable/tou18"/>
 
         <Button
             android:id="@+id/btn5"
