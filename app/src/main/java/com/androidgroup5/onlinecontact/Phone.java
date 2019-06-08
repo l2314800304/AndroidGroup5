@@ -1,6 +1,5 @@
 package com.androidgroup5.onlinecontact;
 
-import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Contacts;
@@ -33,7 +32,7 @@ public class Phone extends Activity {
     private Button bt_star;
     private Button bt_bottom;
     private Button bt_call;
-    private Button bt_function;
+
 
     private TextView tempText;
     private String all = "";
@@ -82,7 +81,7 @@ public class Phone extends Activity {
         bt_star = (Button) findViewById(R.id.bt_star);
         bt_bottom = (Button) findViewById(R.id.bt_bottom);
         bt_call = (Button) findViewById(R.id.bt_call);
-        bt_function = (Button) findViewById(R.id.bt_function);
+
 
         bt_zero.setOnClickListener(new OnClickListener() {
 
@@ -218,7 +217,6 @@ public class Phone extends Activity {
 
         bt_call.setOnClickListener(new OnClickListener() {
 
-            @SuppressLint("MissingPermission")
             public void onClick(View v) {
                 tempText = (TextView) findViewById(R.id.tv_text2);
                 Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:" + tempText.getText().toString().trim()));
@@ -243,12 +241,7 @@ public class Phone extends Activity {
 
             }
         });
-        bt_function.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                Phone.this.finish();
 
-            }
-        });
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(navigation.getMenu().getItem(3).getItemId());
