@@ -51,6 +51,8 @@ public class Remark extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remark);
         init();
+        String Remark=((UserParameter)getApplication()).getUser().getRemark();
+        et_Remark.setText(Remark);
         btn_cancel.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Remark.this.finish();
