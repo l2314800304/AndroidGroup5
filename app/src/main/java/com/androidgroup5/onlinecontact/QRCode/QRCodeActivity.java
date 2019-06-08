@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Button;
 import android.content.Intent;
 
+import com.androidgroup5.onlinecontact.ContactDetailActivity;
+import com.androidgroup5.onlinecontact.EditContactDetailActivity;
 import com.androidgroup5.onlinecontact.EntityClass.User;
 import com.androidgroup5.onlinecontact.R;
 import com.androidgroup5.onlinecontact.UserParameter;
@@ -27,7 +29,7 @@ public class QRCodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode);
-        int index = this.getIntent().getExtras().getInt("index");
+        final int index = this.getIntent().getExtras().getInt("index");
         User u=((UserParameter)getApplication()).getLocal();
         ContactName=u.getContact().get(index).getName();
         ContactNumber=u.getContact().get(index).getContactInfos().get(0).getNumber();
@@ -36,7 +38,7 @@ public class QRCodeActivity extends AppCompatActivity {
         btn_backToDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backToDetail();
+                backToDetail(index);
             }
         });
         final TextView tv_contactname = (TextView) findViewById(R.id.tv_contactname);
@@ -86,7 +88,7 @@ public class QRCodeActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    private void backToDetail() {
-        moveTaskToBack(true);
+    private void backToDetail(int index) {
+        startActivity(new Intent().setClass(QRCodeActivity.this, ContactDetailActivity.class).putExtra("index", index));
     }
 }
