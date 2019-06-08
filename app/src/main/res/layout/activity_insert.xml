@@ -134,14 +134,14 @@
         android:paddingBottom="18dp"
         android:orientation="horizontal">
         <TextView
-            android:id="@+id/contactCorpEmail"
+            android:id="@+id/corpEmail"
             android:layout_width="203dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="#fff"
             android:text="公司邮箱：" />
         <EditText
-            android:id="@+id/Position"
+            android:id="@+id/contactCorpEmail"
             android:layout_width="206dp"
             android:layout_height="wrap_content"
             android:inputType="text"></EditText>
@@ -158,7 +158,7 @@
             android:layout_width="wrap_content"
             android:layout_height="33dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="120dp"
             android:background="@drawable/login_btn_cancel"
@@ -173,7 +173,7 @@
             android:layout_width="wrap_content"
             android:layout_height="33dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/login_btn_ok"
             android:drawablePadding="5dp"

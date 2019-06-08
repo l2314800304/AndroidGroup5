@@ -28,15 +28,12 @@ public class Insert extends AppCompatActivity {
     private Button insert;
     private Button clear;
 
-    //EmailOrNumber 0,Email;1,电话
-
-
-    private String name = contactName.getText().toString().trim();
-    private String email = contactEmail.getText().toString().trim();
-    private String mobilePhone = contactMobilePhone.getText().toString().trim();
-    private String telPhone = contactTelPhone.getText().toString().trim();
-    private String corpPhone = contactCorpPhone.getText().toString().trim();
-    private String corpEmail = contactCorpEmail.getText().toString().trim();
+    private String name = "";
+    private String email = "";
+    private String mobilePhone = "";
+    private String telPhone = "";
+    private String corpPhone = "";
+    private String corpEmail = "";
 
     private List<ContactInfos> list = new ArrayList();
 
@@ -78,14 +75,14 @@ public class Insert extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 for(ContactInfos ci : list) {
-                    insert(ci.getEmailOrNumber(), ci.getNumber(), ci.getType());
+                    insert(ci.getNumber(), ci.getType());
                 }
                 showDialog("消息","添加成功！");
             }
         });
     }
 
-    private void insert(int emailOrNumber, String number, String type) {
+    private void insert(String number, String type) {
         ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
 
         ContentProviderOperation op1 = ContentProviderOperation
