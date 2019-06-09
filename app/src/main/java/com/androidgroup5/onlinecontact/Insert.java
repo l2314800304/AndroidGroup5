@@ -28,12 +28,12 @@ public class Insert extends AppCompatActivity {
     private Button insert;
     private Button clear;
 
-    private String name = "";
-    private String email = "";
-    private String mobilePhone = "";
-    private String telPhone = "";
-    private String corpPhone = "";
-    private String corpEmail = "";
+    private String name;
+    private String email;
+    private String mobilePhone;
+    private String telPhone;
+    private String corpPhone;
+    private String corpEmail;
 
     private List<ContactInfos> list = new ArrayList();
 
@@ -55,8 +55,6 @@ public class Insert extends AppCompatActivity {
 
         init();
 
-        judge();
-
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +72,15 @@ public class Insert extends AppCompatActivity {
         insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                name = contactName.getText().toString().trim();
+                email = contactEmail.getText().toString().trim();
+                mobilePhone = contactMobilePhone.getText().toString().trim();
+                telPhone = contactTelPhone.getText().toString().trim();
+                corpPhone = contactCorpPhone.getText().toString().trim();
+                corpEmail = contactCorpEmail.getText().toString().trim();
+
+                judge();
+
                 for(ContactInfos ci : list) {
                     insert(ci.getNumber(), ci.getType());
                 }
