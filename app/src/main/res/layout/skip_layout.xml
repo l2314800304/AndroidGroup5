@@ -32,6 +32,7 @@
             android:id="@+id/btn_birthday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/login_btn_ok"
             android:text="生日提醒"/>
 
         <!--我的密码-->
@@ -39,49 +40,44 @@
         <Button
             android:id="@+id/btn3"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/tou15"></Button>
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_btn_ok"
+            android:text="我的密码"/>
         <!--我的备注-->
         <Button
             android:id="@+id/btn6"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/tou16"></Button>
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_btn_ok"
+            android:text="我的备注"/>
     <!--我的信息-->
+
         <Button
             android:id="@+id/btn7"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/tou17"></Button>
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_btn_ok"
+            android:text="我的信息"/>
       <!--签到-->
+
         <Button
             android:id="@+id/btn_sign"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/tou19"/>
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_btn_ok"
+            android:text="签到"/>
         <!--我的定位-->
         <Button
             android:id="@+id/btndingwei"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/tou18"/>
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_btn_ok"
+            android:text="我的定位"/>
 
         <Button
             android:id="@+id/btn5"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content"
             android:background="@android:color/holo_red_light"
             android:text="退出"
             android:textColor="@android:color/black"></Button>
