@@ -15,17 +15,16 @@ namespace OnlineContact
         {
             context.Response.ContentType = "text/plain";
             String UserName = context.Request["UserName"];
-            String old = context.Request["OldPassword"];
             String Ne = context.Request["NewPassword"];
             MySqlHelper helper = new MySqlHelper();
-            if (helper.getMySqlCom("UPDATE User Set Password='" + Ne + "' where UserName='" + UserName+"' And Password='"+old+"'") > 0)
-            {
-                context.Response.Write("OK");
-            }
-            else
-            {
-                context.Response.Write("Error");
-            }
+                if (helper.getMySqlCom("UPDATE User Set Password='" + Ne + "' where UserName='" + UserName + "'") > 0)
+                {
+                    context.Response.Write("OK");
+                }
+                else
+                {
+                    context.Response.Write("Error");
+                }
         }
 
         public bool IsReusable

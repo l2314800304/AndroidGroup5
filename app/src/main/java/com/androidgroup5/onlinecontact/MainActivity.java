@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this, SyncAddressBook.class).putExtra("UserName", "宋甜乐"));
                     break;
                 case 11:
-                    startActivity(new Intent().setClass(MainActivity.this, SkipActivity.class));
+                    startActivity(new Intent().setClass(MainActivity.this, SkipActivity.class).putExtra("UserName", "宋甜乐"));;
                     break;
                 case 12:
                     break;

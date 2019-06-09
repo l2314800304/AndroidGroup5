@@ -23,8 +23,7 @@ import okhttp3.Response;
 
 public class Repassword extends AppCompatActivity {
     Button btn_cancel,btn_ok;
-    EditText et_Npass;
-    EditText et_Opass;
+    EditText et_Password;
     private Handler handler = new Handler() {
 
         @Override
@@ -50,19 +49,11 @@ public class Repassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.password);
         init();
+        String Password=((UserParameter)getApplication()).getUser().getPassword();
+        et_Password.setText(Password);
         btn_cancel.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Repassword.this.finish();
-            }
-        });
-        Button btn5=findViewById(R.id.btn5);
-        btn5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent it5=new Intent();
-                it5.setClass(Repassword.this,SkipActivity.class);
-                Repassword.this.startActivity(it5);
-
             }
         });
     }
@@ -70,13 +61,13 @@ public class Repassword extends AppCompatActivity {
     private void init() {
         btn_cancel = (Button) findViewById(R.id.buttonCancel);
         btn_ok = (Button) findViewById(R.id.buttonOk);
-        et_Npass = (EditText) findViewById(R.id.buttonNpass);
+        et_Password = (EditText) findViewById(R.id.buttonPassword);
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (checkData()) {
                     Toast.makeText(Repassword.this, "修改中...", Toast.LENGTH_LONG).show();
-                    repassword();
+                    remark();
                 } else {
                     Toast.makeText(Repassword.this, "修改失败，请检查修改信息！", Toast.LENGTH_LONG).show();
                 }
@@ -84,15 +75,13 @@ public class Repassword extends AppCompatActivity {
         });
     }
 
-    private void repassword() {
-        String UserName="宋甜乐";
-        String OldPassword="123456";
-
-        String newPassword = et_Npass.getText().toString();
+    private void remark() {
+        String UserName=((UserParameter) getApplication()).getUser().getUserName();
+        String password = et_Password.getText().toString();
         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS).build();
         Request request = new Request.Builder()
-                .url("http://114.116.171.181:80/ChangePassword.ashx?UserName?OldPassword"+ UserName+ OldPassword+"&NewPassword=" + URLEncoder.encode(newPassword))
+                .url("http://114.116.171.181:80/ChangePassword.ashx?UserName="+ UserName+ "&Password=" + URLEncoder.encode(password))
                 .method("GET",null)
                 .build();
         client.newCall(request).enqueue(new Callback() {
@@ -129,8 +118,8 @@ public class Repassword extends AppCompatActivity {
     }
 
     private boolean checkData() {
-        String newPassword = et_Npass.getText().toString();
-        if ( newPassword.length() > 50 ) {
+        String password = et_Password.getText().toString();
+        if ( password.length() > 50 ) {
             return false;
         } else {
             return true;
