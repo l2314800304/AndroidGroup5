@@ -104,7 +104,7 @@ public class SignDate extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     Message message = new Message();
-                    message.what = 0;
+                    message.what =1;
                     handler.sendMessage(message);
                     res = response.body().string();
                 }
@@ -170,6 +170,7 @@ public class SignDate extends AppCompatActivity {
         btn_signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!btn_signIn.isEnabled())return;
                 Date today = calendar.getThisday();
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 //           /* calendar.removeAllMarks();
@@ -233,6 +234,16 @@ public class SignDate extends AppCompatActivity {
             SetSign();
             add(df.format(day));
             // 添加日期标注
+            if(date1.split("-")[0].equals(date[i].split("-")[0])
+                    &&date1.split("-")[1].equals(date[i].split("-")[1])
+                    &&date1.split("-")[2].equals(date[i].split("-")[2])){
+                //设置签到按钮文字
+                btn_signIn.setText("今日已签，明日继续");
+                //设置签到按钮背景
+                btn_signIn.setBackgroundResource(R.drawable.button_gray);
+                //禁止按钮点击
+                btn_signIn.setEnabled(false);
+            }
             query();
             HashMap<String, Integer> bg = new HashMap<String, Integer>();
             //设置当天日期背景颜色

@@ -10,7 +10,7 @@ import java.util.List;
 public class DBManager
 {
     private DatabaseHelper helper;
-    private SQLiteDatabase db;
+     SQLiteDatabase db;
 
     public DBManager(Context context)
     {
@@ -19,7 +19,8 @@ public class DBManager
         // mFactory);
         // 所以要确保context已初始化,我们可以把实例化DBManager的步骤放在Activity的onCreate里
         db = helper.getWritableDatabase();
-        db.delete(DatabaseHelper.TABLE_NAME,null,null);
+        db.execSQL("DELETE FROM " + DatabaseHelper.TABLE_NAME
+                + "");
     }
 
     /**
