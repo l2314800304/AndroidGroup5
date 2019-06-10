@@ -2,44 +2,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/register"
     android:orientation="vertical">
     <!--顶部栏-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white">
+        android:layout_height="50dp">
         <Button
             android:id="@+id/btn_sign_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#fff"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/back"
             android:textSize="20sp"
-            android:text="返回"/>
+            android:textColor="#fff"/>
         <!--顶部栏文字-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="签到"
-            android:textColor="@color/black"
+            android:textColor="#fff"
             android:textSize="20sp"/>
     </RelativeLayout>
     <!--顶部横线-->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/salmon"/>
+        android:background="@color/white"/>
     <LinearLayout
         android:id="@+id/ll_popup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffeeeeee"
         android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/white">
+            android:layout_height="60dp">
             <ImageView
                 android:id="@+id/iv_left"
                 android:layout_width="wrap_content"
@@ -55,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:gravity="center"
-                android:textColor="@color/red"
+                android:textColor="@color/white"
                 android:textSize="18sp"/>
             <ImageView
                 android:id="@+id/iv_right"
@@ -103,6 +100,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="当前总计已签到0次"
+            android:textColor="@color/white"
+            android:textSize="15sp"
             android:gravity="center"/>
     </LinearLayout>
 </LinearLayout>

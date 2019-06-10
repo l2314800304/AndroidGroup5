@@ -25,14 +25,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="姓名"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="#fff"/>
 
             <TextView
                 android:id="@+id/tv_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="电话"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="#fff"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -47,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:clickable="false"
+            android:theme="@style/My_CheckBox"
             android:focusable="false" />
     </LinearLayout>
 </LinearLayout>

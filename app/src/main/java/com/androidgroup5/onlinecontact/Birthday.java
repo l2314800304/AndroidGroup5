@@ -7,6 +7,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.androidgroup5.onlinecontact.EntityClass.User;
@@ -27,6 +29,12 @@ public class Birthday extends Activity {
         //ParsePosition pos = new ParsePosition(8);
         Date currentTime = new Date();
         String dateString1 = formatter.format(currentTime);
+        ((Button)findViewById(R.id.btn_back)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Birthday.this,SkipActivity.class));
+            }
+        });
         textView2.setText("今天日期是"+dateString1 );
         StringBuilder sb = new StringBuilder();
         for (int i=0;i<((UserParameter) getApplication()).getUser().getContact().size();i++)

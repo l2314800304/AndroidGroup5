@@ -34,6 +34,7 @@ public class Remark extends AppCompatActivity {
             switch (msg.what) {
                 case 0:
                     Toast.makeText(Remark.this, "修改成功！返回详情页面...", Toast.LENGTH_LONG).show();
+                    ((UserParameter)getApplication()).getUser().setRemark(et_Remark.getText().toString());
                     backToInsert();
                     break;
                 case 1:

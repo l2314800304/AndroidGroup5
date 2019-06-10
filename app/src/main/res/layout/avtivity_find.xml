@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
-        android:background="@drawable/register"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,7 +87,6 @@
                 android:text="A"
                 android:gravity="center"
                 android:background="#f0f0f0"/>
-
         </RelativeLayout>
     </LinearLayout>
 
