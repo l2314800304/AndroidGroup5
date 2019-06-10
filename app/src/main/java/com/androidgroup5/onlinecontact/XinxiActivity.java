@@ -27,12 +27,12 @@ public class XinxiActivity extends AppCompatActivity {
     private EditText Location;
     private EditText Remark;
 
-    @SuppressLint("WrongViewCast")
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.xinxi_layout);
-        /*init();
+       /* init();
         String Remark=((UserParameter)getApplication()).getUser().getRemark();
         buttonRemark.setText(Remark);
         String Username=((UserParameter)getApplication()).getUser().getUserName();
@@ -54,18 +54,8 @@ public class XinxiActivity extends AppCompatActivity {
 
             }
         });
-        Button btn8=findViewById(R.id.btntuichu);
-        btn8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent it8=new Intent();
-                it8.setClass(XinxiActivity.this,SkipActivity.class);
-                XinxiActivity.this.startActivity(it8);
-            }
-        });
-
-       /* private void init() {
-            Username = (EditText) findViewById(R.id.buttonUsername);
+        /*private void init() {
+            Username = (EditText)findViewById(R.id.buttonUsername);
             Sex = (EditText) findViewById(R.id.buttonSex);
             Location = (EditText) findViewById(R.id.buttonLocation);
             Password = (EditText) findViewById(R.id.buttonPassword);
