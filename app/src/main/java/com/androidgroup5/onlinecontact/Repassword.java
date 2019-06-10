@@ -51,8 +51,6 @@ public class Repassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.password);
         init();
-        String Password=((UserParameter)getApplication()).getUser().getPassword();
-        et_Password.setText(Password);
         btn_cancel.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Repassword.this.finish();
