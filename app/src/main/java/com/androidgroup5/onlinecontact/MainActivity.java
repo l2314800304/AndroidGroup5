@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this, SyncAddressBook.class).putExtra("UserName", "宋甜乐"));
                     break;
                 case 11:
-                    startActivity(new Intent().setClass(MainActivity.this, SkipActivity.class).putExtra("UserName", "宋甜乐"));;
+                    startActivity(new Intent().setClass(MainActivity.this, SkipActivity.class).putExtra("UserName", "宋甜乐").putExtra("Password", "123456"));;
                     break;
                 case 12:
                     break;
@@ -300,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent().setClass(MainActivity.this, CallLogActivity.class));
                     break;
                 case 51:
-                    startActivity(new Intent().setClass(MainActivity.this, Insert.class));
+                   /* startActivity(new Intent().setClass(MainActivity.this, Insert.class));*/
                     break;
                 case 52:
                     break;
