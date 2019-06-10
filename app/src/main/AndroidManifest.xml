@@ -42,7 +42,7 @@
         <activity android:name=".Delete" />
         <activity android:name=".Export" />
         <activity android:name=".Find" />
-       <!-- <activity android:name=".Insert" />-->
+        <activity android:name=".Insert" />
         <activity android:name=".Phone" />
         <activity android:name=".Remark" />
         <activity
