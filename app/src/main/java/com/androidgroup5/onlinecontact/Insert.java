@@ -1,10 +1,9 @@
+/**
 package com.androidgroup5.onlinecontact;
 
 import android.content.ContentProviderOperation;
 import android.content.DialogInterface;
-import android.content.OperationApplicationException;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,9 +13,6 @@ import android.widget.TextView;
 import com.androidgroup5.onlinecontact.EntityClass.ContactInfos;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.baidu.mapapi.BMapManager.getContext;
-
 
 public class Insert extends AppCompatActivity {
     private TextView contactName;
@@ -82,23 +78,19 @@ public class Insert extends AppCompatActivity {
                 judge();
 
                 for(ContactInfos ci : list) {
-                    insert(ci.getNumber(), ci.getType());
+                    insert(ci.getEmailOrNumber(), ci.getNumber(), ci.getType());
                 }
                 showDialog("消息","添加成功！");
             }
         });
     }
 
-    private void insert(String number, String type) {
+    private void insert(int emailOrNumber, String number, String type) {
         ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
-
         ContentProviderOperation op1 = ContentProviderOperation
-                .newInsert(ContactsContract.Data.CONTENT_URI)
-                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-                .withValue(
-                        ContactsContract.Data.MIMETYPE,
-                        ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
-                .withValue(ContactsContract.Data.DATA1, name).build();// 得到了一个添加内容的对象
+                .newInsert(ContactsContract.RawContacts.CONTENT_URI)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
+                .build();// 得到了一个添加内容的对象
         operations.add(op1);
 
         ContentProviderOperation op2 = ContentProviderOperation
@@ -106,18 +98,39 @@ public class Insert extends AppCompatActivity {
                 .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
                 .withValue(
                         ContactsContract.Data.MIMETYPE,
-                        ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
-                .withValue(ContactsContract.Data.DATA1, number)
-                .withValue(ContactsContract.Data.DATA2, type)// data2=2即type=2，表示移动电话
-                .build();// 得到了一个添加内容的对象
+                        ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.Data.DATA1, name).build();// 得到了一个添加内容的对象
         operations.add(op2);
 
+        if(emailOrNumber == 5) {
+            ContentProviderOperation op3 = ContentProviderOperation
+                    .newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(
+                            ContactsContract.Data.MIMETYPE,
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                    .withValue(ContactsContract.Data.DATA1, number)
+                    .withValue(ContactsContract.Data.DATA2, type)// data2=2即type=2，表示移动电话
+                    .build();// 得到了一个添加内容的对象
+            operations.add(op3);
+        }
+        if(emailOrNumber == 7) {
+            ContentProviderOperation op4 = ContentProviderOperation
+                    .newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(
+                            ContactsContract.Data.MIMETYPE,
+                            ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
+                    .withValue(ContactsContract.Data.DATA1, number)
+                    .withValue(ContactsContract.Data.DATA2, type)// data2=2即type=2，表示工作邮箱
+                    .build();// 得到了一个添加内容的对象
+            operations.add(op4);
+        }
+
         try {
-            getContext().getContentResolver().applyBatch("com.android.contacts",
-                    operations);// 执行批量操作
-        } catch (OperationApplicationException e) {
-            e.printStackTrace();
-        } catch (RemoteException e) {
+            getContentResolver().applyBatch(
+                    ContactsContract.AUTHORITY, operations);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -182,3 +195,4 @@ public class Insert extends AppCompatActivity {
     }
 
 }
+ **/

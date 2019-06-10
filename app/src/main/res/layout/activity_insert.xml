@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="top"
+    android:gravity="center"
     android:background="@drawable/register">
 
     <LinearLayout
@@ -14,173 +14,107 @@
         android:orientation="vertical"
         android:gravity="center">
 
-
         <TextView
+            android:id="@+id/tv_contactinsert"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="输入联系人信息"
             android:textColor="#fff"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:text="添加联系人信息"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/first"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="18dp"
-        android:paddingBottom="18dp"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="203dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="#fff"
-            android:text="联系人姓名：" />
-        <EditText
-            android:id="@+id/contactName"
-            android:layout_width="206dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"></EditText>
-    </LinearLayout>
+        android:layout_margin="15dip"
+        android:padding="15dip">
 
-    <LinearLayout
-        android:id="@+id/second"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="18dp"
-        android:paddingBottom="18dp"
-        android:orientation="horizontal">
         <TextView
-            android:id="@+id/email"
-            android:layout_width="203dp"
+            android:id="@+id/tv_contact_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="5dp"
+            android:text="姓名:"
             android:textColor="#fff"
-            android:text="联系人邮箱：" />
-        <EditText
-            android:id="@+id/contactEmail"
-            android:layout_width="206dp"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"></EditText>
-    </LinearLayout>
+            android:textSize="14sp" />
 
-    <LinearLayout
-        android:id="@+id/third"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="18dp"
-        android:paddingBottom="18dp"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/mobilephone"
-            android:layout_width="203dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="#fff"
-            android:text="联系人手机：" />
         <EditText
-            android:id="@+id/contactMobilePhone"
-            android:layout_width="206dp"
+            android:id="@+id/et_contact_name"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="phone"></EditText>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/fourth"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="18dp"
-        android:paddingBottom="18dp"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/telphone"
-            android:layout_width="203dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_below="@id/tv_contact_name"
+            android:background="@drawable/login_edit"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:paddingLeft="9dp"
+            android:paddingTop="7dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="7dp"
+            android:singleLine="true"
             android:textColor="#fff"
-            android:text="联系人座机：" />
-        <EditText
-            android:id="@+id/contactTelPhone"
-            android:layout_width="206dp"
-            android:layout_height="wrap_content"
-            android:inputType="phone"></EditText>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/fifth"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="18dp"
-        android:paddingBottom="18dp"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/corp_phone"
-            android:layout_width="203dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="#fff"
-            android:text="公司电话：" />
-        <EditText
-            android:id="@+id/contactCorpPhone"
-            android:layout_width="206dp"
-            android:layout_height="wrap_content"
-            android:inputType="phone"></EditText>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/sixth"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="18dp"
-        android:paddingBottom="18dp"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/corpEmail"
-            android:layout_width="203dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="#fff"
-            android:text="公司邮箱：" />
-        <EditText
-            android:id="@+id/contactCorpEmail"
-            android:layout_width="206dp"
-            android:layout_height="wrap_content"
-            android:inputType="text"></EditText>
-    </LinearLayout>
+            android:textColorHint="#aaa"
+            android:textSize="15sp" />
 
-    <LinearLayout
-        android:id="@+id/seventh"
-        android:layout_width="match_parent"
-        android:layout_height="82dp"
-        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_contact_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_contact_name"
+            android:layout_marginTop="8dp"
+            android:text="号码:"
+            android:textColor="#fff"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_contact_number"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_contact_number"
+            android:background="@drawable/login_edit"
+            android:paddingLeft="9dp"
+            android:paddingTop="7dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="7dp"
+            android:singleLine="true"
+            android:textColor="#fff"
+            android:textColorHint="#aaa"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/btn_insert"
-            android:layout_width="wrap_content"
-            android:layout_height="33dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="120dp"
-            android:background="@drawable/login_btn_cancel"
-            android:drawablePadding="5dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:text="添加"
-            android:textSize="15dp" />
-
-        <Button
-            android:id="@+id/btn_clear"
-            android:layout_width="wrap_content"
-            android:layout_height="33dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="306dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/et_contact_number"
+            android:layout_alignRight="@id/et_contact_number"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="53dp"
+            android:layout_marginRight="12dp"
             android:background="@drawable/login_btn_ok"
             android:drawablePadding="5dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:text="清空"
-            android:textSize="15dp" />
+            android:text="添加"
+            android:textSize="21dp" />
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/btn_backToDetail"
+            android:layout_width="306dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/btn_insert"
+            android:layout_alignRight="@id/et_contact_number"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="29dp"
+            android:layout_marginRight="13dp"
+            android:background="@drawable/login_btn_ok"
+            android:drawablePadding="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="返回"
+            android:textSize="21dp" />
+    </RelativeLayout>
+
 </LinearLayout>
