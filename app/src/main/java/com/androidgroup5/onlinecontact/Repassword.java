@@ -83,10 +83,18 @@ public class Repassword extends AppCompatActivity {
         String UserName = et_Username.getText().toString();
         String Password = et_Password.getText().toString();
         String NewPassword = et_NewPassword.getText().toString();
+        if(!UserName.equals(NewPassword)){
+            Toast.makeText(Repassword.this,"新密码与确认密码不同，请确认后重试...",Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(!Password.equals(((UserParameter)getApplication()).getUser().getPassword())){
+            Toast.makeText(Repassword.this,"原密码输入错误，请确认后重试...",Toast.LENGTH_LONG).show();
+            return;
+        }
         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS).build();
         Request request = new Request.Builder()
-                .url("http://114.116.171.181:80/ChangePassword.ashx?UserName="+ UserName+ "&Password=" + URLEncoder.encode(Password)+"&NewPassword=" + URLEncoder.encode(NewPassword))
+                .url("http://114.116.171.181:80/ChangePassword.ashx?UserName="+ ((UserParameter)getApplication()).getUser().getUserName()+ "&Password=" + URLEncoder.encode(Password)+"&NewPassword=" + URLEncoder.encode(NewPassword))
                 .method("GET",null)
                 .build();
         client.newCall(request).enqueue(new Callback() {
