@@ -71,14 +71,6 @@
                 android:textColor="#fff"
                 android:text="修改密码"/>
             <Button
-                android:id="@+id/btndingwei"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/login_btn_ok"
-                android:textColor="#fff"
-                android:text="我的位置"/>
-            <Button
                 android:id="@+id/btn5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -63,16 +63,6 @@ public class SkipActivity extends Activity {
 
             }
         });
-        Button btn9=findViewById(R.id.btndingwei);
-        btn9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent it9=new Intent();
-                it9.setClass(SkipActivity.this,Myorention.class);
-                SkipActivity.this.startActivity(it9);
-
-            }
-        });
         Button bt=findViewById(R.id.btn3);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -16,8 +16,9 @@
         android:layout_height="38dp"
         android:singleLine="true"
         android:textSize="14sp"
-        android:textColor="#303F9F"
+        android:textColor="#fff"
         android:hint="请输入文字..."
+        android:textColorHint="#fff"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"/>
 

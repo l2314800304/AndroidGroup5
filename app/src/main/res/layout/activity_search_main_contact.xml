@@ -22,6 +22,8 @@
             android:drawableLeft="@drawable/search"
             android:hint="@string/search"
             android:singleLine="true"
+            android:textColor="#fff"
+            android:textColorHint="#fff"
             android:textSize="15.0dip" />
 
         <FrameLayout

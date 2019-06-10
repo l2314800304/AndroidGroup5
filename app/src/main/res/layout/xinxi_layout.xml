@@ -1,153 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/register"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center"
+    tools:context=".XinxiActivity">
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/register"
-        android:orientation="vertical">
-        tools:context=".XinxiActivity">
-
-        <RelativeLayout
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/num2"
-            android:layout_marginRight="10dp">
-
-            <ImageView
-                android:id="@+id/item_img3"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/about"
-                />
-            <!--android:text="宋甜乐"-->
-            <EditText
-                android:id="@+id/buttonUsername"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="50dp"
-                android:layout_toRightOf="@+id/item_img3"
-                android:gravity="center_vertical"
-                android:textColor="#fff"
-                android:textSize="20dp"  />
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/nump"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
-
-            <ImageView
-                android:id="@+id/item_imgp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/lishi"
-                />
-            <!-- android:text="密码"-->
-            <EditText
-                android:id="@+id/buttonPassword"
+                android:layout_height="100dp">
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/mine_icon"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/num2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="50dp"
-                android:layout_toRightOf="@id/item_imgp"
-                android:gravity="center_vertical"
-                android:textColor="#fff"
-                android:textSize="20dp" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/num3"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+                android:layout_height="45dp"
+                android:layout_margin="20dp">
 
-            <ImageView
-                android:id="@+id/item_img2"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/xiazai"
-                />
-            <!--android:text="男"-->
-            <EditText
-                android:id="@+id/buttonSex"
+                <ImageView
+                    android:id="@+id/item_img3"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/name" />
+                <!--android:text="宋甜乐"-->
+                <TextView
+                    android:id="@+id/txt_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/item_img3"
+                    android:gravity="center_vertical"
+                    android:textColor="#fff"
+                    android:textSize="20dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/num3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="50dp"
-                android:layout_toRightOf="@id/item_img2"
-                android:gravity="center_vertical"
-                android:textColor="#fff"
-                android:textSize="20dp"  />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            >
+                android:layout_height="45dp"
+                android:layout_margin="20dp">
 
-            <ImageView
-                android:id="@+id/item_img6"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/person"
-                />
-            <!--android:text="黄山学院南区"-->
-            <EditText
-                android:id="@+id/buttonLocation"
+                <ImageView
+                    android:id="@+id/item_img2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/sex" />
+                <!--android:text="男"-->
+                <TextView
+                    android:id="@+id/txt_sex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/item_img2"
+                    android:gravity="center_vertical"
+                    android:textColor="#fff"
+                    android:textSize="20dp" />
+            </RelativeLayout>
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="50dp"
-                android:layout_toRightOf="@id/item_img6"
-                android:gravity="center_vertical"
-                android:textColor="#fff"
-                android:textSize="20dp"  /> />
-        </RelativeLayout>
+                android:layout_height="45dp"
+                android:layout_margin="20dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            >
-
-            <ImageView
-                android:id="@+id/item_img8"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/update"
+                <ImageView
+                    android:id="@+id/item_img8"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/location" />
+                <!--android:text="我的签名：好好学习天天向上"-->
+                <TextView
+                    android:id="@+id/txt_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/item_img8"
+                    android:gravity="center_vertical"
+                    android:textColor="#fff"
+                    android:textSize="20dp" />
                 />
-            <!--android:text="我的签名：好好学习天天向上"-->
-            <EditText
-                android:id="@+id/buttonRemark"
+            </RelativeLayout>
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="50dp"
-                android:layout_toRightOf="@id/item_img8"
-                android:gravity="center_vertical"
+                android:layout_height="45dp"
+                android:layout_margin="20dp">
+
+                <ImageView
+                    android:id="@+id/item_img6"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/remark" />
+                <!--android:text="黄山学院南区"-->
+                <TextView
+                    android:id="@+id/txt_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/item_img6"
+                    android:gravity="center_vertical"
+                    android:textColor="#fff"
+                    android:textSize="20dp" />
+                />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btntuichu"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/login_btn_ok"
+                android:text="返回"
                 android:textColor="#fff"
-                android:textSize="20dp" /> />
-        </RelativeLayout>
-        <Button
-            android:id="@+id/btntuichu"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/login_btn_ok"
-            android:text="返回"
-            android:textColor="#fff"
-            android:textSize="15dp"
-            ></Button>
-    </LinearLayout>
+                android:textSize="15dp"></Button>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

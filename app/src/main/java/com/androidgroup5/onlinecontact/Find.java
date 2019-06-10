@@ -90,7 +90,7 @@ public class Find extends Activity {
         ((ImageButton)findViewById(R.id.btn_find_insert)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent().setClass(Find.this, Delete.class));
+                startActivity(new Intent().setClass(Find.this, Insert.class));
             }
         });
         ((ImageButton)findViewById(R.id.btn_find_delete)).setOnClickListener(new View.OnClickListener() {
