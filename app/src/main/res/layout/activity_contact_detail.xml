@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:scrollbars="vertical"
     android:showDividers="end"
+    android:background="@drawable/register"
     tools:context="com.androidgroup5.onlinecontact.ContactDetailActivity">
 
     <FrameLayout
@@ -16,8 +17,7 @@
             android:id="@+id/pic1"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/contact_pic_demo" />
+            android:scaleType="centerCrop" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -84,6 +84,7 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:text="@string/star"
                 android:textSize="10sp"
+                android:textColor="#fff"
                 android:typeface="sans" />
         </LinearLayout>
 
@@ -107,6 +108,7 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:text="@string/send"
                 android:textSize="10sp"
+                android:textColor="#fff"
                 android:typeface="sans" />
         </LinearLayout>
 
@@ -130,6 +132,7 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:text="@string/edit"
                 android:textSize="10sp"
+                android:textColor="#fff"
                 android:typeface="sans" />
         </LinearLayout>
     </LinearLayout>

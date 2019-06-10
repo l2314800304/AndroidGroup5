@@ -27,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="156 5162 0391"
+            android:textColor="#fff"
             android:textSize="18sp" />
 
         <LinearLayout
@@ -39,14 +40,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="类别"
-                android:textColor="#778899"
+                android:textColor="#fff"
                 android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="   |   "
-                android:textColor="#778899"
+                android:textColor="#fff"
                 android:textSize="14sp" />
 
             <TextView
@@ -54,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="归属地"
-                android:textColor="#778899"
+                android:textColor="#fff"
                 android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
