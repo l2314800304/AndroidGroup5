@@ -61,41 +61,7 @@
                 android:textSize="17sp" />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/num1"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
 
-            <ImageView
-                android:id="@+id/item_img4"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/lishi"
-                />
-            <TextView
-                android:id="@+id/dateDisplay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_toRightOf="@id/item_img4"
-                android:textColor="#050000"
-                android:text="我的默认出生日期显示"
-                android:textSize="17sp" />
-
-            <Button
-                android:id="@+id/dateChoose"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:background="@android:color/holo_blue_light"
-                android:textColor="#050000"
-                android:text="选择日期" />
-        </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"

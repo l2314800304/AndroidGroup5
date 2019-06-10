@@ -24,6 +24,8 @@ import okhttp3.Response;
 public class Repassword extends AppCompatActivity {
     Button btn_cancel,btn_ok;
     EditText et_Password;
+    EditText et_Username;
+    EditText et_NewPassword;
     private Handler handler = new Handler() {
 
         @Override
@@ -61,7 +63,9 @@ public class Repassword extends AppCompatActivity {
     private void init() {
         btn_cancel = (Button) findViewById(R.id.buttonCancel);
         btn_ok = (Button) findViewById(R.id.buttonOk);
-        et_Password = (EditText) findViewById(R.id.buttonPassword);
+        et_Username = (EditText) findViewById(R.id.buttonUsername);
+        et_Password = (EditText) findViewById(R.id.buttonOldpassword);
+        et_NewPassword = (EditText) findViewById(R.id.buttonPassword);
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,12 +80,13 @@ public class Repassword extends AppCompatActivity {
     }
 
     private void remark() {
-        String UserName=((UserParameter) getApplication()).getUser().getUserName();
-        String password = et_Password.getText().toString();
+        String UserName = et_Username.getText().toString();
+        String Password = et_Password.getText().toString();
+        String NewPassword = et_NewPassword.getText().toString();
         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS).build();
         Request request = new Request.Builder()
-                .url("http://114.116.171.181:80/ChangePassword.ashx?UserName="+ UserName+ "&Password=" + URLEncoder.encode(password))
+                .url("http://114.116.171.181:80/ChangePassword.ashx?UserName="+ UserName+ "&Password=" + URLEncoder.encode(Password)+"&NewPassword=" + URLEncoder.encode(NewPassword))
                 .method("GET",null)
                 .build();
         client.newCall(request).enqueue(new Callback() {
@@ -118,8 +123,10 @@ public class Repassword extends AppCompatActivity {
     }
 
     private boolean checkData() {
-        String password = et_Password.getText().toString();
-        if ( password.length() > 50 ) {
+        String UserName = et_Username.getText().toString();
+        String Password = et_Password.getText().toString();
+        String NewPassword = et_NewPassword.getText().toString();
+        if ( Password.length() > 50 ||NewPassword.length() > 50||UserName.length() > 50) {
             return false;
         } else {
             return true;
