@@ -19,6 +19,7 @@ public class DBManager
         // mFactory);
         // 所以要确保context已初始化,我们可以把实例化DBManager的步骤放在Activity的onCreate里
         db = helper.getWritableDatabase();
+        db.delete(DatabaseHelper.TABLE_NAME,null,null);
     }
 
     /**

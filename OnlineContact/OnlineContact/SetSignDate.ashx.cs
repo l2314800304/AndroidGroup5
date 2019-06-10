@@ -21,18 +21,20 @@ namespace OnlineContact
             MySqlDataReader reader = helper.getMySqlReader(sql);
             reader.Read();
             String today = DateTime.Today.Year + "-" + DateTime.Today.Month + "-" + DateTime.Today.Day;
-            String Sign = ((reader.IsDBNull(0)?"":reader.GetString(0)).Equals("")?"": (reader.GetString(0)+",")+ today);
+            String ss = reader.IsDBNull(0) ? "" : reader.GetString(0);
+            String Sign = ((ss.Equals("")?"": (reader.GetString(0)+","))+ today);
             int SignCount = reader.IsDBNull(1)?1:reader.GetInt32(1)+1;
-            reader.Dispose();
             helper.mysqlcom.Dispose();
             helper.mysqlcon.Close();
             helper.mysqlcon.Dispose();
-            if (reader.GetString(0).Split(',')[SignCount - 1].Equals(today))
+            if (ss.Split(',')[SignCount - 2].Equals(today))
             {
+                reader.Dispose();
                 context.Response.Write("Sign:" + Sign + ";SignCount:" + SignCount);
                 return;
             }
-            if(helper.getMySqlCom("Update User set Sign='"+Sign+"',SignCount="+SignCount+ " where UserName='" + UserName + "'") > 0)
+            reader.Dispose();
+            if (helper.getMySqlCom("Update User set Sign='"+Sign+"',SignCount="+SignCount+ " where UserName='" + UserName + "'") > 0)
             {
                 context.Response.Write("Sign:" + Sign + ";SignCount:" + SignCount);
             }

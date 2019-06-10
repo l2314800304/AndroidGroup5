@@ -51,6 +51,9 @@ public class SignDate extends AppCompatActivity {
                 case 0:
                     addRange(GetSignDate(res));
                     break;
+                case 1:
+                    ((TextView)findViewById(R.id.txt_signCount)).setText("当前总计已签到"+GetSignCount(res)+"次");
+                    break;
                 default:
                     break;
             }
@@ -100,8 +103,10 @@ public class SignDate extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    String res = response.body().string();
-                    ((TextView)findViewById(R.id.txt_signCount)).setText("当前总计已签到"+GetSignCount(res)+"次");
+                    Message message = new Message();
+                    message.what = 0;
+                    handler.sendMessage(message);
+                    res = response.body().string();
                 }
             }
         });
@@ -127,6 +132,7 @@ public class SignDate extends AppCompatActivity {
             }
         });
         dbManager = new DBManager(this);
+
         //日期格式   格式为 “2019-05-03” 标准DATE格式
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         //获取当前时间
