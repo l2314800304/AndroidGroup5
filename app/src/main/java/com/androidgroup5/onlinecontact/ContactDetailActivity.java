@@ -94,8 +94,7 @@ public class ContactDetailActivity extends Activity {
     public void init() {
         User u=((UserParameter)getApplication()).getLocal();
         //u.getContact().get(0).getContactInfos().get(0).getEmailOrNumber();
-        Intent iIntent = getIntent();
-        int thisIndex = iIntent.getExtras().getInt("index");
+        int thisIndex = ((UserParameter)getApplication()).getIndex();
         Contact contactIndex = u.getContact().get(thisIndex);//Index
         index=thisIndex;
         contactId = contactIndex.getID();//ID
@@ -113,8 +112,7 @@ public class ContactDetailActivity extends Activity {
     public void reInit() {
         User u=((UserParameter)getApplication()).getLocal();
         //u.getContact().get(0).getContactInfos().get(0).getEmailOrNumber();
-        Intent iIntent = getIntent();
-        int thisIndex = Integer.parseInt(iIntent.getStringExtra("index"));
+        int thisIndex =((UserParameter)getApplication()).getIndex();
         Contact contactIndex = u.getContact().get(thisIndex);//Index
 
         contactId = contactIndex.getID();//ID

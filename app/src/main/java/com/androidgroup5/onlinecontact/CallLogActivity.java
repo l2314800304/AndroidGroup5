@@ -125,8 +125,8 @@ public class CallLogActivity extends Activity {
                     u.getRecord().get(i).getNumber(),// 通话记录的电话号码
                     u.getRecord().get(i).getDate(),// 通话记录的日期
                     u.getRecord().get(i).getDuration(),// 通话时长
-                    u.getRecord().get(i).getType(), // 通话类型
-                    u.getContact().get(i).getName() // 通话人姓名
+                    u.getRecord().get(i).getType(),
+                    ""
             };
 
             String name = columns[4];

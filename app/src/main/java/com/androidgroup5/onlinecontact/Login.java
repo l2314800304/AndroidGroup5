@@ -70,6 +70,13 @@ public class Login extends AppCompatActivity {
                     p.setUser(user);
                     passwordField = findViewById(R.id.login_et_pass);
                     if (passwordField.getText().toString().trim().equals(user.getPassword().trim())) {
+                        while(((UserParameter)getApplication()).getLocal()==null){
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         Intent intent = new Intent();
                         intent.setClass(Login.this, Find.class);
                         startActivity(intent);
@@ -146,6 +153,17 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = getSharedPreferences("FirstRun", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        new Thread() {
+            @Override
+            public void run() {
+                ;
+                UserParameter p = (UserParameter) getApplication();
+                User u = new User();
+                u.setContact(GetContactFromLocal());
+                u.setRecord(GetRecordFromLocal());
+                p.setLocal(u);
+            }
+        }.start();
         if (sharedPreferences.getBoolean("guideTF", true)) {
             Intent intent = new Intent(Login.this, GuidePageActivity.class);
             startActivity(intent);
@@ -155,17 +173,6 @@ public class Login extends AppCompatActivity {
         }else{
             setContentView(R.layout.activity_login);
             checkDangerousPermissions();
-            new Thread() {
-                @Override
-                public void run() {
-                    ;
-                    UserParameter p = (UserParameter) getApplication();
-                    User u = new User();
-                    u.setContact(GetContactFromLocal());
-                    u.setRecord(GetRecordFromLocal());
-                    p.setLocal(u);
-                }
-            }.start();
             init();
         }
 
@@ -219,7 +226,12 @@ public class Login extends AppCompatActivity {
             contact.setContactInfos(contactInfos);
             contacts.add(contact);
         }
-
+        for(int i=0;i<contacts.size();i++){
+            if(contacts.get(i).getContactInfos().size()==0){
+                contacts.remove(i);
+                i--;
+            }
+        }
         cursor.close();
         return contacts;
     }
@@ -261,6 +273,12 @@ public class Login extends AppCompatActivity {
             info.setDate(date);
             info.setType(type + "");
             records.add(info);
+        }
+        for(int i=0;i<records.size();i++){
+            if(records.get(i).getNumber().isEmpty()){
+                records.remove(i);
+                i--;
+            }
         }
         recor.close();
         return records;

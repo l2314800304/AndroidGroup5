@@ -41,7 +41,22 @@ public class SignDate extends AppCompatActivity {
     DBManager dbManager;
     boolean isinput = false;
     private String date1 = null;//单天日期
+    String res;
+    private Handler handler = new Handler() {
 
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    addRange(GetSignDate(res));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    };
     public void GetSign() {
         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(1000, TimeUnit.SECONDS)
                 .readTimeout(1000, TimeUnit.SECONDS).build();
@@ -59,8 +74,10 @@ public class SignDate extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    String res = response.body().string();
-                    addRange(GetSignDate(res));
+                    res = response.body().string();
+                    Message message = new Message();
+                    message.what = 0;
+                    handler.sendMessage(message);
                     ((TextView)findViewById(R.id.txt_signCount)).setText("当前总计已签到"+GetSignCount(res)+"次");
                 }
             }
@@ -204,14 +221,17 @@ public class SignDate extends AppCompatActivity {
     }
 
     public void addRange(String[] date) {
-        ArrayList<sqlit> persons = new ArrayList<sqlit>();
-        sqlit person1;
-        for (int i = 0; i < date.length; i++) {
-            person1 = new sqlit(date[i], "true");
-            persons.add(person1);
+        for(int i=0;i<date.length;i++){
+            Date day=new Date(new Integer(date[i].split("-")[0])-1900,new Integer(date[i].split("-")[1])-1,new Integer(date[i].split("-")[2]));
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            SetSign();
+            add(df.format(day));
+            // 添加日期标注
+            query();
+            HashMap<String, Integer> bg = new HashMap<String, Integer>();
+            //设置当天日期背景颜色
+            calendar.setCalendarDayBgColor(day, R.drawable.bg_sign_today);
         }
-        dbManager.add(persons);
-        query();
     }
 
     //添加签到日期

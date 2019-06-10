@@ -6,4 +6,5 @@ android:layout_height="40dp"
 android:singleLine="true"
 android:paddingLeft="12dp"
 android:gravity="center_vertical"
-android:background="#66FFFF"/>
+    android:textColor="#fff"
+android:background="@drawable/login_btn_header"/>

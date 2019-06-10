@@ -7,84 +7,89 @@
     android:background="@drawable/register"
     android:orientation="vertical"
     tools:context=".SkipActivity">
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <!--我的头像-->
-        <RelativeLayout
+        android:layout_marginBottom="50dp">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-           >
-            <ImageView
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+            <!--我的头像-->
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/head"
-                android:layout_centerInParent="true"/>
-        </RelativeLayout>
-        <!--我的性别-->
-
-        <Button
-            android:id="@+id/btn_birthday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/login_btn_ok"
-            android:text="生日提醒"/>
-
-        <!--我的密码-->
-
-        <Button
-            android:id="@+id/btn3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/login_btn_ok"
-            android:text="我的密码"/>
-        <!--我的备注-->
-        <Button
-            android:id="@+id/btn6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/login_btn_ok"
-            android:text="我的备注"/>
-    <!--我的信息-->
-
-        <Button
-            android:id="@+id/btn7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/login_btn_ok"
-            android:text="我的信息"/>
-      <!--签到-->
-
-        <Button
+                android:layout_height="100dp">
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/mine_icon"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+            <!--我的性别-->
+            <Button
             android:id="@+id/btn_sign"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+                android:layout_margin="5dp"
             android:background="@drawable/login_btn_ok"
+                android:textColor="#fff"
             android:text="签到"/>
-        <!--我的定位-->
-        <Button
-            android:id="@+id/btndingwei"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/login_btn_ok"
-            android:text="我的定位"/>
 
-        <Button
-            android:id="@+id/btn5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/holo_red_light"
-            android:text="退出"
-            android:textColor="@android:color/black"></Button>
+            <Button
+                android:id="@+id/btn7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/login_btn_ok"
+                android:textColor="#fff"
+                android:text="我的信息"/>
+
+            <Button
+                android:id="@+id/btn_birthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/login_btn_ok"
+                android:textColor="#fff"
+                android:text="生日提醒"/>
+            <Button
+                android:id="@+id/btn6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/login_btn_ok"
+                android:textColor="#fff"
+                android:text="我的备注"/>
+            <Button
+                android:id="@+id/btn3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/login_btn_ok"
+                android:textColor="#fff"
+                android:text="修改密码"/>
+            <Button
+                android:id="@+id/btndingwei"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/login_btn_ok"
+                android:textColor="#fff"
+                android:text="我的位置"/>
+            <Button
+                android:id="@+id/btn5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/login_btn_exit"
+                android:text="退出"
+                android:textColor="#fff"></Button>
 
 
-    </LinearLayout>
-
+        </LinearLayout>
+    </ScrollView>
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="0dp"
@@ -92,7 +97,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
         android:theme="@style/AppTheme"
-        android:background="?android:attr/windowBackground"
+        android:background="@drawable/login_btn_header"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

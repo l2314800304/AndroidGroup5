@@ -12,6 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
         android:gravity="bottom"
         android:orientation="vertical">
@@ -24,35 +25,35 @@
             <TextView
                 android:id="@+id/tv_text1"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="130dp"
                 android:layout_gravity="center"
                 android:autoLink="email|phone|web"
                 android:text=""
-                android:textColor="@color/whites"
+                android:textColor="#fff"
                 android:textSize="50dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#000000"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_text2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="50"
                 android:gravity="center"
                 android:text=""
                 android:textColor="#fff"
+                android:background="@drawable/login_edit"
                 android:textSize="20sp" />
 
             <Button
                 android:id="@+id/bt_delete"
                 android:layout_width="54dp"
                 android:layout_height="wrap_content"
-                android:background="#545454"
+                android:background="@drawable/login_btn_ok"
                 android:onClick="deleteClick"
                 android:text="del"
                 android:textColor="#fff" />
@@ -68,6 +69,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/login_btn_ok"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
                 android:text="1"
                 android:textSize="20sp" />
 
@@ -76,6 +80,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/login_btn_ok"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
                 android:text="2"
                 android:textSize="20sp" />
 
@@ -84,6 +91,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/login_btn_ok"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
                 android:text="3"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -98,6 +108,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="#fff"
+                android:background="@drawable/login_btn_ok"
+                android:layout_margin="5dp"
                 android:text="4"
                 android:textSize="20sp" />
 
@@ -106,6 +119,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="#fff"
+                android:background="@drawable/login_btn_ok"
+                android:layout_margin="5dp"
                 android:text="5"
                 android:textSize="20sp" />
 
@@ -114,6 +130,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/login_btn_ok"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
                 android:text="6"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -128,6 +147,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/login_btn_ok"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
                 android:text="7"
                 android:textSize="20sp" />
 
@@ -136,6 +158,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/login_btn_ok"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
                 android:text="8"
                 android:textSize="20sp" />
 
@@ -144,6 +169,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/login_btn_ok"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
                 android:text="9"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -157,8 +185,10 @@
                 android:id="@+id/bt_star"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="0dp"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
                 android:layout_weight="1"
+                android:background="@drawable/login_btn_ok"
                 android:text="*"
                 android:textSize="20sp" />
 
@@ -167,6 +197,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/login_btn_ok"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
                 android:text="0"
                 android:textSize="20sp" />
 
@@ -175,6 +208,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/login_btn_ok"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
                 android:text="#"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -190,7 +226,11 @@
                 android:id="@+id/bt_call"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/login_btn_ok"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
                 android:layout_weight="1"
+                android:textSize="20sp"
                 android:text="拨号" />
 
         </LinearLayout>
@@ -203,7 +243,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:background="?android:attr/windowBackground"
+        android:background="@drawable/login_btn_header"
         android:theme="@style/AppTheme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

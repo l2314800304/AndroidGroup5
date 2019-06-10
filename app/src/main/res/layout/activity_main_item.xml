@@ -22,13 +22,8 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:layout_centerVertical="true"
+            android:textColor="#fff"
             android:text="王二"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_alignParentBottom="true"
-            android:background="#e0e0e0"/>
 
     </RelativeLayout>
 </LinearLayout>

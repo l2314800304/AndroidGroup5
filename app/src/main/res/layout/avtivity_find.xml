@@ -3,23 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
-    android:background="@color/whites">
+    android:background="@drawable/register">
     <LinearLayout
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
-        android:background="@color/whites"
+        android:background="@drawable/register"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:minHeight="48dp"
-            android:gravity="fill_horizontal"
-            app:contentInsetRight="0dp"
-            app:contentInsetStart="0dp"
-            app:titleMarginStart="0dp" >
+            android:layout_height="30dp">
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -28,8 +22,7 @@
                     android:id="@+id/btn_find_insert"
                     android:layout_width="30dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/insert"
-                    android:background="@color/whites"
+                    android:background="@drawable/insert"
                     android:scaleType="fitXY"/>
             </LinearLayout>
             <LinearLayout
@@ -52,11 +45,17 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/login_btn_ok"
+                android:textColor="#fff"
                 android:text="查找"/>
             <Button android:id="@+id/btn_export"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/login_btn_ok"
+                android:textColor="#fff"
                 android:text="导出"/>
         </LinearLayout>
         <RelativeLayout
@@ -75,15 +74,15 @@
                 android:layout_marginRight="1dp"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
-                app:charTextColor="#c9c8c9"
-                app:indexTextColor="#c9c8c9"
+                app:charTextColor="#fff"
+                app:indexTextColor="#fff"
                 app:indexTextSize="13sp" />
 
             <TextView android:id="@+id/tv_index"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_centerInParent="true"
-                android:textColor="#cbcece"
+                android:textColor="#000"
                 android:textSize="25sp"
                 android:visibility="invisible"
                 android:text="A"
@@ -97,7 +96,7 @@
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
+        android:background="@drawable/login_btn_header"
         android:theme="@style/AppTheme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

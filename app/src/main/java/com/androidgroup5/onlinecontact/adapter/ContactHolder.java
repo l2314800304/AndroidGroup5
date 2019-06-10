@@ -38,7 +38,8 @@ public class ContactHolder extends RecyclerView.ViewHolder {
                 for(int i=0;i<contactList.size();i++)
                     if(contactList.get(i).getName().equals(tv_name.getText().toString().split(" ")[0]))
                         index=i;
-                activity.startActivity(new Intent().setClass(activity.getApplicationContext(),ContactDetailActivity.class).putExtra("index",index));
+                ((UserParameter)activity.getApplication()).setIndex(index);
+                activity.startActivity(new Intent().setClass(activity.getApplicationContext(),ContactDetailActivity.class));
             }
         });
     }

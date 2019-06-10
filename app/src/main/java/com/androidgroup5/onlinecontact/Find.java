@@ -84,6 +84,7 @@ public class Find extends Activity {
                 SearchActivity.lanuch(Find.this, contactList);
             }
         });
+
         final LinearLayoutManager manager = new LinearLayoutManager(this);
         rv_main.setLayoutManager(manager);
         ((ImageButton)findViewById(R.id.btn_find_insert)).setOnClickListener(new View.OnClickListener() {
@@ -144,9 +145,10 @@ public class Find extends Activity {
                     for (int i = 0; i < u.getContact().size(); i++) {
                         int urlIndex = random.nextInt(URLS.length - 1);
                         int url = URLS[urlIndex];
+                        if(u.getContact().get(i).getContactInfos().size()!=0)
                         contactLists.add(new sContact(u.getContact().get(i).getName(),u.getContact().get(i).getContactInfos().get(0).getNumber(), url));
                     }
-                    List<CNPinyin<sContact>> contactList = CNPinyinFactory.createCNPinyinList(contactLists);
+                    ArrayList<CNPinyin<sContact>> contactList = CNPinyinFactory.createCNPinyinList(contactLists);
                     Collections.sort(contactList);
                     subscriber.onNext(contactList);
                     subscriber.onCompleted();

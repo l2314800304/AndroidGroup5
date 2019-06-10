@@ -141,12 +141,13 @@
                     android:id="@+id/login_btn_toRegister"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/login_btn_cancel"
+                    android:background="@drawable/login_btn_ok"
                     android:drawablePadding="5dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:layout_marginLeft="20dp"
                     android:text="注册"
+                    android:textColor="#fff"
                     android:textSize="15dp" />
 
                 <Button
@@ -159,6 +160,7 @@
                     android:paddingRight="15dp"
                     android:layout_marginRight="20dp"
                     android:text="登陆"
+                    android:textColor="#fff"
                     android:textSize="15dp" />
 
             </com.google.android.flexbox.FlexboxLayout>

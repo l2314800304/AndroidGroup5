@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:text="@string/name"
-                android:textColor="#CCCCCC"
+                android:textColor="#fff"
                 android:textSize="34dp" />
 
         </LinearLayout>

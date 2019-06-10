@@ -9,6 +9,16 @@ public class UserParameter extends Application {
         return user;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    int index=-1;
+
     public void setUser(User u) {
         this.user = u;
     }

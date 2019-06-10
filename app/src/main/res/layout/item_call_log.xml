@@ -10,6 +10,7 @@
         android:id="@+id/tv_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#fff"
         android:text="名字和电话"
         />
     <LinearLayout
@@ -22,6 +23,7 @@
             android:id="@+id/tv_item_time_lead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#fff"
             android:text="时间"
             />
         <TextView
@@ -29,6 +31,7 @@
             android:id="@+id/tv_item_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#fff"
             android:text="时长"
             />
 
