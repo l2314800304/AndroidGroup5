@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".Birthday"
     android:orientation="vertical"
-    android:gravity="bottom"
-    android:background="@drawable/happy">
+    android:background="@drawable/register"
+    android:gravity="bottom">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:textSize="20sp"
+            android:textColor="#fff"
             tools:layout_editor_absoluteX="176dp"
             tools:layout_editor_absoluteY="212dp" />
         <TextView
@@ -27,19 +28,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"
+            android:textColor="#fff"
             android:layout_gravity="center_horizontal"/>
         <TextView
             android:id="@+id/text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"
+            android:textColor="#fff"
             android:layout_gravity="center_horizontal"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/happy"
+            android:layout_gravity="center"
+            android:scaleType="center"/>
     </LinearLayout>
+    <Button
+        android:id="@+id/btn_addBirthday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加生日提醒"
+        android:layout_margin="20dp"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        android:background="@drawable/login_btn_ok"/>
     <Button
         android:id="@+id/btn_back"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="返回"
         android:layout_margin="20dp"
+        android:textColor="#fff"
+        android:textSize="20sp"
         android:background="@drawable/login_btn_ok"/>
 </LinearLayout>

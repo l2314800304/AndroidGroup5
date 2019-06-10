@@ -35,8 +35,15 @@ public class Birthday extends Activity {
                 startActivity(new Intent(Birthday.this,SkipActivity.class));
             }
         });
+        ((Button)findViewById(R.id.btn_addBirthday)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Birthday.this,UpdateBirthday.class));
+            }
+        });
         textView2.setText("今天日期是"+dateString1 );
         StringBuilder sb = new StringBuilder();
+        textView3.setText("很抱歉，今天不是好友生日，请明天查看！");
         for (int i=0;i<((UserParameter) getApplication()).getUser().getContact().size();i++)
         {
             String date2 = ((UserParameter) getApplication()).getUser().getContact().get(i).getBirthday();

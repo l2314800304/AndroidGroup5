@@ -23,7 +23,7 @@
             android:textSize="25sp"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:text="添加联系人信息"/>
+            android:text="添加联系人"/>
     </LinearLayout>
 
     <RelativeLayout
@@ -98,10 +98,11 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="添加"
-            android:textSize="21dp" />
+            android:textColor="#fff"
+            android:textSize="20dp" />
 
         <Button
-            android:id="@+id/btn_backToDetail"
+            android:id="@+id/btn_backToFind"
             android:layout_width="306dp"
             android:layout_height="60dp"
             android:layout_below="@id/btn_insert"
@@ -113,8 +114,9 @@
             android:drawablePadding="5dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
+            android:textColor="#fff"
             android:text="返回"
-            android:textSize="21dp" />
+            android:textSize="20dp" />
     </RelativeLayout>
 
 </LinearLayout>

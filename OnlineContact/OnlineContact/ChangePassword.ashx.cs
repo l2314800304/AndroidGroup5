@@ -15,9 +15,10 @@ namespace OnlineContact
         {
             context.Response.ContentType = "text/plain";
             String UserName = context.Request["UserName"];
+            String Old = context.Request["Password"];
             String Ne = context.Request["NewPassword"];
             MySqlHelper helper = new MySqlHelper();
-                if (helper.getMySqlCom("UPDATE User Set Password='" + Ne + "' where UserName='" + UserName + "'") > 0)
+                if (helper.getMySqlCom("UPDATE User Set Password='" + Ne + "' where UserName='" + UserName + "' And Password='"+Old+"'") > 0)
                 {
                     context.Response.Write("OK");
                 }

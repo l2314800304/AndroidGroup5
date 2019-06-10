@@ -153,17 +153,6 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = getSharedPreferences("FirstRun", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        new Thread() {
-            @Override
-            public void run() {
-                ;
-                UserParameter p = (UserParameter) getApplication();
-                User u = new User();
-                u.setContact(GetContactFromLocal());
-                u.setRecord(GetRecordFromLocal());
-                p.setLocal(u);
-            }
-        }.start();
         if (sharedPreferences.getBoolean("guideTF", true)) {
             Intent intent = new Intent(Login.this, GuidePageActivity.class);
             startActivity(intent);
@@ -173,6 +162,17 @@ public class Login extends AppCompatActivity {
         }else{
             setContentView(R.layout.activity_login);
             checkDangerousPermissions();
+            new Thread() {
+                @Override
+                public void run() {
+                    ;
+                    UserParameter p = (UserParameter) getApplication();
+                    User u = new User();
+                    u.setContact(GetContactFromLocal());
+                    u.setRecord(GetRecordFromLocal());
+                    p.setLocal(u);
+                }
+            }.start();
             init();
         }
 
