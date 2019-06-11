@@ -49,6 +49,7 @@ public class SignDate extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
+                    if(!res.equals("Sign:;SignCount:0"))
                     addRange(GetSignDate(res));
                     break;
                 case 1:

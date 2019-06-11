@@ -26,10 +26,10 @@
       <publishTime>05/30/2019 13:34:33</publishTime>
     </File>
     <File Include="bin/OnlineContact.dll">
-      <publishTime>06/11/2019 10:32:04</publishTime>
+      <publishTime>06/11/2019 10:53:31</publishTime>
     </File>
     <File Include="bin/OnlineContact.pdb">
-      <publishTime>06/11/2019 10:32:04</publishTime>
+      <publishTime>06/11/2019 10:53:31</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>05/30/2019 13:34:34</publishTime>
