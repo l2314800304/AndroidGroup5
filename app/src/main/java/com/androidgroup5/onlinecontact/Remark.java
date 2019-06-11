@@ -35,6 +35,8 @@ public class Remark extends AppCompatActivity {
                 case 0:
                     Toast.makeText(Remark.this, "修改成功！返回详情页面...", Toast.LENGTH_LONG).show();
                     ((UserParameter)getApplication()).getUser().setRemark(et_Remark.getText().toString());
+                    ((UserParameter)getApplication()).getUser().setSex(((boolean)((RadioButton)findViewById(R.id.change_rbtn_man)).isChecked())?"男":"女");
+                    ((UserParameter)getApplication()).getUser().setLocation(et_Location.getText().toString());
                     backToInsert();
                     break;
                 case 1:
@@ -95,9 +97,9 @@ public class Remark extends AppCompatActivity {
                 .readTimeout(20, TimeUnit.SECONDS).build();
         ((UserParameter) getApplication()).getUser().setRemark(remark);
         ((UserParameter) getApplication()).getUser().setLocation(((EditText)findViewById(R.id.change_et_location)).getText().toString());
-        ((UserParameter) getApplication()).getUser().setSex(((boolean)((RadioButton)findViewById(R.id.change_rbtn_man)).isSelected())?"男":"女");
+        ((UserParameter) getApplication()).getUser().setSex(((boolean)((RadioButton)findViewById(R.id.change_rbtn_man)).isChecked())?"男":"女");
         Request request = new Request.Builder()
-                .url("http://114.116.171.181:80/ChangeRemark.ashx?UserName="+ UserName+ "&Sex="+(((boolean)((RadioButton)findViewById(R.id.change_rbtn_man)).isSelected())?"男":"女")+"&Location="+(((EditText)findViewById(R.id.change_et_location)).getText().toString())+"&Remark=" + URLEncoder.encode(remark))
+                .url("http://114.116.171.181:80/ChangeRemark.ashx?UserName="+ UserName+ "&Sex="+(((boolean)((RadioButton)findViewById(R.id.change_rbtn_man)).isChecked())?"男":"女")+"&Location="+(((EditText)findViewById(R.id.change_et_location)).getText().toString())+"&Remark=" + URLEncoder.encode(remark))
                 .method("GET",null)
                 .build();
         client.newCall(request).enqueue(new Callback() {
@@ -130,7 +132,7 @@ public class Remark extends AppCompatActivity {
     }
 
     private void backToInsert(){
-       startActivity(new Intent().setClass(Remark.this, SkipActivity.class));
+       startActivity(new Intent().setClass(Remark.this, XinxiActivity.class));
      }
 
     private boolean checkData() {
