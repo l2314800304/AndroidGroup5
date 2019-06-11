@@ -14,19 +14,27 @@
         android:textColor="#fff"
         android:text="修改生日提醒"
         android:gravity="center"
-        android:layout_marginBottom="50dp"
+        android:textSize="40sp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="#fff"
+        android:gravity="center"
         android:textSize="40sp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="50dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:orientation="horizontal">
         <Spinner
             android:id="@+id/spinner_contact"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
+            android:background="@drawable/login_btn_ok"
+            android:popupBackground="#00000000"
             android:minHeight="50dp"> </Spinner>
         <Button
             android:id="@+id/btn_date"
@@ -36,8 +44,6 @@
             android:background="@drawable/login_btn_ok"
             android:textColor="#fff"
             android:textSize="20sp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
             android:text="选择日期"/>
     </LinearLayout>
     <Button

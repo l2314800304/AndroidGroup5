@@ -45,7 +45,7 @@ public class UpdateBirthday extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    Toast.makeText(UpdateBirthday.this, "修改成功，返回登录页面...", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UpdateBirthday.this, "修改成功", Toast.LENGTH_LONG).show();
                     break;
                 case 1:
                     Toast.makeText(UpdateBirthday.this, "修改失败，请检查网络连接！", Toast.LENGTH_LONG).show();
@@ -75,8 +75,8 @@ public class UpdateBirthday extends AppCompatActivity {
         for(int i=0;i<contacts.size();i++){
             contact.add(contacts.get(i).getName());
         }
-        adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,contact);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        adapter = new ArrayAdapter<String>(this,R.layout.spinner_display,R.id.txtvwSpinner, contact);
+        adapter.setDropDownViewResource(R.layout.spinner_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
