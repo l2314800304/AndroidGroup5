@@ -25,7 +25,7 @@ import okhttp3.Response;
 
 public class Remark extends AppCompatActivity {
     Button btn_cancel,btn_ok;
-    EditText et_Remark;
+    EditText et_Remark,et_Location;
     private Handler handler = new Handler() {
 
         @Override
@@ -54,6 +54,15 @@ public class Remark extends AppCompatActivity {
         init();
         String Remark=((UserParameter)getApplication()).getUser().getRemark();
         et_Remark.setText(Remark);
+        et_Location.setText(((UserParameter)getApplication()).getUser().getLocation());
+        RadioButton man=(RadioButton)findViewById(R.id.change_rbtn_man),woman=(RadioButton)findViewById(R.id.change_rbtn_woman);
+        if(((UserParameter)getApplication()).getUser().getSex().equals("男")){
+            man.setSelected(true);
+            woman.setSelected(false);
+        }else{
+            man.setSelected(false);
+            woman.setSelected(true);
+        }
         btn_cancel.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Remark.this.finish();
@@ -64,7 +73,8 @@ public class Remark extends AppCompatActivity {
     private void init() {
         btn_cancel = (Button) findViewById(R.id.buttonCancel);
         btn_ok = (Button) findViewById(R.id.buttonOk);
-        et_Remark = (EditText) findViewById(R.id.buttonRemark);
+        et_Remark = (EditText) findViewById(R.id.change_et_Remark);
+        et_Location=(EditText)findViewById(R.id.change_et_location);
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,8 +93,11 @@ public class Remark extends AppCompatActivity {
         String remark = et_Remark.getText().toString();
         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS).build();
+        ((UserParameter) getApplication()).getUser().setRemark(remark);
+        ((UserParameter) getApplication()).getUser().setLocation(((EditText)findViewById(R.id.change_et_location)).getText().toString());
+        ((UserParameter) getApplication()).getUser().setSex(((boolean)((RadioButton)findViewById(R.id.change_rbtn_man)).isSelected())?"男":"女");
         Request request = new Request.Builder()
-                .url("http://114.116.171.181:80/ChangeRemark.ashx?UserName="+ UserName+ "&Remark=" + URLEncoder.encode(remark))
+                .url("http://114.116.171.181:80/ChangeRemark.ashx?UserName="+ UserName+ "&Sex="+(((boolean)((RadioButton)findViewById(R.id.change_rbtn_man)).isSelected())?"男":"女")+"&Location="+(((EditText)findViewById(R.id.change_et_location)).getText().toString())+"&Remark=" + URLEncoder.encode(remark))
                 .method("GET",null)
                 .build();
         client.newCall(request).enqueue(new Callback() {

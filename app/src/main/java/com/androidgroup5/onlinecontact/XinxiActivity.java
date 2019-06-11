@@ -48,6 +48,16 @@ public class XinxiActivity extends AppCompatActivity {
         Sex.setText("性  别："+u.getSex());
         Location.setText("位  置："+u.getLocation());
         Remark.setText("备  注："+u.getRemark());
+        Button btn3=findViewById(R.id.btn6);
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it3=new Intent();
+                it3.setClass(XinxiActivity.this,Remark.class);
+                startActivity(it3);
+
+            }
+        });
 
     }
 }

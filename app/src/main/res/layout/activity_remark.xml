@@ -4,22 +4,84 @@
     android:layout_height="match_parent"
     android:background="@drawable/register"
     android:padding="30dp"
-    android:gravity="center"
+    android:gravity="center_vertical"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="修改备注"
+        android:text="修改信息"
         android:textColor="#fff"
         android:textSize="25sp" />
-
+    <TextView
+        android:id="@+id/tv_pass_register3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_pass1"
+        android:layout_marginTop="8dp"
+        android:text="性别:"
+        android:textColor="#fff"
+        android:textSize="14sp" />
+    <RadioGroup
+        android:id="@+id/rg_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_pass_register3"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/change_rbtn_man"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:buttonTint="#fff"
+            android:checked="true"
+            android:text="男"/>
+        <RadioButton
+            android:id="@+id/change_rbtn_woman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:buttonTint="#fff"
+            android:text="女"/>
+    </RadioGroup>
+    <TextView
+        android:id="@+id/tv_pass_register4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rg_sex"
+        android:layout_marginTop="8dp"
+        android:text="地址:"
+        android:textColor="#fff"
+        android:textSize="14sp" />
     <EditText
-        android:id="@+id/buttonRemark"
+        android:id="@+id/change_et_location"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_pass_register4"
+        android:background="@drawable/login_edit"
+        android:paddingBottom="7dp"
+        android:paddingLeft="9dp"
+        android:paddingRight="8dp"
+        android:paddingTop="7dp"
+        android:hint="地理位置(5个字符以内)"
+        android:textColorHint="#aaa"
+        android:textColor="#fff"
+        android:singleLine="true"
+        android:textSize="15sp" />
+    <TextView
+        android:id="@+id/tv_pass_register5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_location"
+        android:layout_marginTop="8dp"
+        android:text="备注:"
+        android:textColor="#fff"
+        android:textSize="14sp" />
+    <EditText
+        android:id="@+id/change_et_Remark"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginTop="50dp"
         android:background="@drawable/login_edit"
         android:inputType="textMultiLine"
         android:padding="5dp"

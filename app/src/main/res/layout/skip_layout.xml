@@ -55,14 +55,6 @@
                 android:textColor="#fff"
                 android:text="生日提醒"/>
             <Button
-                android:id="@+id/btn6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/login_btn_ok"
-                android:textColor="#fff"
-                android:text="我的备注"/>
-            <Button
                 android:id="@+id/btn3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
